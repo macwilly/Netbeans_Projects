@@ -1,8 +1,7 @@
 <head>
+    <?php include './function/title.php'; ?>
     <meta charset="UTF-8">
-    <title></title>
+    <title><?php titleInformation(basename($_SERVER['PHP_SELF'])); ?></title>
     <script src="../jquery/jquery-3.2.1.js" type="text/javascript"></script>
 </head>
-        <?php
-        // put your code here
-        ?>
+<body>
