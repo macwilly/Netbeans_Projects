@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html>
+<?php
+    header('Location: ./pages/index.php');
+    exit();
     
-    <?php
-    echo '1';
+    
+    
+    
     include './include/header.inc.php';
-    echo '2';
+    
     //connection information for the database
     require '../../bin/dbConnection.inc.php';
-    echo '3';
+    
     //process to open a connection to the database
     include './include/connection_open.inc.php';
-    echo '4';
+    
 
     $sql = "SELECT id,username,CAST(AES_DECRYPT(password, '<password>') AS CHAR(20)) as password_decrypt,security_level,first_name,last_name,active,email"
             . " FROM users";
 
-    echo $sql;
+    
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -35,4 +37,5 @@
     mysqli_close($conn);
     ?>
 </body>
+<a href="AASL/index.html"></a>
 </html>
