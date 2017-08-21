@@ -33,6 +33,7 @@
     <![endif]-->
     
     <script src="../jquery/jquery-3.2.1.js" type="text/javascript"></script>
+    <link rel="shortcut icon" href="../images/favicon.ico">
 </head>
 
 <body>
