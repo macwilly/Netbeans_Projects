@@ -16,21 +16,22 @@
                                 <h3 class="panel-title">Please Sign In</h3>
                             </div>
                             <div class="panel-body">
-                                <form role="form" method="POST" action="#">
+                                <form role="form" id="loginForm" method="POST" action="index.php">
                                     <fieldset>
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                            <input class="form-control" placeholder="Username" name="username" id="username" type="email" autofocus>
                                         </div>
                                         <div class="form-group">
-                                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                            <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
                                         </div>
-                                        <div class="checkbox">
+<!--                                        <div class="checkbox">
                                             <label>
                                                 <input name="remember" type="checkbox" value="Remember Me">Remember Me
                                             </label>
-                                        </div>
+                                        </div>-->
                                         <!-- Change this to a button or input when using this as a form -->
-                                        <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
+                                        <a href="#" onclick="doLogin()" class="btn btn-lg btn-success btn-block">Login</a>
+                                        <a href="index.php" class="btn btn-lg btn-success btn-block">Cancel </a>
                                     </fieldset>
                                 </form>
                             </div>
@@ -49,4 +50,5 @@
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
+<script src="../js/loginFormChecking.js" type="text/javascript"></script>
 <?php include '../include/footer.inc.php'; ?>
