@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 15, 2017 at 02:40 AM
+-- Generation Time: Aug 25, 2017 at 03:00 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.6
 
@@ -13,6 +13,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `animated_sign`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attributes`
+--
+
+CREATE TABLE `attributes` (
+  `sign_id` int(11) NOT NULL,
+  `attribute` int(11) NOT NULL,
+  `description` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -42,7 +54,9 @@ CREATE TABLE `sign` (
   `dominate_end_HS` varchar(20) NOT NULL,
   `nondominate_start_HS` varchar(20) NOT NULL,
   `nondominate_end_HS` varchar(20) NOT NULL,
-  `english_meaning` varchar(30) NOT NULL
+  `english_meaning` varchar(30) NOT NULL,
+  `start_photo` char(50) NOT NULL,
+  `end_photo` char(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -79,11 +93,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `security_level`, `first_name`, `last_name`, `active`, `email`) VALUES
-(2, 'mtw2935', 0x4df5996e258693adc654f89ecc786543, 0, 'Mackenzie', 'Willard', 1, 'mtwillard29@gmail.com');
+(2, 'mtw2935', 0x9ed38d8c7e95f75ad5b672d6e7904853, 0, 'Mackenzie', 'Willard', 1, 'mtwillard29@gmail.com');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `attributes`
+--
+ALTER TABLE `attributes`
+  ADD PRIMARY KEY (`sign_id`,`attribute`);
 
 --
 -- Indexes for table `auditTrail`
