@@ -4,17 +4,17 @@
 
     <!-- Navigation -->
     <?php include '../include/navigation.inc.php'; ?>
-    
+
     <?php
-        //Checking for error information
-        
-        if(is_null($_GET["error"])){
-            echo '<h1>There is an error</h1>';
-        }else{
-            echo '<h1>Hello</h1>';
-        }
+    //Checking for error information
+
+    if (is_null($_GET["error"])) {
+        echo '<h1>There is an error</h1>';
+    } else {
+        echo '<h1>Hello</h1>';
+    }
     ?>
-    
+
     <!-- Page Content -->
     <div id="page-wrapper">
         <div class="row hidden" >
@@ -37,7 +37,7 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" id="loginForm" onsubmit="return doLogin()" method="POST" action="index.php">
+                        <form role="form" id="loginForm" onsubmit="return doLogin()" method="POST" action="">
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Username" name="username" id="username" type="input" required autofocus>
