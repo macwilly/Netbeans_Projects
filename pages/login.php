@@ -40,7 +40,7 @@
                         <form role="form" id="loginForm" onsubmit="return doLogin()" method="POST" action="index.php">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Username" name="username" id="username" type="email" required autofocus>
+                                    <input class="form-control" placeholder="Username" name="username" id="username" type="input" required autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" id="password" type="password" required>
