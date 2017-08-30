@@ -9,9 +9,10 @@
     //Checking for error information
 
     if (is_null($_GET["error"])) {
-        echo '<h1>There is an error</h1>';
+        
     } else {
-        echo '<h1>Hello</h1>';
+       //write code to make the error div appear
+        // will need to be javascript or jquery
     }
     ?>
 

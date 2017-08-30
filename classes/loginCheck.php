@@ -7,7 +7,7 @@ session_start();
  * and open the template in the editor.
  */
 
-
+$url = "";
 //information from POST
 $uname = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 $pword = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
@@ -39,11 +39,9 @@ if ($result->num_rows > 0) {
             $_SESSION["firstName"] = $row["first_name"];
             $_SESSION["lastName"] = $row["last_name"];
             $_SESSION["userEmail"] = $row["email"];
+            $url = "../pages/index.php";
         }else{
-            //close the connection
-            mysqli_close($conn);
-            header('Location: ../pages/login.php?error=1');
-            exit();
+            $url = "../pages/login.php?error=1";
         }
         
         
@@ -54,14 +52,19 @@ if ($result->num_rows > 0) {
           echo "last name: " . $row["last_name"] . "<br>";
           echo "email: " . $row["email"] . "<br>"; */
     }
-    //close the connection
-    mysqli_close($conn);
+    
 } else {
-    //close the connection
-    mysqli_close($conn);
-    header('Location: ../pages/login.php?error=1');
-    exit();
+    $url = "../pages/login.php?error=1";
+    
 }
+//close the connection
+mysqli_close($conn);
+
+//redirect the page
+header("Location: " . $url);
+exit();
+
+
 
 //echo "Username " . $uname . "<br>";
 //echo "Password " . $pword . "<br>";

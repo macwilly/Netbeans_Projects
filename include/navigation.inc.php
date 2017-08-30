@@ -11,6 +11,16 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <?php
+                        if($_SESSION["userName"] == ""){
+                            echo "Guest ";
+                        }else{
+                            echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . " ";
+                        }
+                        
+                    ?>|
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
