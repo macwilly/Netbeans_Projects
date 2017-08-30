@@ -14,7 +14,7 @@ $pword = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
 //second checking of the information that is sent
 if (strlen($uname) === 0 || strlen($pword) === 0) {
-    header('Location: ../pages/login.php');
+    header('Location: ../pages/login.php?error=1');
     exit();
 }
 //connection information for the database
