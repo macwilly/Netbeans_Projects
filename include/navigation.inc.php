@@ -68,6 +68,15 @@
                         <li>
                             <a href="./index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
+                        <?php
+                            if($_SESSION["userName"] == ""){
+                                include '../include/signNavGuest.inc.php';
+                            }else{
+                                include '../include/signNavUser.inc.php';
+                            }
+                         
+                        
+                        ?>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
