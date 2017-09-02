@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 30, 2017 at 03:05 AM
+-- Generation Time: Sep 02, 2017 at 05:06 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.6
 
@@ -43,6 +43,19 @@ CREATE TABLE `auditTrail` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hand_shape`
+--
+
+CREATE TABLE `hand_shape` (
+  `id` int(11) NOT NULL,
+  `description` varchar(10) NOT NULL,
+  `image` varchar(20) NOT NULL COMMENT 'Location on the server where the image is located',
+  `active` int(11) NOT NULL COMMENT '0= Not active 1 = Active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sign`
 --
 
@@ -53,10 +66,26 @@ CREATE TABLE `sign` (
   `dominate_start_HS` varchar(20) NOT NULL,
   `dominate_end_HS` varchar(20) NOT NULL,
   `nondominate_start_HS` varchar(20) NOT NULL,
+  `handedness` int(11) NOT NULL COMMENT 'Is the sign one handed or two handed 1 = 1h 2 = 2h',
   `nondominate_end_HS` varchar(20) NOT NULL,
   `english_meaning` varchar(30) NOT NULL,
   `start_photo` char(50) NOT NULL,
-  `end_photo` char(50) NOT NULL
+  `end_photo` char(50) NOT NULL,
+  `finished` int(11) NOT NULL COMMENT 'Is the sign finished 0=No 1=Yes'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sign_history`
+--
+
+CREATE TABLE `sign_history` (
+  `id` int(11) NOT NULL,
+  `sign` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `user` int(11) NOT NULL,
+  `old_embr` varchar(500) NOT NULL COMMENT 'the embr that was in the sign table before an update happened to it'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
