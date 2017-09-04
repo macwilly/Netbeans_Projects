@@ -13,7 +13,13 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <?php
-                        if($_SESSION["userName"] == ""){
+                    
+                    try{
+                        $un = $_SESSION["userName"];
+                    } catch (Exception $e){
+                        $un = "";
+                    }
+                        if($un == ""){
                             echo "Guest ";
                         }else{
                             echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . " ";
@@ -27,7 +33,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                             <?php
-                                if($_SESSION["userName"] == ""){                                                                     
+                                if($un == ""){                                                                     
                                     echo '<li>';
                                     echo '<a  href="./login.php"><i class="fa fa-user fa-fw"></i> Login</a>';
                                     echo '</li>'; 
@@ -69,7 +75,7 @@
                             <a href="./index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <?php
-                            if($_SESSION["userName"] == ""){
+                            if($un == ""){
                                 include '../include/signNavGuest.inc.php';
                             }else{
                                 include '../include/signNavUser.inc.php';
