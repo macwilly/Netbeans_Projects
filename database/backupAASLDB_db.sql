@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 04, 2017 at 10:42 PM
+-- Generation Time: Sep 05, 2017 at 02:47 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.6
 
@@ -48,10 +48,56 @@ CREATE TABLE `auditTrail` (
 
 CREATE TABLE `hand_shape` (
   `id` int(11) NOT NULL,
-  `description` varchar(10) NOT NULL,
+  `description` varchar(20) NOT NULL,
   `image` varchar(20) NOT NULL COMMENT 'Location on the server where the image is located',
   `active` int(11) NOT NULL COMMENT '0= Not active 1 = Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hand_shape`
+--
+
+INSERT INTO `hand_shape` (`id`, `description`, `image`, `active`) VALUES
+(1, 'A', 'na', 1),
+(2, 'B', 'na', 1),
+(3, 'B-xd', 'na', 1),
+(4, 'flat-B', 'na', 1),
+(5, 'B-L', 'na', 1),
+(6, 'crvd-B', 'na', 1),
+(7, 'crvd-flat-B', 'na', 1),
+(8, 'crvd-sprd-B', 'na', 1),
+(9, 'bent-B', 'na', 1),
+(10, 'bent-B-xd', 'na', 1),
+(11, 'bent-B-L', 'na', 1),
+(12, 'C', 'na', 1),
+(13, 'sml-C/3', 'na', 1),
+(14, 'tight-C', 'na', 1),
+(15, 'tight-C/2', 'na', 1),
+(16, 'D', 'na', 1),
+(17, 'E', 'na', 1),
+(18, 'loose-E', 'na', 1),
+(19, 'F/9', 'na', 1),
+(20, 'cocked-F', 'na', 1),
+(21, 'open-F', 'na', 1),
+(22, 'G/Q', 'na', 1),
+(23, 'flat-G', 'na', 1),
+(24, 'alt-G', 'na', 1),
+(25, 'U/H', 'na', 1),
+(26, 'I', 'na ', 1),
+(27, 'I-L-Y', 'na', 1),
+(28, 'bent-I-L-Y', 'na', 1),
+(29, 'P/K', 'na', 1),
+(30, 'L', 'na', 1),
+(31, 'L-X', 'na', 1),
+(32, 'crvd-L', 'na', 1),
+(33, 'M', 'na', 1),
+(34, 'alt-M', 'na', 1),
+(35, 'bent-M', 'na', 1),
+(36, 'N', 'na', 1),
+(37, 'alt-N', 'na', 1),
+(38, 'bent-N', 'na', 1),
+(39, 'O', 'na', 1),
+(40, 'baby-O', 'na', 1);
 
 -- --------------------------------------------------------
 
@@ -140,6 +186,12 @@ ALTER TABLE `attributes`
 ALTER TABLE `auditTrail`
   ADD PRIMARY KEY (`sign_id`),
   ADD UNIQUE KEY `auditTrailIndex` (`id`,`date`,`user_id`);
+
+--
+-- Indexes for table `hand_shape`
+--
+ALTER TABLE `hand_shape`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sign`
