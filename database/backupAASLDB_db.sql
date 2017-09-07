@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 05, 2017 at 02:47 AM
+-- Generation Time: Sep 07, 2017 at 04:03 AM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.6
 
@@ -58,6 +58,7 @@ CREATE TABLE `hand_shape` (
 --
 
 INSERT INTO `hand_shape` (`id`, `description`, `image`, `active`) VALUES
+(0, '', '', 0),
 (1, 'A', 'na', 1),
 (2, 'B', 'na', 1),
 (3, 'B-xd', 'na', 1),
@@ -97,7 +98,64 @@ INSERT INTO `hand_shape` (`id`, `description`, `image`, `active`) VALUES
 (37, 'alt-N', 'na', 1),
 (38, 'bent-N', 'na', 1),
 (39, 'O', 'na', 1),
-(40, 'baby-O', 'na', 1);
+(40, 'baby-O', 'na', 1),
+(41, 'flat-O', 'na', 1),
+(42, 'flat-O/2', 'na', 1),
+(43, 'fanned-flat-O', 'na', 1),
+(44, 'alt-P', 'na', 1),
+(45, 'R', 'na', 1),
+(46, 'R-L', 'na', 1),
+(47, 'S', 'na', 1),
+(48, 'crooked-S', 'na', 1),
+(49, 'T', 'na', 1),
+(50, 'crvd-U', 'na', 1),
+(51, 'bent-U', 'na', 1),
+(52, 'cocked-U', 'na', 1),
+(53, 'U-L', 'na', 1),
+(54, 'bent-U-L', 'na', 1),
+(55, 'V/2', 'na', 1),
+(56, 'crvd-V', 'na', 1),
+(57, 'bent-V', 'na', 1),
+(58, 'W', 'na', 1),
+(59, 'crvd-W', 'na', 1),
+(60, 'X', 'na', 1),
+(61, 'X-over-thumb', 'na', 1),
+(62, 'Y', 'na', 1),
+(63, 'Vulcan', 'na', 1),
+(64, 'Horns', 'na', 1),
+(65, 'bent-Horns', 'na', 1),
+(66, 'O/2-Horns', 'na', 1),
+(67, 'RLxd', 'na', 1),
+(68, '1', 'na', 1),
+(69, 'bent-1', 'na', 1),
+(70, '3', 'na', 1),
+(71, 'crvd-3', 'na', 1),
+(72, '4', 'na', 1),
+(73, '5', 'na', 1),
+(74, 'crvd-5', 'na', 1),
+(75, '5-C', 'na', 1),
+(76, '5-C-L', 'na', 1),
+(77, '5-C-tt', 'na', 1),
+(78, '6', 'na', 1),
+(79, '7', 'na', 1),
+(80, 'cocked-7', 'na', 1),
+(81, 'open-7', 'na', 1),
+(82, '8', 'na', 1),
+(83, 'cocked-8', 'na', 1),
+(84, 'open-8', 'na', 1),
+(85, '25', 'na', 1),
+(86, 'Other', 'na', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `related_sign`
+--
+
+CREATE TABLE `related_sign` (
+  `s_sign` int(11) NOT NULL,
+  `r_sign` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -117,7 +175,8 @@ CREATE TABLE `sign` (
   `english_meaning` varchar(30) NOT NULL,
   `start_photo` char(50) NOT NULL,
   `end_photo` char(50) NOT NULL,
-  `finished` int(11) NOT NULL COMMENT 'Is the sign finished 0=No 1=Yes'
+  `finished` int(11) NOT NULL COMMENT 'Is the sign finished 0=No 1=Yes',
+  `asllvd_link` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -192,6 +251,12 @@ ALTER TABLE `auditTrail`
 --
 ALTER TABLE `hand_shape`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `related_sign`
+--
+ALTER TABLE `related_sign`
+  ADD PRIMARY KEY (`s_sign`,`r_sign`);
 
 --
 -- Indexes for table `sign`
