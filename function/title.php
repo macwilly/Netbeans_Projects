@@ -7,5 +7,7 @@ function titleInformation($pageName) {
         echo 'Main';
     } elseif ($pageName == 'login.php') {
         echo 'Login';
+    }elseif ($pageName == 'signList.php'){
+        echo 'Sign List';
     }
 }

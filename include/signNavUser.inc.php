@@ -2,7 +2,7 @@
     <a href="#"><i class="fa fa-hand-o-right fa-fw"></i> Animated Signs<span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
         <li>
-            <a href="#">View Signs</a>
+            <a href="../pages/signList.php">View Signs</a>
         </li>
         <li>
             <a href="#">Edit Signs</a>
