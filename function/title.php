@@ -9,5 +9,7 @@ function titleInformation($pageName) {
         echo 'Login';
     }elseif ($pageName == 'signList.php'){
         echo 'Sign List';
+    }elseif($pageName == 'users.php'){
+        echo 'Users';
     }
 }
