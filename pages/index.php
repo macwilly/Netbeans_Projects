@@ -13,13 +13,13 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <form role="form">
+        <form role="form" name="mainSearch" method="POST" action="">
             <div class="row">
                 <div class="col-lg-8">    
                     <div class="input-group custom-search-form">
                         <input type="text" class="form-control input-lg" placeholder="Search...">
                         <span class="input-group-btn">
-                            <button class="btn btn-default btn-lg" type="button">
+                            <button id="mainSearch-submit" class="btn btn-default btn-lg" type="button">
                                 <i class="fa fa-search"></i>
                             </button>
                         </span>
@@ -40,7 +40,45 @@
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>One Handed or Two Handed</label>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="optionsHanded" id="optionsHanded1" value="1" checked>One Handed
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="optionsHanded" id="optionsHanded2" value="2">Two Handed
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group tooltips">
+                                                <label  data-toggle="tooltip" data-placement="right" title="Multiple Select: Hold Command click multiple options." >Hand Shape</label>
+                                                <select multiple class="form-control">
+                                                    <?php
+                                                        //need to have an object that will get the the information for the handshapes
+                                                        //get the object then display properly 
+                                                    ?>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="background-color: #31b131">
+                                        <div class="col-lg-5 col-lg-offset-7 col-md-7">
+                                            <button type="button" class="btn btn-default">Submit Button</button>
+                                            <button type="reset" class="btn btn-default">Reset Button</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -57,4 +95,11 @@
 
 <?php include '../include/bottom_jquery.inc.php'; ?>
 <script src="../js/homeScreen.js" type="text/javascript"></script>
+<script>
+    // tooltip demo
+    $('.tooltips').tooltip({
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    });
+    </script>
 <?php include '../include/footer.inc.php'; ?>

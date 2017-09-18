@@ -1,11 +1,10 @@
 <?php
 
-session_start();
-
-//Users class
-require '/classes/users.php';
-
 function getUsers() {
+    //Users class
+    require '../classes/usersClass.php';
+    
+    $users = array();
 
     //connection information for the database
     require '../../../bin/dbConnection.inc.php';
@@ -22,9 +21,25 @@ function getUsers() {
 
     while ($row = $result->fetch_assoc()) {
         
-        $user = new users($row["id"],$row["username"],$row["password"],$row["security_level"],$row["first_name"],$row["last_name"],$row[active],$row["email"]);
-        
+
+        $user = new users($row["id"], $row["username"], $row["password"], $row["security_level"], $row["first_name"], $row["last_name"], $row["active"], $row["email"]);
+        //$user->setUsername($row["username"]);
+        array_push($users, $user);
+        //echo $user->getUsername();
     }
     //close the connection
     mysqli_close($conn);
+    return $users;
 }
+
+function activeTextConvert($act){
+    if($act == 1){
+        $text = "Yes";
+    }else{
+        $text = "No";
+    }
+        
+    return $text;
+}
+
+?>

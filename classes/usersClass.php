@@ -24,81 +24,79 @@ class users {
     protected $active;
     protected $email;
 
-    public function _construct($_id, $_username, $_password, $_security_level, $_first_name, $_last_name, $_active, $_email) {
-        $this->id = $_id;
-        $this->username = $_username;
-        $this->password = $_password;
-        $this->security_level = $_security_level;
-        $this->first_name = $_first_name;
-        $this->last_name = $_last_name;
-        $this->active = $_active;
-        $this->email = $_email;
+    function __construct($id, $username, $password, $security_level, $first_name, $last_name, $active, $email) {
+        $this->id = $id;
+        $this->username = $username;
+        $this->password = $password;
+        $this->security_level = $security_level;
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
+        $this->active = $active;
+        $this->email = $email;
     }
 
-    function getId() {
+    public function getId() {
         return $this->id;
     }
 
-    function getUsername() {
+    public function getUsername() {
         return $this->username;
     }
 
-    function getPassword() {
+    public function getPassword() {
         return $this->password;
     }
 
-    function getSecurity_level() {
+    public function getSecurity_level() {
         return $this->security_level;
     }
 
-    function getFirst_name() {
+    public function getFirst_name() {
         return $this->first_name;
     }
 
-    function getLast_name() {
+    public function getLast_name() {
         return $this->last_name;
     }
 
-    function getActive() {
+    public function getActive() {
         return $this->active;
     }
 
-    function getEmail() {
+    public function getEmail() {
         return $this->email;
     }
 
-    function setId($id) {
+    public function setId($id) {
         $this->id = $id;
     }
 
-    function setUsername($username) {
+    public function setUsername($username) {
         $this->username = $username;
     }
 
-    function setPassword($password) {
+    public function setPassword($password) {
         $this->password = $password;
     }
 
-    function setSecurity_level($security_level) {
+    public function setSecurity_level($security_level) {
         $this->security_level = $security_level;
     }
 
-    function setFirst_name($first_name) {
+    public function setFirst_name($first_name) {
         $this->first_name = $first_name;
     }
 
-    function setLast_name($last_name) {
+    public function setLast_name($last_name) {
         $this->last_name = $last_name;
     }
 
-    function setActive($active) {
+    public function setActive($active) {
         $this->active = $active;
     }
 
-    function setEmail($email) {
+    public function setEmail($email) {
         $this->email = $email;
     }
-    
-    
 
 }
