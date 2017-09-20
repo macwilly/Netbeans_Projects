@@ -10,6 +10,8 @@ function titleInformation($pageName) {
     }elseif ($pageName == 'signList.php'){
         echo 'Sign List';
     }elseif($pageName == 'users.php'){
+        echo 'User';
+    }elseif($pageName == 'users.php'){
         echo 'Users';
     }
 }

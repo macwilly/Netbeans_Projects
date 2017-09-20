@@ -5,7 +5,10 @@
             <a href="../pages/users.php">All Users</a>
         </li>
         <li>
-            <a href="#">Edit User</a>
+            <a href="../pages/user.php?type=1">Add User</a>
+        </li>
+        <li>
+            <a href="../pages/user.php?type=2">Edit User</a>
         </li>
         <li>
             <a  href="../classes/logout.php"> Logout</a>
