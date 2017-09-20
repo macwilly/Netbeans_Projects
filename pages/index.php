@@ -75,8 +75,8 @@
                                     </div>
                                     <div class="row" style="background-color: #31b131">
                                         <div class="col-lg-5 col-lg-offset-7 col-md-7">
-                                            <button type="button" class="btn btn-default">Submit Button</button>
-                                            <button type="reset" class="btn btn-default">Reset Button</button>
+                                            <button type="button" class="btn btn-default">Search</button>
+                                            <button type="reset" class="btn btn-default">Reset</button>
                                         </div>
                                     </div>
                                 </div>

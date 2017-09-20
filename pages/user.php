@@ -1,12 +1,15 @@
 <?php
 //checking to see where the user came from. If it is not either of these it will
-//send the user back to the main page.
+//send the user back to the main page. Also adding in other variables that will be used on this page
 $userAddEdit = "";
+$jsCheck = "";
 $aeType = $_GET["type"];
 if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
     $userAddEdit = "Add User";
+    $jsCheck = "doUserCreate()";
 } elseif (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 2) {
     $userAddEdit = "Edit User";
+    $jsCheck = "doUserEdit()";
 } else {
     header("Location: ./index.php");
     die();
@@ -32,28 +35,28 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">                        
-                        <div class="panel-body">
-                            <form name="userInput" method="POST" action="">
+                        <div class="panel-body">                            
+                            <form name="userInput" id="userInputId"  method="POST" action="">
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input class="form-control" name="inputUserFirstName" placeholder="John">
+                                        <input class="form-control" name="inputUserFirstName" id="fName" placeholder="John">
                                     </div>
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input class="form-control" name="inputUserLastName" placeholder="Smith">
+                                        <input class="form-control" name="inputUserLastName" id="lName" placeholder="Smith">
                                     </div>
                                     <div class="form-group">
                                         <label>Username</label>
-                                        <input class="form-control" name="inputUserUsername" placeholder="jxs1234">
+                                        <input class="form-control" name="inputUserUsername" id="uName" placeholder="jxs1234">
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" name="inputUserEmail" placeholder="jxs1234@email.com">
+                                        <input type="email" class="form-control" name="inputUserEmail" id="email" placeholder="jxs1234@email.com">
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>  <!-- Will need to check for ' " and other characters that can break the insert -->
-                                        <input type="password" class="form-control" name="inputUserPassword" placeholder="">
+                                        <input type="password" class="form-control" name="inputUserPassword" id="pword" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -61,22 +64,27 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
                                         <label>Active</label>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="optionsActive" id="optionsActive1" value="1" checked>Yes
+                                                <input type="radio" name="optionsActive" id="optionsActive" value="1">Yes
                                             </label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="optionsActive" id="optionsActive2" value="0">No
+                                                <input type="radio" name="optionsActive" id="optionsActive" value="0">No
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                            <label>Security Level</label>
-                                            <select class="form-control">
-                                                <option value="1">User</option>
-                                                <option value="2">Administrator</option>
-                                            </select>
-                                        </div>
+                                        <label>Security Level</label>
+                                        <select class="form-control" name="selectSecurityLevel" id="secLevel">
+                                            <option value="1">User</option>
+                                            <option value="2">Administrator</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-3 col-sm-offset-9 col-xs-3 col-xs-9 ">
+                                        <button type="button" onclick="return <?php echo $jsCheck; ?>" class="btn btn-primary"><?php echo $userAddEdit; ?></button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -95,4 +103,5 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
+<script src="../js/userFormChecking.js" type="text/javascript"></script>
 <?php include '../include/footer.inc.php'; ?>
