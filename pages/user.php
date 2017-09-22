@@ -3,13 +3,16 @@
 //send the user back to the main page. Also adding in other variables that will be used on this page
 $userAddEdit = "";
 $jsCheck = "";
+$ie = 0;
 $aeType = $_GET["type"];
 if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
     $userAddEdit = "Add User";
     $jsCheck = "doUserCreate()";
+    $ie = 1; 
 } elseif (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 2) {
     $userAddEdit = "Edit User";
     $jsCheck = "doUserEdit()";
+    $ie = 2;
 } else {
     header("Location: ./index.php");
     die();
@@ -86,6 +89,7 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
                                         <button type="button" onclick="return <?php echo $jsCheck; ?>" class="btn btn-primary"><?php echo $userAddEdit; ?></button>
                                     </div>
                                 </div>
+                                <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie;?>">
                             </form>
                         </div>
                     </div>

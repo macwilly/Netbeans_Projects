@@ -34,8 +34,19 @@ class users {
         $this->active = $active;
         $this->email = $email;
     }
+    
+    function forInsert($username, $password, $security_level, $first_name, $last_name, $active, $email) {
+        $instance = new users(); 
+        $this->username = $username;
+        $this->password = $password;
+        $this->security_level = $security_level;
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
+        $this->active = $active;
+        $this->email = $email;
+    }
 
-    public function getId() {
+        public function getId() {
         return $this->id;
     }
 
@@ -97,6 +108,18 @@ class users {
 
     public function setEmail($email) {
         $this->email = $email;
+    }
+
+    public function insertUser() {
+        //connection information for the database
+        require '../../../bin/dbConnection.inc.php';
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+    }
+
+    public function editUser() {
+        
     }
 
 }
