@@ -38,9 +38,7 @@
                                 $u = getUsers();
 
                                 foreach ($u as $printUser) {
-                                    $count = 1;
-                                    $act = $printUser->getActive();
-                                                                        
+                                    $count = 1;  
                                     
                                     //setting up the hover classes for the data table
                                     if($count % 2 != 0){

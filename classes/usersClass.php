@@ -24,7 +24,21 @@ class users {
     protected $active;
     protected $email;
 
-    function __construct($id, $username, $password, $security_level, $first_name, $last_name, $active, $email) {
+    function __construct() {
+
+        $argv = func_get_args();
+        switch (func_num_args()) {
+
+            case 7:
+                self::__construct2($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6]);
+                break;
+            case 8:
+                self::__construct1($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7]);
+                break;
+        }
+    }
+
+    public function __construct1($id, $username, $password, $security_level, $first_name, $last_name, $active, $email) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
@@ -34,9 +48,8 @@ class users {
         $this->active = $active;
         $this->email = $email;
     }
-    
-    function forInsert($username, $password, $security_level, $first_name, $last_name, $active, $email) {
-        $instance = new users(); 
+
+    function __construct2($username, $password, $security_level, $first_name, $last_name, $active, $email) {
         $this->username = $username;
         $this->password = $password;
         $this->security_level = $security_level;
@@ -46,7 +59,7 @@ class users {
         $this->email = $email;
     }
 
-        public function getId() {
+    public function getId() {
         return $this->id;
     }
 
@@ -111,11 +124,24 @@ class users {
     }
 
     public function insertUser() {
+
+        $ret = 0;
+        
         //connection information for the database
         require '../../../bin/dbConnection.inc.php';
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
+        //$conn = new mysqli($servername, $username, $password, $dbname);
+        
+        $sql = "INSERT INTO `users`(`id`, `username`, `password`, `security_level`, `first_name`, `last_name`, `active`, `email`) " .
+            "VALUES(?,?,?,?,?,?,?,?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssissis", $this->getUsername(),"AES_ENCRYPT(".$this->getPassword().",".$this->getPassword().")",  $this->getSecurity_level(),  $this->getFirst_name(),$this->getLast_name(),$this->getActive(),  $this->getEmail());
+        $stmt->execute();
+        $stmt->close();
+        $conn->close();
+        
     }
 
     public function editUser() {

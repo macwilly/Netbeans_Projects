@@ -7,10 +7,15 @@ function doUserCreate() {
     var userName = $("#uName").val();
     var email = $("#email").val();
     var password = $("#pword").val();
+    alert("1111");
     var active = $('#optionsActive:checked').val();//if not checked == undefined
+    alert("123");
+    alert(active);
     var securityLevel = $("#secLevel").val();
     var inEdit = $("#insertEdit").val();
     var errorCount = 0;
+    
+    alert(securityLevel);
 
     if (firstName.length === 0) {
         errorCount++;
@@ -42,7 +47,7 @@ function doUserCreate() {
         errorCount++;
     }
 
-    if (securityLevel !== 1 || securityLevel !== 2) {
+    if (securityLevel != 1 && securityLevel != 2) {
         $("#security-level-container").addClass("has-error");
         errorCount++;
     }
