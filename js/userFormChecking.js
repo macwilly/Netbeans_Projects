@@ -6,17 +6,12 @@ function doUserCreate() {
     var lastName = $("#lName").val();
     var userName = $("#uName").val();
     var email = $("#email").val();
-    var password = $("#pword").val();
-    alert("1111");
-    var active = $('#optionsActive:checked').val();//if not checked == undefined
-    alert("123");
-    alert(active);
+    var password = $("#pword").val();    
+    var active = $('#optionsActive:checked').val();//if not checked == undefined    
     var securityLevel = $("#secLevel").val();
     var inEdit = $("#insertEdit").val();
     var errorCount = 0;
     
-    alert(securityLevel);
-
     if (firstName.length === 0) {
         errorCount++;
         $("#first-name-container").addClass("has-error");
@@ -52,14 +47,14 @@ function doUserCreate() {
         errorCount++;
     }
     
-    if (inEdit !=1 || inEdit != 2){
+    if (inEdit !=1 && inEdit != 2){
         errorCount++;
     }
 
     if (errorCount > 0) {
         return false;
     } else {
-        $('#loginForm').attr('action','../classes/userCheck.php');
+        $('#userInputId').attr('action','../classes/userCheck.php');
         $("#userInputId").submit();
     }
 

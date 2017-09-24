@@ -127,6 +127,7 @@ class users {
 
         $ret = 0;
         
+        $pass = "AES_ENCRYPT(".$this->getPassword().",".$this->getPassword().")";
         //connection information for the database
         require '../../../bin/dbConnection.inc.php';
 
@@ -134,10 +135,10 @@ class users {
         include '../include/connection_open.inc.php';
         //$conn = new mysqli($servername, $username, $password, $dbname);
         
-        $sql = "INSERT INTO `users`(`id`, `username`, `password`, `security_level`, `first_name`, `last_name`, `active`, `email`) " .
-            "VALUES(?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO `users`(`username`, `password`, `security_level`, `first_name`, `last_name`, `active`, `email`) " .
+            "VALUES(?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssissis", $this->getUsername(),"AES_ENCRYPT(".$this->getPassword().",".$this->getPassword().")",  $this->getSecurity_level(),  $this->getFirst_name(),$this->getLast_name(),$this->getActive(),  $this->getEmail());
+        $stmt->bind_param("ssissis", $this->getUsername(),$pass,  $this->getSecurity_level(),  $this->getFirst_name(),$this->getLast_name(),$this->getActive(),  $this->getEmail());
         $stmt->execute();
         $stmt->close();
         $conn->close();
