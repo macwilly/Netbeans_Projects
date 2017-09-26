@@ -15,138 +15,167 @@ class users {
 
     //put your code here
 
-    protected $id;
-    protected $username;
-    protected $password;
-    protected $security_level;
-    protected $first_name;
-    protected $last_name;
-    protected $active;
-    protected $email;
+    protected $_id;
+    protected $_username;
+    protected $_password;
+    protected $_security_level;
+    protected $_first_name;
+    protected $_last_name;
+    protected $_active;
+    protected $_email;
 
     function __construct() {
 
         $argv = func_get_args();
         switch (func_num_args()) {
-
+            case 1:
+                self::__construct1($argv[0]);
+                break;
             case 7:
-                self::__construct2($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6]);
+                self::__construct7($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6]);
                 break;
             case 8:
-                self::__construct1($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7]);
+                self::__construct8($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7]);
                 break;
         }
     }
 
-    public function __construct1($id, $username, $password, $security_level, $first_name, $last_name, $active, $email) {
-        $this->id = $id;
-        $this->username = $username;
-        $this->password = $password;
-        $this->security_level = $security_level;
-        $this->first_name = $first_name;
-        $this->last_name = $last_name;
-        $this->active = $active;
-        $this->email = $email;
+    public function __construct1($id) {
+        $this->_id = $id;
     }
 
-    function __construct2($username, $password, $security_level, $first_name, $last_name, $active, $email) {
-        $this->username = $username;
-        $this->password = $password;
-        $this->security_level = $security_level;
-        $this->first_name = $first_name;
-        $this->last_name = $last_name;
-        $this->active = $active;
-        $this->email = $email;
+    function __construct7($username, $password, $security_level, $first_name, $last_name, $active, $email) {
+        $this->_username = $username;
+        $this->_password = $password;
+        $this->_security_level = $security_level;
+        $this->_first_name = $first_name;
+        $this->_last_name = $last_name;
+        $this->_active = $active;
+        $this->_email = $email;
+    }
+
+    public function __construct8($id, $username, $password, $security_level, $first_name, $last_name, $active, $email) {
+        $this->_id = $id;
+        $this->_username = $username;
+        $this->_password = $password;
+        $this->_security_level = $security_level;
+        $this->_first_name = $first_name;
+        $this->_last_name = $last_name;
+        $this->_active = $active;
+        $this->_email = $email;
     }
 
     public function getId() {
-        return $this->id;
+        return $this->_id;
     }
 
     public function getUsername() {
-        return $this->username;
+        return $this->_username;
     }
 
     public function getPassword() {
-        return $this->password;
+        return $this->_password;
     }
 
     public function getSecurity_level() {
-        return $this->security_level;
+        return $this->_security_level;
     }
 
     public function getFirst_name() {
-        return $this->first_name;
+        return $this->_first_name;
     }
 
     public function getLast_name() {
-        return $this->last_name;
+        return $this->_last_name;
     }
 
     public function getActive() {
-        return $this->active;
+        return $this->_active;
     }
 
     public function getEmail() {
-        return $this->email;
+        return $this->_email;
     }
 
     public function setId($id) {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     public function setUsername($username) {
-        $this->username = $username;
+        $this->_username = $username;
     }
 
     public function setPassword($password) {
-        $this->password = $password;
+        $this->_password = $password;
     }
 
     public function setSecurity_level($security_level) {
-        $this->security_level = $security_level;
+        $this->_security_level = $security_level;
     }
 
     public function setFirst_name($first_name) {
-        $this->first_name = $first_name;
+        $this->_first_name = $first_name;
     }
 
     public function setLast_name($last_name) {
-        $this->last_name = $last_name;
+        $this->_last_name = $last_name;
     }
 
     public function setActive($active) {
-        $this->active = $active;
+        $this->_active = $active;
     }
 
     public function setEmail($email) {
-        $this->email = $email;
+        $this->_email = $email;
     }
 
     public function insertUser() {
-
+        // need to set up functionality to check and see if a user was inserted 
         $ret = 0;
-        
-        $pass = "AES_ENCRYPT(".$this->getPassword().",".$this->getPassword().")";
+
+        $pass = "AES_ENCRYPT(" . $this->getPassword() . "," . $this->getPassword() . ")";
         //connection information for the database
         require '../../../bin/dbConnection.inc.php';
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
         //$conn = new mysqli($servername, $username, $password, $dbname);
-        
+
         $sql = "INSERT INTO `users`(`username`, `password`, `security_level`, `first_name`, `last_name`, `active`, `email`) " .
-            "VALUES(?,?,?,?,?,?,?)";
+                "VALUES(?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssissis", $this->getUsername(),$pass,  $this->getSecurity_level(),  $this->getFirst_name(),$this->getLast_name(),$this->getActive(),  $this->getEmail());
+        $stmt->bind_param("ssissis", $this->getUsername(), $pass, $this->getSecurity_level(), $this->getFirst_name(), $this->getLast_name(), $this->getActive(), $this->getEmail());
         $stmt->execute();
         $stmt->close();
         $conn->close();
-        
     }
 
     public function editUser() {
         
+    }
+
+    public function getUserInfo() {
+        $sql = "SELECT * FROM users WHERE users.id = " . $this->_id;
+        echo $sql;
+        //connection information for the database
+        require '../../../bin/dbConnection.inc.php';
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+        $result = $conn->query($sql);
+        
+        while ($row = $result->fetch_assoc()) {
+            
+            $this->_username = $row["username"];
+            $this->_password = $row["password"];
+            $this->_security_level = $row["security_level"];
+            $this->_first_name = $row["first_name"];
+            $this->_last_name = $row["last_name"];
+            $this->_active = $row["active"];
+            $this->_email = $row["email"];
+        }
+        //close the connection
+        mysqli_close($conn);
     }
 
 }

@@ -17,11 +17,12 @@ if(! filter_var($email,FILTER_VALIDATE_EMAIL)){
         $url = "../pages/user.php?type=1&error=2";
     }else{
         if($inEdit == 1){
+            //inserting a new user
             $user = new users($uname, $password, $securityLevel,$fname,$lname,$active, $email);
             $user->insertUser();
             $url = "../pages/users.php";
         }else{
-            
+            //editing a user
         }
     }
 }
