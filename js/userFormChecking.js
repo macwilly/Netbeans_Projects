@@ -1,17 +1,42 @@
 function doUserCreate() {
-    
+
     removeError();
-    
+    var errors = doCheck();
+
+    if (errors > 0) {
+        return false;
+    } else {
+        $('#userInputId').attr('action', '../classes/userCheck.php');
+        $("#userInputId").submit();
+    }
+
+
+
+}
+
+function doUserEdit() {
+    removeError();
+    var errors = doCheck();
+
+    if (errors > 0) {
+        return false;
+    } else {
+        $('#userInputId').attr('action', '../classes/userCheck.php');
+        $("#userInputId").submit();
+    }
+}
+
+function doCheck() {
     var firstName = $("#fName").val();
     var lastName = $("#lName").val();
     var userName = $("#uName").val();
     var email = $("#email").val();
-    var password = $("#pword").val();    
+    var password = $("#pword").val();
     var active = $('#optionsActive:checked').val();//if not checked == undefined    
     var securityLevel = $("#secLevel").val();
     var inEdit = $("#insertEdit").val();
     var errorCount = 0;
-    
+
     if (firstName.length === 0) {
         errorCount++;
         $("#first-name-container").addClass("has-error");
@@ -46,24 +71,11 @@ function doUserCreate() {
         $("#security-level-container").addClass("has-error");
         errorCount++;
     }
-    
-    if (inEdit !=1 && inEdit != 2){
+
+    if (inEdit != 1 && inEdit != 2) {
         errorCount++;
     }
-
-    if (errorCount > 0) {
-        return false;
-    } else {
-        $('#userInputId').attr('action','../classes/userCheck.php');
-        $("#userInputId").submit();
-    }
-
-
-
-}
-
-function doUserEdit() {
-
+    return errorCount++;
 }
 
 function removeError() {

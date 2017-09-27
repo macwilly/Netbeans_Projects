@@ -1,5 +1,6 @@
 <?php
 include './usersClass.php';
+session_start();
 $url = "";
 $fname = filter_input(INPUT_POST, 'inputUserFirstName', FILTER_SANITIZE_STRING,FILTER_SANITIZE_ENCODED);
 $lname = filter_input(INPUT_POST, 'inputUserLastName', FILTER_SANITIZE_STRING,FILTER_SANITIZE_ENCODED);
@@ -9,7 +10,7 @@ $password = filter_input(INPUT_POST,'inputUserPassword',FILTER_SANITIZE_ENCODED)
 $active = filter_input(INPUT_POST, 'optionsActive',FILTER_SANITIZE_NUMBER_INT);
 $securityLevel = filter_input(INPUT_POST, 'selectSecurityLevel',FILTER_SANITIZE_NUMBER_INT);
 $inEdit = filter_input(INPUT_POST, 'insertEdit',FILTER_SANITIZE_NUMBER_INT);
-
+$id = $_SESSION['userId'];
 if(! filter_var($email,FILTER_VALIDATE_EMAIL)){
     $url = "../pages/user.php?type=1&error=1";
 }else{
@@ -23,6 +24,9 @@ if(! filter_var($email,FILTER_VALIDATE_EMAIL)){
             $url = "../pages/users.php";
         }else{
             //editing a user
+            $user =  new users($id,$uname,$password,$securityLevel,$fname,$lname,$active,$email);
+            $url = $user->editUser();            
+            
         }
     }
 }

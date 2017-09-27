@@ -12,6 +12,7 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
 } elseif (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 2) {
     $userAddEdit = "Edit User";
     $jsCheck = "doUserEdit()";
+    echo $aeType;
     $ie = 2;
 } else {
     header("Location: ./index.php");
@@ -41,7 +42,7 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
                         <div class="panel-body"> 
                             
                             <?php
-                            echo $_SESSION["editUser"] . "session user<br/>";
+                            //echo $_SESSION["editUser"] . "session user<br/>";
                                 foreach($_SESSION as $key=>$val){
                                     echo $key . " ". $val . "<br/>";
                                 }

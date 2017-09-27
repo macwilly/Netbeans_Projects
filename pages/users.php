@@ -23,6 +23,7 @@
                         <table width="100%" class="table table-striped table-bordered table-hover" id="user-table">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Username</th>
                                     <th>First Name</th>
                                     <th>Last Name</th>
@@ -38,26 +39,25 @@
                                 $u = getUsers();
 
                                 foreach ($u as $printUser) {
-                                    $count = 1;  
-                                    
+                                    $count = 1;
+
                                     //setting up the hover classes for the data table
-                                    if($count % 2 != 0){
+                                    if ($count % 2 != 0) {
                                         echo '<tr class="odd">';
-                                    }else{
+                                    } else {
                                         echo '<tr class="even">';
                                     }
-                                    
+                                    echo '<td><button onclick="editUser('.$printUser->getId() .')" type="button" class="btn btn-primary">Edit</button></td>';
                                     echo '<td>' . $printUser->getUsername() . '</td>';
                                     echo '<td>' . $printUser->getFirst_name() . '</td>';
                                     echo '<td>' . $printUser->getLast_name() . '</td>';
                                     echo '<td>' . $printUser->getEmail() . '</td>';
                                     echo '<td>' . $printUser->getSecurity_level() . '</td>';
-                                    echo '<td>' . activeTextConvert($printUser->getActive()) . '</td>';
+                                    echo '<td>' . activeTextConvert($printUser->getActive()) . '</td>';                                    
                                     echo '</tr>';
                                     $count++;
                                 }
                                 ?>
-                                
                             </tbody>
                         </table>
 
@@ -88,5 +88,11 @@
             responsive: true
         });
     });
+    
+    function editUser(id){  
+        var url = "../function/otherUserEdit.php?id=" + id;
+        document.location.href = url;
+        
+    }
 </script>
 <?php include '../include/footer.inc.php'; ?>

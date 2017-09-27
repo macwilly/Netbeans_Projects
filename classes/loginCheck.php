@@ -38,7 +38,7 @@ if ($result->num_rows > 0) {
             $_SESSION["secLevel"] = $row["security_level"];
             $_SESSION["firstName"] = $row["first_name"];
             $_SESSION["lastName"] = $row["last_name"];
-            $_SESSION["userEmail"] = $row["email"];
+            $_SESSION["userEmail"] = $row["email"];            
             $url = "../pages/index.php";
         }else{
             $url = "../pages/login.php?error=1";

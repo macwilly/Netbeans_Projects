@@ -133,7 +133,8 @@ class users {
         // need to set up functionality to check and see if a user was inserted 
         $ret = 0;
 
-        $pass = "AES_ENCRYPT(" . $this->getPassword() . "," . $this->getPassword() . ")";
+        //        $this->isDuplicate($this->_username);
+        $pass = "AES_ENCRYPT('" . $this->getPassword() . "','" . $this->getPassword() . "')";
         //connection information for the database
         require '../../../bin/dbConnection.inc.php';
 
@@ -142,21 +143,40 @@ class users {
         //$conn = new mysqli($servername, $username, $password, $dbname);
 
         $sql = "INSERT INTO `users`(`username`, `password`, `security_level`, `first_name`, `last_name`, `active`, `email`) " .
-                "VALUES(?,?,?,?,?,?,?)";
+                "VALUES(?,AES_ENCRYPT(?,?),?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssissis", $this->getUsername(), $pass, $this->getSecurity_level(), $this->getFirst_name(), $this->getLast_name(), $this->getActive(), $this->getEmail());
+        $stmt->bind_param("sssissis", $this->getUsername(), $this->getPassword(), $this->getPassword(), $this->getSecurity_level(), $this->getFirst_name(), $this->getLast_name(), $this->getActive(), $this->getEmail());
         $stmt->execute();
         $stmt->close();
         $conn->close();
     }
 
     public function editUser() {
+        $ret = "";
+//        $this->isDuplicate($this->_username);
+        $sql = "UPDATE users SET username='" . $this->_username . "', password= AES_ENCRYPT('".$this->_password."','".$this->_password."'), security_level=" . $this->_security_level . ", " . 
+                "first_name = '" . $this->_first_name . "', last_name = '" . $this->_last_name . "', active = " . $this->_active . ", email = '" . $this->_email ."' ". 
+                "WHERE users.id = " .$this->_id;
+        
+        //connection information for the database
+        require '../../../bin/dbConnection.inc.php';
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+        
+        if($conn->query($sql) === TRUE){
+           $ret =  "../pages/users.php";
+        }else{
+            $ret = "../pages/user.php?type=2&error=3";
+        }
+        
+        return $ret;
         
     }
 
     public function getUserInfo() {
         $sql = "SELECT * FROM users WHERE users.id = " . $this->_id;
-        echo $sql;
+                
         //connection information for the database
         require '../../../bin/dbConnection.inc.php';
 
@@ -176,6 +196,22 @@ class users {
         }
         //close the connection
         mysqli_close($conn);
+    }
+    
+    
+    /**
+     *  isDuplicate
+     *  
+     * Checkes to see if there is another user in the database with the same username 
+     * 
+     * @return boolean 
+     */
+    protected function isDuplicate($checkUserName){
+        $ret = FALSE;
+        
+        
+        return ret;
+        
     }
 
 }
