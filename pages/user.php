@@ -5,6 +5,11 @@ $userAddEdit = "";
 $jsCheck = "";
 $ie = 0;
 $aeType = $_GET["type"];
+$haystack = $_SERVER['HTTP_REFERER'];
+$needle = "users.php";
+$pos = strrpos($haystack, $needle);
+
+
 if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
     $userAddEdit = "Add User";
     $jsCheck = "doUserCreate()";
@@ -12,7 +17,6 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
 } elseif (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 2) {
     $userAddEdit = "Edit User";
     $jsCheck = "doUserEdit()";
-    echo $aeType;
     $ie = 2;
 } else {
     header("Location: ./index.php");
@@ -41,11 +45,7 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
                     <div class="panel panel-default">                        
                         <div class="panel-body"> 
                             
-                            <?php
-                            //echo $_SESSION["editUser"] . "session user<br/>";
-                                foreach($_SESSION as $key=>$val){
-                                    echo $key . " ". $val . "<br/>";
-                                }
+                            <?php                            
                                 if($aeType == 1){
                                     include '../include/userAddForm.inc.php';                                    
                                 }else if($aeType == 2){

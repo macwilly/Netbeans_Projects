@@ -8,6 +8,8 @@ if ($_SESSION["editUser"] == "") {
    
 } else {
     //editing another user
+    $user = new users($_SESSION["editUser"]);
+    $user->getUserInfo();
 }
 
 ?>
