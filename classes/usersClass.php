@@ -155,7 +155,6 @@ class users {
     }
 
     public function editUser() {
-        $ret = 0;
         if (!$this->isDuplicate2($this->_username, $this->_id)) {
             $sql = "UPDATE users SET username='" . $this->_username . "', password= AES_ENCRYPT('" . $this->_password . "','" . $this->_password . "'), security_level=" . $this->_security_level . ", " .
                     "first_name = '" . $this->_first_name . "', last_name = '" . $this->_last_name . "', active = " . $this->_active . ", email = '" . $this->_email . "' " .

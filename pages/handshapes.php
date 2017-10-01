@@ -1,6 +1,7 @@
 <?php include '../include/header.inc.php'; ?>
-<?php include '../function/getUsers.php'; ?>
+<?php include '../function/getHandShape.php'; ?>
 <?php include '../function/util.php'; ?>
+
 
 <div id="wrapper">
 
@@ -12,7 +13,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Users</h1>
+                    <h1 class="page-header">Hand Shapes</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -21,15 +22,13 @@
                 <div class="col-lg-12">
                     <div class="well">
 
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="user-table">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="handshape-table">
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Username</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Email</th>
-                                    <th>Security Level</th>
+                                    <th>Description</th>
+                                    <th>EMBR Description</th>
+                                    <th>Image</th>                                    
                                     <th>Active</th>
                                 </tr>
                             </thead>
@@ -37,9 +36,9 @@
                                 <?php
                                 //call class to get all of the information for the table 
                                 //build table with loop
-                                $u = getUsers();
+                                $hs = getHandshapes();
 
-                                foreach ($u as $printUser) {
+                                foreach ($hs as $printHandshape) {
                                     $count = 1;
 
                                     //setting up the hover classes for the data table
@@ -48,13 +47,11 @@
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    echo '<td><button onclick="editUser('.$printUser->getId() .')" type="button" class="btn btn-primary">Edit</button></td>';
-                                    echo '<td>' . $printUser->getUsername() . '</td>';
-                                    echo '<td>' . $printUser->getFirst_name() . '</td>';
-                                    echo '<td>' . $printUser->getLast_name() . '</td>';
-                                    echo '<td>' . $printUser->getEmail() . '</td>';
-                                    echo '<td>' . $printUser->getSecurity_level() . '</td>';
-                                    echo '<td>' . activeTextConvert($printUser->getActive()) . '</td>';                                    
+                                    echo '<td><button onclick="editUser('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">Edit</button></td>';
+                                    echo '<td>' . $printHandshape->get_description() . '</td>';
+                                    echo '<td>' . $printHandshape->get_embrDescription() . '</td>';
+                                    echo '<td>' . $printHandshape->get_imageLocation() . '</td>'; // will need to chage this to be a link                                                                        
+                                    echo '<td>' . activeTextConvert($printHandshape->get_active()) . '</td>';                                    
                                     echo '</tr>';
                                     $count++;
                                 }

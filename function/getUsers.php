@@ -1,5 +1,4 @@
 <?php
-
 function getUsers() {
     //Users class
     require '../classes/usersClass.php';
@@ -32,14 +31,3 @@ function getUsers() {
     return $users;
 }
 
-function activeTextConvert($act){
-    if($act == 1){
-        $text = "Yes";
-    }else{
-        $text = "No";
-    }
-        
-    return $text;
-}
-
-?>

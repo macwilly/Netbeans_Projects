@@ -1,26 +1,176 @@
 <?php
 
-
 /**
  * Description of handShapeClass
  *
  * @author mackenzie
  */
 class handShapeClass {
+
+    private $_id;
+    private $_description;
+    private $_embrDescription;
+    private $_imageLocation;
+    private $_active;
+
+    function __construct() {
+
+        $argv = func_get_args();
+        switch (func_num_args()) {
+            case 5:
+                self::__construct5($argv[0], $argv[1], $argv[2], $argv[3], $argv[4]);
+                break;            
+        }
+    }
     
     
-    
-    
-    
-    
-    
-    //insert handShape Object into the database
-        //function insertHandShape(){}
-    
-    //update handShape Object in the database
-        //function updateHandShape(){}
-    
+    function __construct5($id, $description, $embrDescription, $image, $active) {
+        $this->_id = $id;
+        $this->_description = $description;
+        $this->_embrDescription = $embrDescription;
+        $this->_imageLocation = $image;
+        $this->_active = $active;
+    }
+
+    function get_id() {
+        return $this->_id;
+    }
+
+    function get_description() {
+        return $this->_description;
+    }
+
+    function get_embrDescription() {
+        return $this->_embrDescription;
+    }
+
+    function get_imageLocation() {
+        return $this->_imageLocation;
+    }
+
+    function get_active() {
+        return $this->_active;
+    }
+
+    function set_id($_id) {
+        $this->_id = $_id;
+    }
+
+    function set_description($_description) {
+        $this->_description = $_description;
+    }
+
+    function set_embrDescription($_embrDescription) {
+        $this->_embrDescription = $_embrDescription;
+    }
+
+    function set_imageLocation($_imageLocation) {
+        $this->_imageLocation = $_imageLocation;
+    }
+
+    function set_active($_active) {
+        $this->_active = $_active;
+    }
+
+    /**
+     * Function that is used to insert data from a handshape object into the hand_shape table
+     * 
+     * @return int that will say if there is an error to the user inserting the handshape
+     */
+    function insertHandShape() {
+
+        // need to set up functionality to check and see if a user was inserted 
+        $ret = 0;
+
+        if (!$this->isDuplicate($this->_description, "", 1)) {
+            //connection information for the database
+            require '../../../bin/dbConnection.inc.php';
+
+            //process to open a connection to the database
+            include '../include/connection_open.inc.php';
+
+            $sql = "INSERT INTO hand_shape(description, embr_description, image, active) " .
+                    "VALUES(?,?,?,?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssi", $this->get_description(), $this->get_embrDescription(), $this->get_imageLocation(), $this->get_active());
+            $stmt->execute();
+            $stmt->close();
+            $conn->close();
+        } else {
+            $ret = 0; // still need to figure out if this is what will be used for this. 
+        }
+        return $ret;
+    }
+
+    function updateHandShape() {
+        if (!$this->isDuplicate($this->_description, $this->_id, 2)) {
+            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "', image='" . $this->_imageLocation . "'" .
+                    "WHERE .id = " . $this->_id;
+
+            //connection information for the database
+            require '../../../bin/dbConnection.inc.php';
+
+            //process to open a connection to the database
+            include '../include/connection_open.inc.php';
+
+            if ($conn->query($sql) === TRUE) {
+                $ret = "../pages/users.php";
+            } else {
+                $ret = "../pages/user.php?type=2&error=3";
+            }
+        } else {
+            $ret = "../pages/users.php?&error=1";
+        }
+
+        return $ret;
+    }
+
     //delete handshape from the database
-        //function deleteHandShape(){}
-    
+    //function deleteHandShape(){}
+
+    protected function isDuplicate($desc, $id, $iOrE) {
+        $ok = FALSE;
+
+        //connection information for the database
+        require '../../../bin/dbConnection.inc.php';
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+        //insert
+        if ($iOrE == 1) {
+            $sql = "SELECT id from hand_shape WHERE description = '" . $desc . "'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $ret = TRUE;
+            }
+        } else {
+            //edit
+            $sql = "SELECT description FROM hand_shape WHERE id = '" . $id . +"'";
+            $result = $conn->query($sql);
+
+            while ($row = $result->fetch_assoc()) {
+                $description = $row["description"];
+            }
+
+            //this is showing that the description and the id match
+            if ($desc == $description) {
+                $ret = FALSE;
+            } else {
+                //the description does not match the one accosiated with this id
+                //this means there is a name change
+                $sql = "SELECT id FROM users WHERE description = '" . $desc . "'";
+                $result = $conn->query($sql);
+
+                //this means that there is another description with that id and this will be a duplicate description
+                if ($result->num_rows > 0) {
+                    $ret = TRUE;
+                }
+            }
+        }
+
+        //close the connection
+        mysqli_close($conn);
+
+        return $ok;
+    }
 }
