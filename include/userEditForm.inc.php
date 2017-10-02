@@ -16,7 +16,7 @@ if ($_SESSION["editUser"] == "") {
 <form name="userInput" id="userInputId"  method="POST" action="">
     <div class="col-lg-6">
         <div class="form-group" id="first-name-container">
-            <label class="control-label">First Name EDIT</label>
+            <label class="control-label">First Name</label>
             <input class="form-control" name="inputUserFirstName" id="fName" placeholder="John" value="<?php echo $user->getFirst_name();?>">
         </div>
         <div class="form-group" id="last-name-container">

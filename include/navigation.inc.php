@@ -46,7 +46,6 @@
                     echo '<a  href="../classes/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>';
                     echo '</li>';
                 }
-//for the else could have a change login if needed 
                 ?>
 
             </ul>
@@ -79,6 +78,7 @@
                     include '../include/userNavGuest.inc.php';
                 } else {
                     include '../include/signNavUser.inc.php';
+                    include '../include/handshapeNavUser.inc.php';
                     include '../include/userNavUser.inc.php';
                 }
                 ?>
