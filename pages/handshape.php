@@ -5,19 +5,13 @@ $jsCheck = "";
 $ie = 0;
 $aeType = $_GET["type"];
 
-//used to see which page user is coming from
-$haystack = $_SERVER['HTTP_REFERER'];
-$needle = "users.php";
-$pos = strrpos($haystack, $needle);
-
-
 if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
     $handshapeAddEdit = "Add Handshape";
-    $jsCheck = "doUserCreate()";
+    $jsCheck = "doHandshapeCreate()";
     $ie = 1;
 } elseif (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 2) {
     $handshapeAddEdit = "Edit Handshape";
-    $jsCheck = "doUserEdit()";
+    $jsCheck = "doHandshapeEdit()";
     $ie = 2;
 } else {
     header("Location: ./index.php");
@@ -69,5 +63,5 @@ if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
-<script src="../js/userFormChecking.js" type="text/javascript"></script>
+<script src="../js/handshapeFormChecking.js" type="text/javascript"></script>
 <?php include '../include/footer.inc.php'; ?>

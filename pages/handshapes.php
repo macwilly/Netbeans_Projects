@@ -83,7 +83,7 @@
 <script>
     
     function editUser(id){  
-        var url = "../function/otherUserEdit.php?id=" + id;
+        var url = "../function/handshapeEdit.php?id=" + id;
         document.location.href = url;
         
     }

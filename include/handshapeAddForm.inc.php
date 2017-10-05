@@ -1,18 +1,18 @@
-<form name="userInput" id="handshapeInputId" enctype="multipart/form-data"  method="POST" action="">
+<form name="handshapeInput" id="handshapeInputId" enctype="multipart/form-data"  method="POST" action="">
     <div class="col-lg-6">
         <div class="form-group" id="description-container">
             <label class="control-label">Description</label>
-            <input class="form-control" name="inputHSDescription" id="fName" placeholder="John">
+            <input class="form-control" name="inputHSDescription" id="inputHSDescription" placeholder="">
         </div>
         <div class="form-group" id="EMBR-description-container">
             <label class="control-label">EMBR Description</label>
-            <input class="form-control" name="inputHSEMBRDescription" id="lName" placeholder="Smith">
+            <input class="form-control" name="inputHSEMBRDescription" id="inputHSEMBRDescription" placeholder="">
         </div>
         <div class="form-group" id="active-container">
             <label class="control-label">Active</label>
             <div class="radio">
                 <label>
-                    <input type="radio" name="optionsActive" id="optionsActive" value="1">Yes
+                    <input type="radio" name="optionsActive" id="optionsActive" checked value="1">Yes
                 </label>
             </div>
             <div class="radio">
@@ -23,13 +23,9 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="form-group" id="last-name-container">
-            <label class="control-label">Image</label>
-            <input class="form-control" name="inputUserLastName" id="lName" placeholder="Smith">
-        </div>
         <div class="form-group">
             <label>File input</label>
-            <input type="file">
+            <input name="handshapeImage" type="file">
         </div>
     </div>
     <div class="row">

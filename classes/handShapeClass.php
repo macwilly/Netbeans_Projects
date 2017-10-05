@@ -17,13 +17,29 @@ class handShapeClass {
 
         $argv = func_get_args();
         switch (func_num_args()) {
+            case 1:
+                self::__construct1($argv[0]);
+                break;
+            case 4:
+                self::__construct4($argv[0], $argv[1], $argv[2], $argv[3]);
+                break;
             case 5:
                 self::__construct5($argv[0], $argv[1], $argv[2], $argv[3], $argv[4]);
-                break;            
+                break;
         }
     }
-    
-    
+
+    function __construct1($id) {
+        $this->_id = $id;
+    }
+
+    function __construct4($description, $embrDescription, $image, $active) {
+        $this->_description = $description;
+        $this->_embrDescription = $embrDescription;
+        $this->_imageLocation = $image;
+        $this->_active = $active;
+    }
+
     function __construct5($id, $description, $embrDescription, $image, $active) {
         $this->_id = $id;
         $this->_description = $description;
@@ -80,7 +96,7 @@ class handShapeClass {
     function insertHandShape() {
 
         // need to set up functionality to check and see if a user was inserted 
-        $ret = 0;
+        $ret = TRUE;
 
         if (!$this->isDuplicate($this->_description, "", 1)) {
             //connection information for the database
@@ -91,13 +107,14 @@ class handShapeClass {
 
             $sql = "INSERT INTO hand_shape(description, embr_description, image, active) " .
                     "VALUES(?,?,?,?)";
-            $stmt = $conn->prepare($sql);
+            $stmt = $conn->prepare($sql);            
+            
             $stmt->bind_param("sssi", $this->get_description(), $this->get_embrDescription(), $this->get_imageLocation(), $this->get_active());
             $stmt->execute();
             $stmt->close();
             $conn->close();
         } else {
-            $ret = 0; // still need to figure out if this is what will be used for this. 
+            $ret = FALSE; // still need to figure out if this is what will be used for this. 
         }
         return $ret;
     }
@@ -114,9 +131,9 @@ class handShapeClass {
             include '../include/connection_open.inc.php';
 
             if ($conn->query($sql) === TRUE) {
-                $ret = "../pages/users.php";
+                $ret = "../pages/handshapes.php";
             } else {
-                $ret = "../pages/user.php?type=2&error=3";
+                $ret = "../pages/handshape.php?&error=3";
             }
         } else {
             $ret = "../pages/users.php?&error=1";
@@ -173,4 +190,47 @@ class handShapeClass {
 
         return $ok;
     }
+    
+   public function getHandshapeInfo() {
+        $sql = "SELECT * FROM hand_shape WHERE hand_shape.id = " . $this->_id;
+
+        //connection information for the database
+        require '../../../bin/dbConnection.inc.php';
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+        $result = $conn->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+
+            $this->_description = $row["description"];
+            $this->_embrDescription = $row["embr_description"];
+            $this->_imageLocation = $row["image"];
+            $this->_active = $row["active"];
+            
+        }
+        //close the connection
+        mysqli_close($conn);
+    }
+
+    function deleteHandshape() {
+        $sql = "DELETE FROM hand_shape WHERE description='" . $this->_description . "'";
+
+        //connection information for the database
+        require '../../../bin/dbConnection.inc.php';
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        if ($conn->query($sql) === TRUE) {
+            $ret = TRUE;
+        } else {
+            $ret = FALSE;
+        }
+        //close the connection
+        mysqli_close($conn);
+        
+        return ret;
+    }
+
 }
