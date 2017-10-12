@@ -71,6 +71,10 @@
 
 </div>
 <!-- /#wrapper -->
+<form method="POST" name="editHandshape" action="./handshape.php?type=2">
+    <input type="hidden" name="handshapeId" id="handshapeId">
+    
+</form>
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
@@ -82,10 +86,10 @@
 <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
 <script>
     
-    function editUser(id){  
-        var url = "../function/handshapeEdit.php?id=" + id;
-        document.location.href = url;
-        
+    function editUser(_id){ 
+        $("#handshapeId").val(_id);
+        $("form").submit();        
     }
+    
 </script>
 <?php include '../include/footer.inc.php'; ?>

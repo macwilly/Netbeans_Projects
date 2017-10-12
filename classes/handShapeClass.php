@@ -20,6 +20,9 @@ class handShapeClass {
             case 1:
                 self::__construct1($argv[0]);
                 break;
+            case 3:
+                self::__construct3($argv[0], $argv[1], $argv[2]);
+                break;
             case 4:
                 self::__construct4($argv[0], $argv[1], $argv[2], $argv[3]);
                 break;
@@ -33,6 +36,11 @@ class handShapeClass {
         $this->_id = $id;
     }
 
+    function __construct3($description, $embrDescription, $active) {
+        $this->_description = $description;
+        $this->_embrDescription = $embrDescription;
+        $this->_active = $active;
+    }
     function __construct4($description, $embrDescription, $image, $active) {
         $this->_description = $description;
         $this->_embrDescription = $embrDescription;
@@ -119,10 +127,11 @@ class handShapeClass {
         return $ret;
     }
 
-    function updateHandShape() {
+    function updateHandShapeImage() {
         if (!$this->isDuplicate($this->_description, $this->_id, 2)) {
-            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "', image='" . $this->_imageLocation . "'" .
-                    "WHERE .id = " . $this->_id;
+            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "'," . 
+                    " image='" . $this->_imageLocation . "', active=" . $this->_active . 
+                    " WHERE id = " . $this->_id;
 
             //connection information for the database
             require '../../../bin/dbConnection.inc.php';
@@ -136,7 +145,30 @@ class handShapeClass {
                 $ret = "../pages/handshape.php?&error=3";
             }
         } else {
-            $ret = "../pages/users.php?&error=1";
+            $ret = "../pages/handshapes.php?&error=1";
+        }
+
+        return $ret;
+    }
+    
+    function updateHandShape() {
+        if (!$this->isDuplicate($this->_description, $this->_id, 2)) {
+            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "', active = " . $this->_active . 
+                    " WHERE id = " . $this->_id;
+            
+            //connection information for the database
+            require '../../../bin/dbConnection.inc.php';
+
+            //process to open a connection to the database
+            include '../include/connection_open.inc.php';
+
+            if ($conn->query($sql) === TRUE) {
+                $ret = "../pages/handshapes.php";
+            } else {
+                $ret = "../pages/handshape.php?&error=3";
+            }
+        } else {
+            $ret = "../pages/handshapes.php?&error=1";
         }
 
         return $ret;
@@ -153,16 +185,17 @@ class handShapeClass {
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
+        
         //insert
         if ($iOrE == 1) {
             $sql = "SELECT id from hand_shape WHERE description = '" . $desc . "'";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
-                $ret = TRUE;
+                $ok = TRUE;
             }
         } else {
             //edit
-            $sql = "SELECT description FROM hand_shape WHERE id = '" . $id . +"'";
+            $sql = "SELECT description FROM hand_shape WHERE id = " . $id ;
             $result = $conn->query($sql);
 
             while ($row = $result->fetch_assoc()) {
@@ -171,16 +204,17 @@ class handShapeClass {
 
             //this is showing that the description and the id match
             if ($desc == $description) {
-                $ret = FALSE;
+                $ok = FALSE;
             } else {
                 //the description does not match the one accosiated with this id
                 //this means there is a name change
-                $sql = "SELECT id FROM users WHERE description = '" . $desc . "'";
+                $sql = "SELECT id FROM hand_shape WHERE description = '" . $desc . "'";
                 $result = $conn->query($sql);
-
-                //this means that there is another description with that id and this will be a duplicate description
-                if ($result->num_rows > 0) {
-                    $ret = TRUE;
+                
+                $ck = $result->num_rows;
+            //this means that there is another description with that id and this will be a duplicate username
+                if ($ck > 0) {
+                    $ok = TRUE;
                 }
             }
         }
