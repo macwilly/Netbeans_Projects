@@ -1,4 +1,5 @@
 <?php include '../include/header.inc.php'; ?>
+<?php include '../function/getHandShape.php'; ?>
 
 <div id="wrapper">
 
@@ -61,45 +62,45 @@
                                                 <label  data-toggle="tooltip" data-placement="right" title="Multiple Select: Hold Command click multiple options." >Hand Shape</label>
                                                 <select multiple class="form-control">
                                                     <?php
-                                                        //need to have an object that will get the the information for the handshapes
-                                                        //get the object then display properly 
+                                                    //need to have an object that will get the the information for the handshapes
+                                                    //get the object then display properly 
+                                                    $hs = getHandshapes();
+
+                                                    foreach ($hs as $printHandshape) {
+                                                        echo'<option value="' . $printHandshape->get_id() . '">'. $printHandshape->get_description() .'</option>';
+                                                    }
                                                     ?>
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row" style="background-color: #31b131">
-                                        <div class="col-lg-5 col-lg-offset-7 col-md-7">
-                                            <button type="button" class="btn btn-default">Search</button>
-                                            <button type="reset" class="btn btn-default">Reset</button>
+                                        <div class="row" style="background-color: #31b131">
+                                            <div class="col-lg-5 col-lg-offset-7 col-md-7">
+                                                <button type="button" class="btn btn-default">Search</button>
+                                                <button type="reset" class="btn btn-default">Reset</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div><!-- /.col-lg-8 -->
-            </div>
-            <!-- /.row --> 
-        </form>
+                    </div><!-- /.col-lg-8 -->
+                </div>
+                <!-- /.row --> 
+            </form>
+        </div>
+        <!-- /#page-wrapper -->
+
     </div>
-    <!-- /#page-wrapper -->
+    <!-- /#wrapper -->
 
-</div>
-<!-- /#wrapper -->
-
-<?php include '../include/bottom_jquery.inc.php'; ?>
-<script src="../js/homeScreen.js" type="text/javascript"></script>
-<script>
-    // tooltip demo
-    $('.tooltips').tooltip({
-        selector: "[data-toggle=tooltip]",
-        container: "body"
-    });
+    <?php include '../include/bottom_jquery.inc.php'; ?>
+    <script src="../js/homeScreen.js" type="text/javascript"></script>
+    <script>
+        // tooltip demo
+        $('.tooltips').tooltip({
+            selector: "[data-toggle=tooltip]",
+            container: "body"
+        });
     </script>
-<?php include '../include/footer.inc.php'; ?>
+    <?php include '../include/footer.inc.php'; ?>

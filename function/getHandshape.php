@@ -14,7 +14,7 @@ function getHandshapes() {
     //process to open a connection to the database
     include '../include/connection_open.inc.php';
     
-    $sql = "SELECT * FROM hand_shape";
+    $sql = "SELECT * FROM hand_shape ORDER BY description";
 
     $result = $conn->query($sql);
 
