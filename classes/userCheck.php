@@ -25,7 +25,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             if ($ok == 0) {
                 $url = "../pages/users.php";
             }else{
-                $ $url = "../pages/user.php?type=1&error=" . $ok;
+                $url = "../pages/user.php?type=1&error=" . $ok;
             }
         } else {
             $id = 0;

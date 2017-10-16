@@ -1,6 +1,6 @@
 <?php
 
-include './handshapeClass.php';
+include './handShapeClass.php';
 session_start();
 
 $target_dir = "../images/";

@@ -17,8 +17,13 @@ if (strlen($uname) === 0 || strlen($pword) === 0) {
     header('Location: ../pages/login.php?error=1');
     exit();
 }
-//connection information for the database
-require '../../../bin/dbConnection.inc.php';
+
+//connection information for the database    
+    if($_SERVER["HTTP_HOST"] == "localhost" ){ //development
+        require '../../../bin/dbConnection.inc.php';
+    }else{
+        require '../../bin/dbConnection.inc.php';
+    }
 
 //process to open a connection to the database
 include '../include/connection_open.inc.php';

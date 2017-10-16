@@ -41,6 +41,7 @@ class handShapeClass {
         $this->_embrDescription = $embrDescription;
         $this->_active = $active;
     }
+
     function __construct4($description, $embrDescription, $image, $active) {
         $this->_description = $description;
         $this->_embrDescription = $embrDescription;
@@ -107,16 +108,20 @@ class handShapeClass {
         $ret = TRUE;
 
         if (!$this->isDuplicate($this->_description, "", 1)) {
-            //connection information for the database
-            require '../../../bin/dbConnection.inc.php';
+            //connection information for the database    
+            if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+                require '../../../bin/dbConnection.inc.php';
+            } else {
+                require '../../bin/dbConnection.inc.php';
+            }
 
             //process to open a connection to the database
             include '../include/connection_open.inc.php';
 
             $sql = "INSERT INTO hand_shape(description, embr_description, image, active) " .
                     "VALUES(?,?,?,?)";
-            $stmt = $conn->prepare($sql);            
-            
+            $stmt = $conn->prepare($sql);
+
             $stmt->bind_param("sssi", $this->get_description(), $this->get_embrDescription(), $this->get_imageLocation(), $this->get_active());
             $stmt->execute();
             $stmt->close();
@@ -129,12 +134,16 @@ class handShapeClass {
 
     function updateHandShapeImage() {
         if (!$this->isDuplicate($this->_description, $this->_id, 2)) {
-            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "'," . 
-                    " image='" . $this->_imageLocation . "', active=" . $this->_active . 
+            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "'," .
+                    " image='" . $this->_imageLocation . "', active=" . $this->_active .
                     " WHERE id = " . $this->_id;
 
-            //connection information for the database
-            require '../../../bin/dbConnection.inc.php';
+            //connection information for the database    
+            if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+                require '../../../bin/dbConnection.inc.php';
+            } else {
+                require '../../bin/dbConnection.inc.php';
+            }
 
             //process to open a connection to the database
             include '../include/connection_open.inc.php';
@@ -150,14 +159,18 @@ class handShapeClass {
 
         return $ret;
     }
-    
+
     function updateHandShape() {
         if (!$this->isDuplicate($this->_description, $this->_id, 2)) {
-            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "', active = " . $this->_active . 
+            $sql = "UPDATE hand_shape SET description='" . $this->_description . "', embr_description='" . $this->_embrDescription . "', active = " . $this->_active .
                     " WHERE id = " . $this->_id;
-            
-            //connection information for the database
-            require '../../../bin/dbConnection.inc.php';
+
+            //connection information for the database    
+            if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+                require '../../../bin/dbConnection.inc.php';
+            } else {
+                require '../../bin/dbConnection.inc.php';
+            }
 
             //process to open a connection to the database
             include '../include/connection_open.inc.php';
@@ -180,12 +193,16 @@ class handShapeClass {
     protected function isDuplicate($desc, $id, $iOrE) {
         $ok = FALSE;
 
-        //connection information for the database
-        require '../../../bin/dbConnection.inc.php';
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
-        
+
         //insert
         if ($iOrE == 1) {
             $sql = "SELECT id from hand_shape WHERE description = '" . $desc . "'";
@@ -195,7 +212,7 @@ class handShapeClass {
             }
         } else {
             //edit
-            $sql = "SELECT description FROM hand_shape WHERE id = " . $id ;
+            $sql = "SELECT description FROM hand_shape WHERE id = " . $id;
             $result = $conn->query($sql);
 
             while ($row = $result->fetch_assoc()) {
@@ -210,9 +227,9 @@ class handShapeClass {
                 //this means there is a name change
                 $sql = "SELECT id FROM hand_shape WHERE description = '" . $desc . "'";
                 $result = $conn->query($sql);
-                
+
                 $ck = $result->num_rows;
-            //this means that there is another description with that id and this will be a duplicate username
+                //this means that there is another description with that id and this will be a duplicate username
                 if ($ck > 0) {
                     $ok = TRUE;
                 }
@@ -224,12 +241,16 @@ class handShapeClass {
 
         return $ok;
     }
-    
-   public function getHandshapeInfo() {
+
+    public function getHandshapeInfo() {
         $sql = "SELECT * FROM hand_shape WHERE hand_shape.id = " . $this->_id;
 
-        //connection information for the database
-        require '../../../bin/dbConnection.inc.php';
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
@@ -241,7 +262,6 @@ class handShapeClass {
             $this->_embrDescription = $row["embr_description"];
             $this->_imageLocation = $row["image"];
             $this->_active = $row["active"];
-            
         }
         //close the connection
         mysqli_close($conn);
@@ -250,8 +270,12 @@ class handShapeClass {
     function deleteHandshape() {
         $sql = "DELETE FROM hand_shape WHERE description='" . $this->_description . "'";
 
-        //connection information for the database
-        require '../../../bin/dbConnection.inc.php';
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
@@ -263,7 +287,7 @@ class handShapeClass {
         }
         //close the connection
         mysqli_close($conn);
-        
+
         return ret;
     }
 

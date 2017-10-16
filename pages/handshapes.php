@@ -1,5 +1,5 @@
 <?php include '../include/header.inc.php'; ?>
-<?php include '../function/getHandShape.php'; ?>
+<?php include '../function/getHandshape.php'; ?>
 <?php include '../function/util.php'; ?>
 
 

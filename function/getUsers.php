@@ -1,12 +1,17 @@
 <?php
+
 function getUsers() {
     //Users class
     require '../classes/usersClass.php';
-    
+
     $users = array();
 
-    //connection information for the database
-    require '../../../bin/dbConnection.inc.php';
+    //connection information for the database    
+    if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+        require '../../../bin/dbConnection.inc.php';
+    } else {
+        require '../../bin/dbConnection.inc.php';
+    }
 
     //process to open a connection to the database
     include '../include/connection_open.inc.php';
@@ -19,7 +24,7 @@ function getUsers() {
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
-        
+
 
         $user = new users($row["id"], $row["username"], $row["password"], $row["security_level"], $row["first_name"], $row["last_name"], $row["active"], $row["email"]);
         //$user->setUsername($row["username"]);
@@ -30,4 +35,3 @@ function getUsers() {
     mysqli_close($conn);
     return $users;
 }
-

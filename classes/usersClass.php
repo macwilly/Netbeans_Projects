@@ -134,8 +134,13 @@ class users {
         $ret = 0;
 
         if (!$this->isDuplicate($this->_username)) {
-            //connection information for the database
-            require '../../../bin/dbConnection.inc.php';
+
+//connection information for the database    
+            if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+                require '../../../bin/dbConnection.inc.php';
+            } else {
+                require '../../bin/dbConnection.inc.php';
+            }
 
             //process to open a connection to the database
             include '../include/connection_open.inc.php';
@@ -160,8 +165,12 @@ class users {
                     "first_name = '" . $this->_first_name . "', last_name = '" . $this->_last_name . "', active = " . $this->_active . ", email = '" . $this->_email . "' " .
                     "WHERE users.id = " . $this->_id;
 
-            //connection information for the database
-            require '../../../bin/dbConnection.inc.php';
+            //connection information for the database    
+            if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+                require '../../../bin/dbConnection.inc.php';
+            } else {
+                require '../../bin/dbConnection.inc.php';
+            }
 
             //process to open a connection to the database
             include '../include/connection_open.inc.php';
@@ -171,7 +180,7 @@ class users {
             } else {
                 $ret = "../pages/user.php?type=2&error=3";
             }
-        }else{
+        } else {
             $ret = "../pages/users.php?&error=1";
         }
 
@@ -181,8 +190,12 @@ class users {
     public function getUserInfo() {
         $sql = "SELECT * FROM users WHERE users.id = " . $this->_id;
 
-        //connection information for the database
-        require '../../../bin/dbConnection.inc.php';
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
@@ -211,8 +224,13 @@ class users {
      */
     protected function isDuplicate($checkUserName) {
         $ret = FALSE;
-        //connection information for the database
-        require '../../../bin/dbConnection.inc.php';
+
+//connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
@@ -225,7 +243,7 @@ class users {
         //close the connection
         mysqli_close($conn);
 
-        return ret;
+        return $ret;
     }
 
     /**
@@ -241,8 +259,13 @@ class users {
         $ret = FALSE;
         $retUsername = "";
         $retId = 0;
-        //connection information for the database
-        require '../../../bin/dbConnection.inc.php';
+
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
@@ -269,7 +292,7 @@ class users {
         }
         //close the connection
         mysqli_close($conn);
-        return ret;
+        return $ret;
     }
 
 }
