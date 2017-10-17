@@ -6,6 +6,9 @@ switch($pg){
     case "handshapes.php":
         $tableId = "handshape-table";
         break;
+    case "signList.php":
+        $tableId = "sign-table";
+        break;
     case "users.php":
         $tableId = "user-table";
         break;

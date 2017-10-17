@@ -5,6 +5,9 @@
 function titleInformation($pageName) {
 
     switch ($pageName) {
+        case 'handshape.php':
+            echo 'Handshape';
+            break;
         case 'handshapes.php':
             echo 'Handshape';
             break;
@@ -13,6 +16,9 @@ function titleInformation($pageName) {
             break;
         case 'login.php':
             echo 'Login';
+            break;
+        case 'sign.php':
+            echo 'Sign';
             break;
         case 'signList.php':
             echo 'Sign List';

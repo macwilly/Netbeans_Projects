@@ -47,7 +47,7 @@
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    echo '<td><button onclick="editUser('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">Edit</button></td>';
+                                    echo '<td><button onclick="editHandshape('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">Edit</button></td>';
                                     echo '<td>' . $printHandshape->get_description() . '</td>';
                                     echo '<td>' . $printHandshape->get_embrDescription() . '</td>';
                                     echo '<td>' . $printHandshape->get_imageLocation() . '</td>'; // will need to chage this to be a link                                                                        
@@ -78,15 +78,14 @@
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
-<?php include '../include/datatable_jquery.inc.php'; ?>
+
 
 <!-- DataTables JavaScript -->
-<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+<?php include '../include/datatable_jquery.inc.php'; ?>
+
 <script>
     
-    function editUser(_id){ 
+    function editHandshape(_id){ 
         $("#handshapeId").val(_id);
         $("form").submit();        
     }

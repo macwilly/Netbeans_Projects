@@ -77,12 +77,11 @@
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
-<?php include '../include/datatable_jquery.inc.php'; ?>
 
 <!-- DataTables JavaScript -->
-<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+<?php include '../include/datatable_jquery.inc.php'; ?>
+
+
 <script>
     
     function editUser(id){  
