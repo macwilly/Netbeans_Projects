@@ -5,18 +5,25 @@ $type = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
 if ($type == 1) {
     $page_header = "Add Sign";
     $page_include = "../include/signAddForm.inc.php";
+    $addEdit_button = "Add Sign";
+    $jsCheck = "doSignCreate()";
+    $ie=1;
 } elseif ($type == 2) {
     $page_header = "Edit "; //. $signName;
     $page_include = "../include/signEditForm.inc.php";
+    $addEdit_button = "Add Sign";
+    $jsCheck = "doSignEdit()";
+    $ie=2;
 } elseif ($type == 3) {
     $page_header = "Sign Name"; //$signName;
     $page_include = "../include/signView.inc.php";
+    $addEdit_button = "Add Sign"; //this will be used to link to edit the sign 
 }
 ?>
 <div id="wrapper">
 
     <!-- Navigation -->
-<?php include '../include/navigation.inc.php'; ?>
+    <?php include '../include/navigation.inc.php'; ?>
 
     <!-- Page Content -->
     <div id="page-wrapper">
@@ -24,9 +31,13 @@ if ($type == 1) {
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><?php echo $page_header; ?></h1>
-<?php
-include $page_include;
-?>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <?php include $page_include; ?>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -41,4 +52,5 @@ include $page_include;
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
+<script src="../js/signFormCheck.js" type="text/javascript"></script>
 <?php include '../include/footer.inc.php'; ?>
