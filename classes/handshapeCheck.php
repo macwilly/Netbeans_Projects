@@ -3,7 +3,7 @@
 include './handShapeClass.php';
 session_start();
 
-$target_dir = "../images/";
+$target_dir = "../images/handshape/";
 
 $description = filter_input(INPUT_POST, 'inputHSDescription', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
 $eDescription = filter_input(INPUT_POST, 'inputHSEMBRDescription', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);

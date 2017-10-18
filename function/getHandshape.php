@@ -1,8 +1,12 @@
 <?php
 
-function getHandshapes() {
-    $sql = "SELECT * FROM hand_shape";
-
+function getHandshapes($active) {
+    if($active){
+        $sql = "SELECT * FROM hand_shape where active=1 ORDER BY description";
+    }else{
+        $sql = "SELECT * FROM hand_shape";
+    }
+    
     //Users class
     require '../classes/handShapeClass.php';
 
@@ -17,8 +21,6 @@ function getHandshapes() {
 
     //process to open a connection to the database
     include '../include/connection_open.inc.php';
-    
-    $sql = "SELECT * FROM hand_shape ORDER BY description";
 
     $result = $conn->query($sql);
 
@@ -33,3 +35,4 @@ function getHandshapes() {
     mysqli_close($conn);
     return $handShapes;
 }
+

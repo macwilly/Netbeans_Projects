@@ -26,19 +26,21 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Description</th>
-                                    <th>EMBR Description</th>
-                                    <th>Image</th>                                    
-                                    <th>Active</th>
+                                    <th>Gloss</th>
+                                    <th>Start Handshape</th>
+                                    <th>End Handshape</th>                                    
+                                    <th>Start Image</th>
+                                    <th>End Image</th>
+                                    <th>Finished</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 //call class to get all of the information for the table 
                                 //build table with loop
-                                $hs = getHandshapes();
+                                //$hs = getHandshapes();
 
-                                foreach ($hs as $printHandshape) {
+                                /*foreach ($hs as $printHandshape) {
                                     $count = 1;
 
                                     //setting up the hover classes for the data table
@@ -47,14 +49,14 @@
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    echo '<td><button onclick="editHandshape('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">Edit</button></td>';
+                                    echo '<td><button onclick="editHandshape('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">View</button></td>';
                                     echo '<td>' . $printHandshape->get_description() . '</td>';
                                     echo '<td>' . $printHandshape->get_embrDescription() . '</td>';
                                     echo '<td>' . $printHandshape->get_imageLocation() . '</td>'; // will need to chage this to be a link                                                                        
                                     echo '<td>' . activeTextConvert($printHandshape->get_active()) . '</td>';                                    
                                     echo '</tr>';
                                     $count++;
-                                }
+                                }*/
                                 ?>
                             </tbody>
                         </table>

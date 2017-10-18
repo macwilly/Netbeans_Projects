@@ -40,7 +40,7 @@ if($img == "na"){
     </div>
     <div class="col-lg-6">
 
-        <img src="../images/<?php echo $img; ?>" height="108px" width="77px" alt="<?php echo $img; ?>"/>
+        <img src="../images/handshape/<?php echo $img; ?>" height="108px" width="77px" alt="<?php echo $img; ?>"/>
         <div class="form-group">
             <label>File input</label>
             <input name="handshapeImage" type="file">

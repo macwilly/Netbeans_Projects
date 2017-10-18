@@ -64,7 +64,7 @@
                                                     <?php
                                                     //need to have an object that will get the the information for the handshapes
                                                     //get the object then display properly 
-                                                    $hs = getHandshapes();
+                                                    $hs = getHandshapes(TRUE);
 
                                                     foreach ($hs as $printHandshape) {
                                                         echo'<option value="' . $printHandshape->get_id() . '">'. $printHandshape->get_description() .'</option>';

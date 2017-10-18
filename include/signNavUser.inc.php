@@ -5,10 +5,7 @@
             <a href="../pages/signList.php">View Signs</a>
         </li>
         <li>
-            <a href="#">Add Sign</a>
-        </li>
-        <li>
-            <a href="#">Edit Signs</a>
+            <a href="../pages/sign.php?type=1">Add Sign</a>
         </li>
     </ul>
     <!--.nav-second-level--> 

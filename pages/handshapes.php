@@ -13,7 +13,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Hand Shapes</h1>
+                    <h1 class="page-header">Handshapes</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -36,22 +36,26 @@
                                 <?php
                                 //call class to get all of the information for the table 
                                 //build table with loop
-                                $hs = getHandshapes();
+                                $hs = getHandshapes(FALSE);
 
                                 foreach ($hs as $printHandshape) {
                                     $count = 1;
-
+                                    if($printHandshape->get_imageLocation() == "na"){
+                                        $photo = "none.gif";
+                                    }else{
+                                        $photo = $printHandshape->get_imageLocation();
+                                    }
                                     //setting up the hover classes for the data table
                                     if ($count % 2 != 0) {
                                         echo '<tr class="odd">';
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    echo '<td><button onclick="editHandshape('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">Edit</button></td>';
+                                    echo '<td><button onclick="editHS('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">Edit</button></td>';
                                     echo '<td>' . $printHandshape->get_description() . '</td>';
                                     echo '<td>' . $printHandshape->get_embrDescription() . '</td>';
-                                    echo '<td>' . $printHandshape->get_imageLocation() . '</td>'; // will need to chage this to be a link                                                                        
-                                    echo '<td>' . activeTextConvert($printHandshape->get_active()) . '</td>';                                    
+                                    echo '<td><img src="../images/handshape/' . $photo . '" height="108px" width="77px" alt="'. $photo .'"/></td>';
+                                    echo '<td>' . activeTextConvert($printHandshape->get_active()) . '</td>';
                                     echo '</tr>';
                                     $count++;
                                 }
@@ -85,7 +89,7 @@
 
 <script>
     
-    function editHandshape(_id){ 
+    function editHS(_id){ 
         $("#handshapeId").val(_id);
         $("form").submit();        
     }
