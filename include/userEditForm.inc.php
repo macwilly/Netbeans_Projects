@@ -76,6 +76,7 @@ if ($_SESSION["editUser"] == "") {
         </div>
     </div>
     <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
+    <input type="hidden" name="bcp" id="bcp" value="<?php echo $user->getPassword();?>">
 </form>
 <script type="text/javascript">
     $(document).ready(function(){

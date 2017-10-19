@@ -8,10 +8,12 @@ $lname = filter_input(INPUT_POST, 'inputUserLastName', FILTER_SANITIZE_STRING, F
 $uname = filter_input(INPUT_POST, 'inputUserUsername', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
 $email = filter_input(INPUT_POST, 'inputUserEmail', FILTER_SANITIZE_EMAIL);
 $password = filter_input(INPUT_POST, 'inputUserPassword', FILTER_SANITIZE_ENCODED);
+$beforeChangePassword = filter_input(INPUT_POST, 'bcp', FILTER_SANITIZE_ENCODED);
 $active = filter_input(INPUT_POST, 'optionsActive', FILTER_SANITIZE_NUMBER_INT);
 $securityLevel = filter_input(INPUT_POST, 'selectSecurityLevel', FILTER_SANITIZE_NUMBER_INT);
 $inEdit = filter_input(INPUT_POST, 'insertEdit', FILTER_SANITIZE_NUMBER_INT);
 
+//checking for valid email
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $url = "../pages/user.php?type=1&error=1";
 } else {
@@ -24,8 +26,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $ok = $user->insertUser();
             if ($ok == 0) {
                 $url = "../pages/users.php";
-            }else{
-                $url = "../pages/user.php?type=1&error=" . $ok; 
+            } else {
+                $url = "../pages/user.php?type=1&error=" . $ok;
             }
         } else {
             $id = 0;
@@ -45,7 +47,14 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             if ($rest == 1) {
                 unset($_SESSION["editUser"]);
             }
-            $url = $user->editUser();
+
+
+            if ($password == $beforeChangePassword) {
+                $url = $user->editUser(2);
+            } else{
+                $url = $user->editUser(1);
+            }
+            
         }
     }
 }

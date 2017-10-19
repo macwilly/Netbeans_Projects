@@ -159,12 +159,17 @@ class users {
         }
     }
 
-    public function editUser() {
+    public function editUser($updateType) {
         if (!$this->isDuplicate2($this->_username, $this->_id)) {
+            if($updateType == 1){
             $sql = "UPDATE users SET username='" . $this->_username . "', password= AES_ENCRYPT('" . $this->_password . "','" . $this->_password . "'), security_level=" . $this->_security_level . ", " .
                     "first_name = '" . $this->_first_name . "', last_name = '" . $this->_last_name . "', active = " . $this->_active . ", email = '" . $this->_email . "' " .
                     "WHERE users.id = " . $this->_id;
-
+            }elseif ($updateType == 2) {
+                $sql = "UPDATE users SET username='" . $this->_username . "', security_level=" . $this->_security_level . ", " .
+                    "first_name = '" . $this->_first_name . "', last_name = '" . $this->_last_name . "', active = " . $this->_active . ", email = '" . $this->_email . "' " .
+                    "WHERE users.id = " . $this->_id;
+            }
             //connection information for the database    
             if ($_SERVER["HTTP_HOST"] == "localhost") { //development
                 require '../../../bin/dbConnection.inc.php';
@@ -294,5 +299,5 @@ class users {
         mysqli_close($conn);
         return $ret;
     }
-
+    
 }
