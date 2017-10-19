@@ -1,4 +1,5 @@
 <?php include '../include/header.inc.php'; ?>
+
 <?php
 $type = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
 

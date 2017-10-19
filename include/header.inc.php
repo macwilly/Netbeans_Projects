@@ -23,9 +23,6 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
@@ -41,6 +38,7 @@
     
     <script src="../jquery/jquery-3.2.1.js" type="text/javascript"></script>
     <link rel="shortcut icon" href="../images/favicon.ico">
+    
 </head>
 
 <body>

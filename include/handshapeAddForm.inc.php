@@ -24,7 +24,7 @@
     </div>
     <div class="col-lg-6">
         <div class="form-group">
-            <label>File input</label>
+            <label>Handshape Image</label>
             <input name="handshapeImage" type="file">
         </div>
     </div>

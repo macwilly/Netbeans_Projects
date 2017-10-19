@@ -1,3 +1,8 @@
+<?php
+include '../function/getHandshape.php';
+$hs = getHandshapes(TRUE);
+?>
+
 <div class="row">
     <div class="col-lg-5 col-md-6 col-sm-8">
         <div class="panel panel-primary">
@@ -24,12 +29,22 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <hr>
+    </div>
+</div>
 
 <form name="signInput" id="signInputId" enctype="multipart/form-data"  method="POST" action="">
+
     <div class="col-lg-6">
         <div class="form-group" id="gloss-container">
             <label class="control-label">Gloss</label>
             <input class="form-control" name="inputgloss" id="inputgloss" placeholder="">
+        </div>
+        <div class="form-group" id="english-container">
+            <label class="control-label">English Meaning</label>
+            <input class="form-control" name="inputenglish" id="inputenglish" placeholder="">
         </div>
         <div class="form-group" id="asllvd-container">
             <label class="control-label">ASLLVD Link</label>
@@ -61,8 +76,57 @@
                 </label>
             </div>
         </div>
+        <div class="form-group">
+            <label>EMBR Text</label>
+            <textarea class="form-control" name="embrtext" id="embrtext" rows="5"></textarea>
+        </div>
     </div>
+
     <div class="col-lg-6">
+        <div class="form-group">
+            <label>Start Dominant Handshape</label>
+            <select class="form-control" name="sdh" id="sdh">
+                <option value="none">None</option>
+                <?php
+                foreach ($hs as $printHandshape) {
+                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                }
+                ?>  
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Start Nondominant Handshape</label>
+            <select class="form-control" name="sndh" id="sndh">
+                <option value="none">None</option>
+                <?php
+                foreach ($hs as $printHandshape) {
+                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                }
+                ?>  
+            </select>
+        </div>
+        <div class="form-group">
+            <label>End Dominant Handshape</label>
+            <select class="form-control" name="edh" id="edh">
+                <option value="none">None</option>
+                <?php
+                foreach ($hs as $printHandshape) {
+                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                }
+                ?>  
+            </select>
+        </div>
+        <div class="form-group">
+            <label>End Nondominant Handshape</label>
+            <select class="form-control" name="endh" id="endh">
+                <option value="none">None</option>
+                <?php
+                foreach ($hs as $printHandshape) {
+                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                }
+                ?>  
+            </select>
+        </div>
         <div class="form-group">
             <label>Start Image</label>
             <input name="startImage" type="file">
@@ -70,6 +134,11 @@
         <div class="form-group">
             <label>End Image</label>
             <input name="endImage" type="file">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p>Attributes will got here. They will be dynamically added on.</p>
         </div>
     </div>
     <div class="row">
