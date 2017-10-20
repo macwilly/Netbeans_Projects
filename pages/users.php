@@ -1,7 +1,13 @@
+<?php
+session_start();
+$secLevel = $_SESSION['secLevel'];
+if ($secLevel == 1) {
+    header('Location: ./index.php');
+}
+?>
 <?php include '../include/header.inc.php'; ?>
 <?php include '../function/getUsers.php'; ?>
 <?php include '../function/util.php'; ?>
-
 <div id="wrapper">
 
     <!-- Navigation -->
@@ -48,13 +54,13 @@
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    echo '<td><button onclick="editUser('.$printUser->getId() .')" type="button" class="btn btn-primary">Edit</button></td>';
+                                    echo '<td><button onclick="editUser(' . $printUser->getId() . ')" type="button" class="btn btn-primary">Edit</button></td>';
                                     echo '<td>' . $printUser->getUsername() . '</td>';
                                     echo '<td>' . $printUser->getFirst_name() . '</td>';
                                     echo '<td>' . $printUser->getLast_name() . '</td>';
                                     echo '<td>' . $printUser->getEmail() . '</td>';
                                     echo '<td>' . $printUser->getSecurity_level() . '</td>';
-                                    echo '<td>' . activeTextConvert($printUser->getActive()) . '</td>';                                    
+                                    echo '<td>' . activeTextConvert($printUser->getActive()) . '</td>';
                                     echo '</tr>';
                                     $count++;
                                 }
@@ -83,11 +89,11 @@
 
 
 <script>
-    
-    function editUser(id){  
+
+    function editUser(id) {
         var url = "../function/otherUserEdit.php?id=" + id;
         document.location.href = url;
-        
+
     }
 </script>
 <?php include '../include/footer.inc.php'; ?>

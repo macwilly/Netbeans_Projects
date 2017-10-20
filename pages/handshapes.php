@@ -25,7 +25,11 @@
                         <table width="100%" class="table table-striped table-bordered table-hover" id="handshape-table">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <?php
+                                    if ($secLevel == 2) {
+                                        echo '<th></th>';
+                                    }
+                                    ?>
                                     <th>Description</th>
                                     <th>EMBR Description</th>
                                     <th>Image</th>                                    
@@ -40,9 +44,9 @@
 
                                 foreach ($hs as $printHandshape) {
                                     $count = 1;
-                                    if($printHandshape->get_imageLocation() == "na"){
+                                    if ($printHandshape->get_imageLocation() == "na") {
                                         $photo = "none.gif";
-                                    }else{
+                                    } else {
                                         $photo = $printHandshape->get_imageLocation();
                                     }
                                     //setting up the hover classes for the data table
@@ -51,10 +55,13 @@
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    echo '<td><button onclick="editHS('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">Edit</button></td>';
+                                    if ($secLevel == 2) {
+                                        echo '<td><button onclick="editHS(' . $printHandshape->get_id() . ')" type="button" class="btn btn-primary">Edit</button></td>';
+                                    }
+
                                     echo '<td>' . $printHandshape->get_description() . '</td>';
                                     echo '<td>' . $printHandshape->get_embrDescription() . '</td>';
-                                    echo '<td><img src="../images/handshape/' . $photo . '" height="108px" width="77px" alt="'. $photo .'"/></td>';
+                                    echo '<td><img src="../images/handshape/' . $photo . '" height="108px" width="77px" alt="' . $photo . '"/></td>';
                                     echo '<td>' . activeTextConvert($printHandshape->get_active()) . '</td>';
                                     echo '</tr>';
                                     $count++;
@@ -77,7 +84,7 @@
 <!-- /#wrapper -->
 <form method="POST" name="editHandshape" action="./handshape.php?type=2">
     <input type="hidden" name="handshapeId" id="handshapeId">
-    
+
 </form>
 
 <!-- jQuery -->
@@ -88,11 +95,11 @@
 <?php include '../include/datatable_jquery.inc.php'; ?>
 
 <script>
-    
-    function editHS(_id){ 
+
+    function editHS(_id) {
         $("#handshapeId").val(_id);
-        $("form").submit();        
+        $("form").submit();
     }
-    
+
 </script>
 <?php include '../include/footer.inc.php'; ?>

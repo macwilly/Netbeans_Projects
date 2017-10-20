@@ -40,6 +40,7 @@
             <select class="form-control" name="selectSecurityLevel" id="secLevel">
                 <option value="1">User</option>
                 <option value="2">Administrator</option>
+                <?php if($secLevel == 3){echo '<option value="3">Owner</option>';} ?>
             </select>
         </div>
     </div>

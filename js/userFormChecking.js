@@ -67,7 +67,7 @@ function doCheck() {
         errorCount++;
     }
 
-    if (securityLevel != 1 && securityLevel != 2) {
+    if (securityLevel != 1 && securityLevel != 2 && securityLevel !=3) {
         $("#security-level-container").addClass("has-error");
         errorCount++;
     }

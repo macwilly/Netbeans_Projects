@@ -4,9 +4,13 @@
         <li>
             <a href="../pages/signList.php">View Signs</a>
         </li>
-        <li>
-            <a href="../pages/sign.php?type=1">Add Sign</a>
-        </li>
+        <?php
+        if($secLevel >= 2){
+            echo '<li>';
+            echo '<a href="../pages/sign.php?type=1">Add Sign</a>';
+            echo '</li>';
+        }
+        ?>
     </ul>
     <!--.nav-second-level--> 
 </li>

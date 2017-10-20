@@ -58,4 +58,4 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         }
     }
 }
-header("Location: " . $url);
+header("Location: " . $url); 

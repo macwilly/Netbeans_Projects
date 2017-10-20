@@ -4,9 +4,13 @@
         <li>
             <a href="../pages/handshapes.php">All Handshapes</a>
         </li>
-        <li>
-            <a href="../pages/handshape.php?type=1">Add A Handshape</a>
-        </li>
+        <?php
+        if ($secLevel >= 2) {
+            echo '<li>';
+            echo '<a href="../pages/handshape.php?type=1">Add A Handshape</a>';
+            echo '</li>';
+        }
+        ?>
     </ul>
     <!--.nav-second-level--> 
 </li>

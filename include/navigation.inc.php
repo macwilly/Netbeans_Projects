@@ -21,6 +21,7 @@
             if ($un == "") {
                 echo "Guest ";
             } else {
+                $secLevel = $_SESSION["secLevel"];
                 echo $_SESSION["firstName"] . " " . $_SESSION["lastName"] . " ";
             }
             ?>|
@@ -74,12 +75,15 @@
                 </li>
                 <?php
                 if ($un == "") {
-                    include '../include/signNavGuest.inc.php';
+                    //include '../include/signNavGuest.inc.php';
                     include '../include/userNavGuest.inc.php';
                 } else {
                     include '../include/signNavUser.inc.php';
                     include '../include/handshapeNavUser.inc.php';
                     include '../include/userNavUser.inc.php';
+                    if($secLevel == 3){
+                        
+                    }
                 }
                 ?>
                 <li>

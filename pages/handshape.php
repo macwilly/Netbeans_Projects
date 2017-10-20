@@ -1,6 +1,9 @@
 <?php
 //checking to see where the user came from. If it is not either of these it will
 //send the user back to the main page. Also adding in other variables that will be used on this page
+if($secLevel != 2){
+    header('Location: ./handshapes.php');
+}
 $jsCheck = "";
 $ie = 0;
 $aeType = $_GET["type"];

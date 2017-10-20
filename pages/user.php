@@ -1,20 +1,27 @@
 <?php
+session_start();
 //checking to see where the user came from. If it is not either of these it will
 //send the user back to the main page. Also adding in other variables that will be used on this page
+
+$aeType = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
+$secLevel = $_SESSION['secLevel'];
+if($secLevel == 1 && $aeType != 2){
+    header('Location: ./index.php');
+}
+
 $userAddEdit = "";
 $jsCheck = "";
 $ie = 0;
-$aeType = $_GET["type"];
 $haystack = $_SERVER['HTTP_REFERER'];
 $needle = "users.php";
 $pos = strrpos($haystack, $needle);
 
 
-if (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 1) {
+if ($aeType == 1) {
     $userAddEdit = "Add User";
     $jsCheck = "doUserCreate()";
     $ie = 1;
-} elseif (FILTER_VAR($aeType, FILTER_SANITIZE_NUMBER_INT) == 2) {
+} elseif ($aeType== 2) {
     $userAddEdit = "Edit User";
     $jsCheck = "doUserEdit()";
     $ie = 2;

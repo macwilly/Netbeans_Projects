@@ -11,7 +11,6 @@ if ($_SESSION["editUser"] == "") {
     $user = new users($_SESSION["editUser"]);
     $user->getUserInfo();
 }
-
 ?>
 <form name="userInput" id="userInputId"  method="POST" action="">
     <div class="col-lg-6">
@@ -67,6 +66,7 @@ if ($_SESSION["editUser"] == "") {
             <select class="form-control" name="selectSecurityLevel" id="secLevel">
                 <option value="1" id="sec1">User</option>
                 <option value="2" id="sec2">Administrator</option>
+                <?php if($secLevel == 3){echo '<option value="3" id="sec3">Owner</option>';} ?>
             </select>
         </div>
     </div>

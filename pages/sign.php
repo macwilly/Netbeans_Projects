@@ -1,20 +1,26 @@
+<?php
+session_start();
+$type = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
+$secLevel = $_SESSION['secLevel'];
+if ($secLevel == 1 && ($type == 1 || $type == 2)) {
+    header('Location: ./signList.php');
+}
+?>
 <?php include '../include/header.inc.php'; ?>
 
 <?php
-$type = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
-
 if ($type == 1) {
     $page_header = "Add Sign";
     $page_include = "../include/signAddForm.inc.php";
     $addEdit_button = "Add Sign";
     $jsCheck = "doSignCreate()";
-    $ie=1;
+    $ie = 1;
 } elseif ($type == 2) {
     $page_header = "Edit "; //. $signName;
     $page_include = "../include/signEditForm.inc.php";
     $addEdit_button = "Add Sign";
     $jsCheck = "doSignEdit()";
-    $ie=2;
+    $ie = 2;
 } elseif ($type == 3) {
     $page_header = "Sign Name"; //$signName;
     $page_include = "../include/signView.inc.php";
