@@ -1,7 +1,7 @@
 function doUserCreate() {
 
-    removeError();
-    var errors = doCheck();
+    removeError(2);
+    var errors = doCheck(2);
 
     if (errors > 0) {
         return false;
@@ -15,8 +15,8 @@ function doUserCreate() {
 }
 
 function doUserEdit() {
-    removeError();
-    var errors = doCheck();
+    removeError(2);
+    var errors = doCheck(2);
 
     if (errors > 0) {
         return false;
@@ -26,16 +26,30 @@ function doUserEdit() {
     }
 }
 
-function doCheck() {
+function doUserEditUser(){
+    removeError(1);
+    var errors = doCheck(1);
+    if (errors > 0) {
+        return false;
+    } else {
+        $('#userInputId').attr('action', '../classes/userCheck.php');
+        $("#userInputId").submit();
+    }
+}
+
+function doCheck(sec) {
     var firstName = $("#fName").val();
     var lastName = $("#lName").val();
     var userName = $("#uName").val();
     var email = $("#email").val();
     var password = $("#pword").val();
     var active = $('#optionsActive:checked').val();//if not checked == undefined    
-    var securityLevel = $("#secLevel").val();
     var inEdit = $("#insertEdit").val();
     var errorCount = 0;
+    
+    if(sec === 2){
+        var securityLevel = $("#secLevel").val();
+    }
 
     if (firstName.length === 0) {
         errorCount++;
@@ -66,11 +80,13 @@ function doCheck() {
         $("#active-container").addClass("has-error");
         errorCount++;
     }
-
-    if (securityLevel != 1 && securityLevel != 2 && securityLevel !=3) {
+    if(sec === 3){
+        if (securityLevel != 1 && securityLevel != 2 && securityLevel !=3) {
         $("#security-level-container").addClass("has-error");
         errorCount++;
     }
+    }
+    
 
     if (inEdit != 1 && inEdit != 2) {
         errorCount++;
@@ -78,12 +94,14 @@ function doCheck() {
     return errorCount++;
 }
 
-function removeError() {
+function removeError(sec) {
     $("#first-name-container").removeClass("has-error");
     $("#last-name-container").removeClass("has-error");
     $("#username-container").removeClass("has-error");
     $("#email-container").removeClass("has-error");
     $("#password-container").removeClass("has-error");
-    $("#active-container").removeClass("has-error");
-    $("#security-level-container").removeClass("has-error");
+    $("#active-container").removeClass("has-error");    
+    if(sec === 2){
+        $("#security-level-container").removeClass("has-error");
+    }
 }

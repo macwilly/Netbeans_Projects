@@ -63,11 +63,19 @@ if ($_SESSION["editUser"] == "") {
         </div>
         <div class="form-group" id="security-level-container">
             <label class="control-label">Security Level</label>
-            <select class="form-control" name="selectSecurityLevel" id="secLevel">
-                <option value="1" id="sec1">User</option>
-                <option value="2" id="sec2">Administrator</option>
-                <?php if($secLevel == 3){echo '<option value="3" id="sec3">Owner</option>';} ?>
-            </select>
+            <?php
+                if($secLevel == 1){
+                    echo'<p class="form-control-static">User</p>';
+                }else{
+                    echo '<select class="form-control" name="selectSecurityLevel" id="secLevel">';
+                    echo '<option value="1" id="sec1">User</option>';
+                    echo '<option value="2" id="sec2">Administrator</option>';
+                    if($secLevel == 3){
+                        echo '<option value="3" id="sec3">Owner</option>';   
+                    }
+                    echo '</select>';
+                }
+            ?>
         </div>
     </div>
     <div class="row">
@@ -78,8 +86,12 @@ if ($_SESSION["editUser"] == "") {
     <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
     <input type="hidden" name="bcp" id="bcp" value="<?php echo $user->getPassword();?>">
 </form>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#sec<?php echo $user->getSecurity_level()?>").attr("selected","selected");
-    });
-</script>
+<?php
+if($secLevel != 1){
+    echo '<script type="text/javascript">';
+    echo '$(document).ready(function(){';
+    echo '$("#sec'. $user->getSecurity_level().'").attr("selected","selected");';
+    echo '});';
+    echo '</script>';
+}
+?>

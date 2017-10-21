@@ -5,6 +5,9 @@ session_start();
 
 $aeType = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
 $secLevel = $_SESSION['secLevel'];
+if($secLevel == ""){
+    header('Location: ./index.php');
+}
 if($secLevel == 1 && $aeType != 2){
     header('Location: ./index.php');
 }
@@ -23,7 +26,11 @@ if ($aeType == 1) {
     $ie = 1;
 } elseif ($aeType== 2) {
     $userAddEdit = "Edit User";
-    $jsCheck = "doUserEdit()";
+    if($secLevel == 1){
+        $jsCheck = "doUserEditUser()";
+    }else{
+        $jsCheck = "doUserEdit()";
+    }
     $ie = 2;
 } else {
     header("Location: ./index.php");

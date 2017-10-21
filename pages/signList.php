@@ -1,3 +1,10 @@
+<?php 
+session_start();
+$secLevel = $_SESSION['secLevel'];
+if($secLevel == ""){
+    header('Location: ./index.php');
+}
+?>
 <?php include '../include/header.inc.php'; ?>
 <?php include '../function/getSigns.php'; ?>
 <?php include '../function/util.php'; ?>

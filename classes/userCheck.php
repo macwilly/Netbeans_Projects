@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 include './usersClass.php';
 session_start();
 $url = "";
@@ -10,7 +11,13 @@ $email = filter_input(INPUT_POST, 'inputUserEmail', FILTER_SANITIZE_EMAIL);
 $password = filter_input(INPUT_POST, 'inputUserPassword', FILTER_SANITIZE_ENCODED);
 $beforeChangePassword = filter_input(INPUT_POST, 'bcp', FILTER_SANITIZE_ENCODED);
 $active = filter_input(INPUT_POST, 'optionsActive', FILTER_SANITIZE_NUMBER_INT);
-$securityLevel = filter_input(INPUT_POST, 'selectSecurityLevel', FILTER_SANITIZE_NUMBER_INT);
+
+if ($_SESSION['secLevel'] == 1) {
+    $securityLevel = $_SESSION['secLevel'];
+} else {
+    $securityLevel = filter_input(INPUT_POST, 'selectSecurityLevel', FILTER_SANITIZE_NUMBER_INT);
+}
+
 $inEdit = filter_input(INPUT_POST, 'insertEdit', FILTER_SANITIZE_NUMBER_INT);
 
 //checking for valid email
@@ -51,11 +58,10 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
             if ($password == $beforeChangePassword) {
                 $url = $user->editUser(2);
-            } else{
+            } else {
                 $url = $user->editUser(1);
             }
-            
         }
     }
 }
-header("Location: " . $url); 
+header("Location: " . $url);

@@ -2,6 +2,9 @@
 session_start();
 $type = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
 $secLevel = $_SESSION['secLevel'];
+if($secLevel == ""){
+    header('Location: ./index.php');
+}
 if ($secLevel == 1 && ($type == 1 || $type == 2)) {
     header('Location: ./signList.php');
 }

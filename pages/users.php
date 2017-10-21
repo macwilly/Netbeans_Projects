@@ -1,7 +1,8 @@
 <?php
 session_start();
 $secLevel = $_SESSION['secLevel'];
-if ($secLevel == 1) {
+
+if ($secLevel <= 1) {
     header('Location: ./index.php');
 }
 ?>

@@ -132,10 +132,10 @@ class users {
     public function insertUser() {
         // need to set up functionality to check and see if a user was inserted 
         $ret = 0;
-
+        
         if (!$this->isDuplicate($this->_username)) {
 
-//connection information for the database    
+            //connection information for the database    
             if ($_SERVER["HTTP_HOST"] == "localhost") { //development
                 require '../../../bin/dbConnection.inc.php';
             } else {
@@ -179,7 +179,6 @@ class users {
 
             //process to open a connection to the database
             include '../include/connection_open.inc.php';
-
             if ($conn->query($sql) === TRUE) {
                 $ret = "../pages/users.php";
             } else {
@@ -280,7 +279,6 @@ class users {
         while ($row = $result->fetch_assoc()) {
             $retUsername = $row["username"];
         }
-
         //this is showing that the username and the id match
         if ($checkUserName == $retUsername) {
             $ret = FALSE;
