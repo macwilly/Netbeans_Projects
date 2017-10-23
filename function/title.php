@@ -5,6 +5,12 @@
 function titleInformation($pageName) {
 
     switch ($pageName) {
+        case 'attribute.php':
+            echo 'Attribute';
+            break;
+        case 'attributes.php':
+            echo 'Attributes';
+            break;
         case 'handshape.php':
             echo 'Handshape';
             break;

@@ -27,7 +27,7 @@ if ($type == 1) {
 } elseif ($type == 3) {
     $page_header = "Sign Name"; //$signName;
     $page_include = "../include/signView.inc.php";
-    $addEdit_button = "Add Sign"; //this will be used to link to edit the sign 
+    $addEdit_button = "Edit Sign"; //this will be used to link to edit the sign 
 }
 ?>
 <div id="wrapper">

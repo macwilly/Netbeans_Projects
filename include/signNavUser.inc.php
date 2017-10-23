@@ -10,6 +10,14 @@
             echo '<a href="../pages/sign.php?type=1">Add Sign</a>';
             echo '</li>';
         }
+        if($secLevel == 3){
+            echo '<li>';
+            echo '<a href="../pages/attributes.php">Sign Attributes</a>';
+            echo '</li>';
+            echo '<li>';
+            echo '<a href="../pages/attribute.php">Sign Attributes</a>';
+            echo '</li>';
+        }
         ?>
     </ul>
     <!--.nav-second-level--> 

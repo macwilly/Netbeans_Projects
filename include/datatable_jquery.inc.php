@@ -3,6 +3,9 @@ $pg = basename($_SERVER['PHP_SELF']);
 $tableId = "";
 
 switch($pg){
+    case "attributes.php":
+        $tableId = "attribute-table";
+        break;
     case "handshapes.php":
         $tableId = "handshape-table";
         break;

@@ -13,6 +13,7 @@ $hs = getHandshapes(TRUE);
                 <form name="signCSV" id="signCSV" enctype="multipart/form-data" method="POST" action="">
                     <div class="form-group">
                         <label>CSV File</label>
+                        <p class="text-danger">* This will only upload information from the CSV and not the manual entry area.</p>
                         <input name="csvFile" type="file">
                     </div>
                     <input type="hidden" name="csv" value="yes"/>
