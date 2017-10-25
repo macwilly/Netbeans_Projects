@@ -7,12 +7,6 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- Morris Charts JavaScript -->
-<!-- This may not be needed but can leave in if Matt wants to add more features
-to the site later. -->
-<script src="../vendor/raphael/raphael.min.js"></script>
-<script src="../vendor/morrisjs/morris.min.js"></script>
-<script src="../data/morris-data.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>

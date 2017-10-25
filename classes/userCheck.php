@@ -1,8 +1,6 @@
 <?php
-
 session_start();
 include './usersClass.php';
-session_start();
 $url = "";
 $fname = filter_input(INPUT_POST, 'inputUserFirstName', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
 $lname = filter_input(INPUT_POST, 'inputUserLastName', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);

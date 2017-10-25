@@ -15,7 +15,7 @@
             echo '<a href="../pages/attributes.php">Sign Attributes</a>';
             echo '</li>';
             echo '<li>';
-            echo '<a href="../pages/attribute.php">Sign Attributes</a>';
+            echo '<a href="../pages/attribute.php?type=1">Add Attribute</a>';
             echo '</li>';
         }
         ?>

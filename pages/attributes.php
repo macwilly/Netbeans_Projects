@@ -6,6 +6,8 @@ if ($secLevel != 3) {
 }
 ?>
 <?php include '../include/header.inc.php'; ?>
+<?php include '../function/getAttribute.php'; ?>
+<?php include '../function/util.php'; ?>
 
 <div id="wrapper">
 
@@ -39,9 +41,9 @@ if ($secLevel != 3) {
                                 <?php
                                 //call class to get all of the information for the table 
                                 //build table with loop
-              /*                  $u = getUsers();
+                                $a = getAttributes(FALSE);
 
-                                foreach ($u as $printUser) {
+                                foreach ($a as $printAttribute) {
                                     $count = 1;
 
                                     //setting up the hover classes for the data table
@@ -50,18 +52,13 @@ if ($secLevel != 3) {
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    echo '<td><button onclick="editUser(' . $printUser->getId() . ')" type="button" class="btn btn-primary">Edit</button></td>';
-                                    echo '<td>' . $printUser->getUsername() . '</td>';
-                                    echo '<td>' . $printUser->getFirst_name() . '</td>';
-                                    echo '<td>' . $printUser->getLast_name() . '</td>';
-                                    echo '<td>' . $printUser->getEmail() . '</td>';
-                                    echo '<td>' . $printUser->getSecurity_level() . '</td>';
-                                    echo '<td>' . activeTextConvert($printUser->getActive()) . '</td>';
+                                    echo '<td><button onclick="editA(\'' . $printAttribute->get_aName() . '\');" type="button" class="btn btn-primary">Edit</button></td>';
+                                    echo '<td>' . $printAttribute->get_aName() . '</td>';
+                                    echo '<td>' . $printAttribute->get_desc() . '</td>';
+                                    echo '<td>' . activeTextConvert($printAttribute->get_active()) . '</td>';
                                     echo '</tr>';
                                     $count++;
                                 }
-               * 
-               */
                                 ?>
                             </tbody>
                         </table>
@@ -69,6 +66,10 @@ if ($secLevel != 3) {
                     </div>
                 </div>
                 <!-- /.col-lg-12 -->
+                <form method="POST" name="editAttribute" action="./attribute.php?type=2">
+                    <input type="hidden" name="attributeName" id="attributeName" value="">
+
+                </form>
             </div>
             <!-- /.row -->
         </div>
@@ -80,7 +81,17 @@ if ($secLevel != 3) {
 <!-- /#wrapper -->
 
 <!-- jQuery -->
+
+<script>
+
+    function editA(_name) {
+        $("#attributeName").val(_name);
+        $("form").submit();
+    }
+
+</script>
 <?php include '../include/bottom_jquery.inc.php'; ?>
+
 
 <!-- DataTables JavaScript -->
 <?php include '../include/datatable_jquery.inc.php'; ?>

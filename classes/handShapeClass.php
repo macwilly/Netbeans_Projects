@@ -178,10 +178,10 @@ class handShapeClass {
             if ($conn->query($sql) === TRUE) {
                 $ret = "../pages/handshapes.php";
             } else {
-                $ret = "../pages/handshape.php?&error=3";
+                $ret = "../pages/handshape.php?type=2&error=3";
             }
         } else {
-            $ret = "../pages/handshapes.php?&error=1";
+            $ret = "../pages/handshape.php?type=2&error=1";
         }
 
         return $ret;

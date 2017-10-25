@@ -7,6 +7,23 @@ if($secLevel != 3){
 ?>
 <?php include '../include/header.inc.php';?>
 
+<?php
+    $type = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
+    
+    if($type==1){
+        $ie = 1;
+        $button = 'Add Attribute';
+        $jsCheck = 'addAttribute()';
+        $inc = '../include/attributeAddForm.inc.php';
+    }elseif($type == 2){
+        $ie = 2;
+        $button = 'Edit Attribute';
+        $jsCheck = 'editAttribute()';
+        $inc = '../include/attributeEditForm.inc.php';
+    }
+?>
+
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -23,7 +40,7 @@ if($secLevel != 3){
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    
+                    <?php include $inc;?>
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -35,4 +52,5 @@ if($secLevel != 3){
 
 <!-- jQuery -->
 <?php include '../include/bottom_jquery.inc.php'; ?>
+<script src="../js/attributeFormCheck.js" type="text/javascript"></script>
 <?php include '../include/footer.inc.php'; ?>

@@ -27,6 +27,7 @@ function doCheck() {
     var desc = $("#inputHSDescription").val();
     var eDesc = $("#inputHSEMBRDescription").val();
     var active = $('#optionsActive:checked').val();//if not checked == undefined    
+    alert(active);
     var errorCount = 0;
 
     if (desc.length === 0) {

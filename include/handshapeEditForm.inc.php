@@ -57,7 +57,7 @@ if($img == "na"){
     <input type="hidden" name="handshapeId" id="handshapeId" value="<?php echo $hsi; ?>">
 </form>
 
-<script>
+<script type="text/javascript">
 <?php
     echo '$("#optionsActive' . $hs->get_active() . '").prop("checked",true);';
 ?>
