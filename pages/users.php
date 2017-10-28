@@ -60,7 +60,7 @@ if ($secLevel <= 1) {
                                     echo '<td>' . $printUser->getFirst_name() . '</td>';
                                     echo '<td>' . $printUser->getLast_name() . '</td>';
                                     echo '<td>' . $printUser->getEmail() . '</td>';
-                                    echo '<td>' . $printUser->getSecurity_level() . '</td>';
+                                    echo '<td>' . userTextConsert($printUser->getSecurity_level()) . '</td>';
                                     echo '<td>' . activeTextConvert($printUser->getActive()) . '</td>';
                                     echo '</tr>';
                                     $count++;

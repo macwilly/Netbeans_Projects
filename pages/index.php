@@ -1,6 +1,9 @@
 <?php include '../include/header.inc.php'; ?>
 <?php include '../function/getHandshape.php'; ?>
+<?php include '../function/getAttribute.php'; ?>
+<?php include '../function/util.php';?>
 
+<?php $active = TRUE; ?>
 <div id="wrapper">
 
     <!-- Navigation -->
@@ -56,6 +59,19 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label>Finished</label>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="optionsFinished" id="optionsFinished" value="1">Yes
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="optionsFinished" id="optionsFinished" value="0">No
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group tooltips">
@@ -64,7 +80,7 @@
                                                     <?php
                                                     //need to have an object that will get the the information for the handshapes
                                                     //get the object then display properly 
-                                                    $hs = getHandshapes(TRUE);
+                                                    $hs = getHandshapes($active);
 
                                                     foreach ($hs as $printHandshape) {
                                                         echo'<option value="' . $printHandshape->get_id() . '">'. $printHandshape->get_description() .'</option>';
@@ -74,10 +90,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" style="background-color: #31b131">
-                                            <div class="col-lg-5 col-lg-offset-7 col-md-7">
-                                                <button type="button" class="btn btn-default">Search</button>
-                                                <button type="reset" class="btn btn-default">Reset</button>
+                                        <?php
+                                            $attr = getAttributes($active);
+                                            foreach ($attr as $printAttribute){
+                                                $nm =  $printAttribute->get_aName();
+                                                //makes the html for the attribute
+                                                echo makeAttrIndexDiv($nm);
+                                            }
+                                            
+                                        ?> 
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <button type="button" class="btn btn-default pull-right" >Search</button>
+                                                <button type="reset" class="btn btn-default pull-right" style="margin-right: 1em;">Reset</button>
+                                                
                                             </div>
                                         </div>
                                     </div>

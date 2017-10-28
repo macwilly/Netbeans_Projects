@@ -10,7 +10,7 @@ function getAttributes($active) {
     
     require '../classes/attributeClass.php';
 
-    $aatributes = array();
+    $attributes = array();
 
     //connection information for the database    
     if($_SERVER["HTTP_HOST"] == "localhost" ){ //development
@@ -28,10 +28,10 @@ function getAttributes($active) {
 
         $attribute = new attributeClass($row["name"],$row["description"],$row["active"]);
 
-        array_push($aatributes, $attribute);
+        array_push($attributes, $attribute);
         //echo $user->getUsername();
     }
     //close the connection
     mysqli_close($conn);
-    return $aatributes;
+    return $attributes;
 }
