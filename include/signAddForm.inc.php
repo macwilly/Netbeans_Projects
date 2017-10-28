@@ -146,8 +146,10 @@ $attr = getAttributes(TRUE);
                         </div>
                         <div class="form-group">
                             <label>Related Signs</label>
-                            <select multiple class="form-control" name="relatedsigns" id="relatedsigns">
-                                <option>Signs</option>
+                            <select multiple class="form-control" name="relatedsigns[]" id="relatedsigns">
+                                <option value="sign1">Sign1</option>
+                                <option value="sign2">Sign2</option>
+                                <option value="sign3">Sign3</option>
                                 <?php
                                 //will add code to add in all of the signs 
                                 ?>  
