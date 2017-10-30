@@ -28,9 +28,6 @@ if ($fileName != "") { // there is a file name
     }
 }
 
-
-
-//print_r($_POST);
 //we do not check to see if the file already exists  just allow users to overwrite
 
 if ($uploadOk == 1 && $inEd == 1 && $fileName != "na") {

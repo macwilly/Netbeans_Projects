@@ -159,6 +159,7 @@ $attr = getAttributes(TRUE);
                     <div class="col-lg-12" id="attribute-section">
                         <?php
                         for ($i = 1; $i <= count($attr); $i++) {
+                            //create all of the attributes that can be
                             echo '<div class="row">';
                             echo '<div class="col-lg-6">';
                             echo '<div class="form-group" id="attr' . $i . '-container">';
