@@ -2,6 +2,9 @@
 
 session_start();
 
+include './signClass.php';
+include './sign_attributeClass.php';
+
 $target_dir_start = "../images/sign/startImg/";
 $target_dir_end = "../images/sign/endImg/";
 
@@ -36,6 +39,7 @@ if ($numOfAtt > 0) {
 }
 
 
+//checking the files. 
 if ($startFile != "") {
     $target_file_start = $target_dir_start . basename($_FILES["startImage"]["name"]);
     $fileTypeStart = pathinfo($target_file_start, PATHINFO_EXTENSION);
@@ -56,6 +60,11 @@ if ($endFile != "") {
 } else {
     $endOk = 1;
     $endFile = "na";
+}
+
+if($inEd == 1 && ($startOk == 1 && $endOk == 1)){
+    //adding a new file and everything is okay
+    
 }
 
 function checkImage($type, $img, $size) {
