@@ -39,8 +39,8 @@ class sign {
                 break;
         }
     }
-    
-    function __construct12($embr,$gloss,$dominant_start_HS,$dominant_end_HS,$nondominant_start_HS,$handedness,$nondominant_end_HS,$english_meaning,$start_photo,$end_photo,$finished,$asllvd_link) {
+
+    function __construct12($embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link) {
         $this->_embr = $embr;
         $this->_gloss = $gloss;
         $this->_dominant_start_HS = $dominant_start_HS;
@@ -52,10 +52,10 @@ class sign {
         $this->_start_photo = $start_photo;
         $this->_end_photo = $end_photo;
         $this->_finished = $finished;
-        $this->_asllvd_link = $asllvd_link;   
+        $this->_asllvd_link = $asllvd_link;
     }
-    
-    function __construct13($id,$embr,$gloss,$dominant_start_HS,$dominant_end_HS,$nondominant_start_HS,$handedness,$nondominant_end_HS,$english_meaning,$start_photo,$end_photo,$finished,$asllvd_link) {
+
+    function __construct13($id, $embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link) {
         $this->_id = $id;
         $this->_embr = $embr;
         $this->_gloss = $gloss;
@@ -69,7 +69,6 @@ class sign {
         $this->_end_photo = $end_photo;
         $this->_finished = $finished;
         $this->_asllvd_link = $asllvd_link;
-        
     }
 
     function get_id() {
@@ -188,9 +187,25 @@ class sign {
         $this->_asllvd_link = $_asllvd_link;
         return $this;
     }
-    
-    function createSign(){
-        
+
+    function createSign() {
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        $sql = "INSERT INTO sign(embr_xml, gloss, dominant_start_HS, dominant_end_HS, nondominant_start_HS,handedness,nondominant_end_HS,english_menaing, start_photo, end_photo, finished, asllvd_link) " .
+                "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param("sssi", $this->get_description(), $this->get_embrDescription(), $this->get_imageLocation(), $this->get_active());
+        $stmt->execute();
+        $stmt->close();
+        $conn->close();
     }
 
 }
