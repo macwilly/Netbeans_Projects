@@ -48,8 +48,8 @@ $attr = getAttributes(TRUE);
                 <form name="signInput" id="signInputId" enctype="multipart/form-data"  method="POST" action="">
                     <div class="col-lg-6">
                         <div class="form-group" id="gloss-container">
-                            <label class="control-label"><span class="text-danger">*</span>Gloss</label>
-                            <input class="form-control" name="inputgloss" id="inputgloss" placeholder="" maxlength="30" value="">
+                            <label class="control-label"><span class="text-danger">*</span>Gloss <span id="glossWarning"></span></label>
+                            <input class="form-control" name="inputgloss" id="inputgloss" placeholder="" maxlength="30" value="" onkeyup="alertDuplicate(this.value)">
                         </div>
                         <div class="form-group" id="english-container">
                             <label class="control-label"><span class="text-danger">*</span>English Meaning</label>
@@ -198,5 +198,30 @@ $attr = getAttributes(TRUE);
         </div>
     </div>
 </div>
+<script>
+                                function alertDuplicate(str) {
+                                    if (str.length == 0) {
+                                        document.getElementById("glossWarning").innerHTML = "";
+                                        $('#gloss-container').removeClass('has-error');
+                                    } else {
+                                        var xmlhttp = new XMLHttpRequest();
+                                        xmlhttp.onreadystatechange = function () {
+                                            if (this.readyState == 4 && this.status == 200) {
+                                                var text = this.responseText;
+                                                if (text == "Ok") {
+                                                    document.getElementById("glossWarning").innerHTML = "";
+                                                    $('#gloss-container').removeClass('has-error');
+                                                } else {
+                                                    document.getElementById("glossWarning").innerHTML = text;
+                                                    $('#gloss-container').addClass('has-error');
+                                                }
 
+                                            }
+                                        };
+                                        
+                                        xmlhttp.open("GET", "../function/checkGloss.php?q=" + encodeURIComponent(str), true);
+                                        xmlhttp.send();
+                                    }
+                                }
+</script>
 <script src="../js/signFormCheck.js" type="text/javascript"></script>
