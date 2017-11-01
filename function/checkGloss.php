@@ -13,9 +13,9 @@ include '../include/connection_open.inc.php';
 $sql = "SELECT gloss FROM sign WHERE gloss = '" . $q . "'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    echo 'This is a duplicate gloss. Please make sure that it is unique ' . $sql;
+    echo 'This is a duplicate gloss. Please make sure that it is unique.';
 } else {
-    echo 'Ok ' .$sql;
+    echo 'Ok';
 }
 mysqli_close($conn);
 

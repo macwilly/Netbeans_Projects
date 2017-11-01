@@ -31,13 +31,31 @@ class sign {
             case 5:
                 self::__construct5($argv[0], $argv[1], $argv[2], $argv[3], $argv[4]);
                 break;
+            case 12:
+                self::__construct12($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11]);
+                break;
             case 13:
                 self::__construct13($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11], $argv[12]);
                 break;
         }
     }
     
-    function __construct5($id,$embr,$gloss,$dominant_start_HS,$dominant_end_HS,$nondominant_start_HS,$handedness,$nondominant_end_HS,$english_meaning,$start_photo,$end_photo,$finished,$asllvd_link) {
+    function __construct12($embr,$gloss,$dominant_start_HS,$dominant_end_HS,$nondominant_start_HS,$handedness,$nondominant_end_HS,$english_meaning,$start_photo,$end_photo,$finished,$asllvd_link) {
+        $this->_embr = $embr;
+        $this->_gloss = $gloss;
+        $this->_dominant_start_HS = $dominant_start_HS;
+        $this->_dominant_end_HS = $dominant_end_HS;
+        $this->_nondominant_start_HS = $nondominant_start_HS;
+        $this->_handedness = $handedness;
+        $this->_nondominant_end_HS = $nondominant_end_HS;
+        $this->_english_meaning = $english_meaning;
+        $this->_start_photo = $start_photo;
+        $this->_end_photo = $end_photo;
+        $this->_finished = $finished;
+        $this->_asllvd_link = $asllvd_link;   
+    }
+    
+    function __construct13($id,$embr,$gloss,$dominant_start_HS,$dominant_end_HS,$nondominant_start_HS,$handedness,$nondominant_end_HS,$english_meaning,$start_photo,$end_photo,$finished,$asllvd_link) {
         $this->_id = $id;
         $this->_embr = $embr;
         $this->_gloss = $gloss;
@@ -169,6 +187,10 @@ class sign {
     function set_asllvd_link($_asllvd_link) {
         $this->_asllvd_link = $_asllvd_link;
         return $this;
+    }
+    
+    function createSign(){
+        
     }
 
 }

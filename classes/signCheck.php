@@ -62,8 +62,21 @@ if ($endFile != "") {
     $endFile = "na";
 }
 
-if($inEd == 1 && ($startOk == 1 && $endOk == 1)){
-    //adding a new file and everything is okay
+if($inEd == 1 && ($startOk == 1 && $startFile == "na")&&($endOk == 1 && $endFile == "na")){
+    //adding a new sign and everything is okay and there are no images
+    insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+}
+
+function insertSign($g,$e,$a,$f,$h,$embr,$ds,$de,$nds,$nde,$sf,$ef){
+    $s = new sign($g,$e,$a,$f,$h,$embr,$ds,$de,$nds,$nde,$sf,$ef);
+    $s->createSign();
+}
+
+function insertAttribute(){
+    
+}
+
+function insertRelatedSigns(){
     
 }
 
