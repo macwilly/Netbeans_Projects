@@ -1,9 +1,11 @@
 <?php
 include '../function/getHandshape.php';
 include '../function/getAttribute.php';
+include '../function/getSigns.php';
 include '../function/util.php';
 $hs = getHandshapes(TRUE);
 $attr = getAttributes(TRUE);
+$sign = getSign();
 ?>
 
 <div class="row">
@@ -106,7 +108,7 @@ $attr = getAttributes(TRUE);
                         <div class="form-group">
                             <label>Start Nondominant Handshape</label>
                             <select class="form-control" name="sndh" id="sndh">
-                                <option value="none">None</option>
+                                <option value="0">None</option>
                                 <?php
                                 foreach ($hs as $printHandshape) {
                                     echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
@@ -128,7 +130,7 @@ $attr = getAttributes(TRUE);
                         <div class="form-group">
                             <label>End Nondominant Handshape</label>
                             <select class="form-control" name="endh" id="endh">
-                                <option value="none">None</option>
+                                <option value="0">None</option>
                                 <?php
                                 foreach ($hs as $printHandshape) {
                                     echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
@@ -147,11 +149,11 @@ $attr = getAttributes(TRUE);
                         <div class="form-group">
                             <label>Related Signs</label>
                             <select multiple class="form-control" name="relatedsigns[]" id="relatedsigns">
-                                <option value="sign1">Sign1</option>
-                                <option value="sign2">Sign2</option>
-                                <option value="sign3">Sign3</option>
                                 <?php
                                 //will add code to add in all of the signs 
+                                 foreach ($sign as $printSign){
+                                     echo '<option value="' . $printSign->get_id() . '">' . $printSign->get_gloss() . '</option>';
+                                 }
                                 ?>  
                             </select>
                         </div>
@@ -199,29 +201,33 @@ $attr = getAttributes(TRUE);
     </div>
 </div>
 <script>
-                                function alertDuplicate(str) {
-                                    if (str.length == 0) {
-                                        document.getElementById("glossWarning").innerHTML = "";
-                                        $('#gloss-container').removeClass('has-error');
-                                    } else {
-                                        var xmlhttp = new XMLHttpRequest();
-                                        xmlhttp.onreadystatechange = function () {
-                                            if (this.readyState == 4 && this.status == 200) {
-                                                var text = this.responseText;
-                                                if (text == "Ok") {
-                                                    document.getElementById("glossWarning").innerHTML = "";
-                                                    $('#gloss-container').removeClass('has-error');
-                                                } else {
-                                                    document.getElementById("glossWarning").innerHTML = text;
-                                                    $('#gloss-container').addClass('has-error');
-                                                }
+    function alertDuplicate(str) {
+        if (str.length == 0) {
+            document.getElementById("glossWarning").innerHTML = "";
+            $('#gloss-container').removeClass('has-error');
+        } else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var text = this.responseText;
+                    if (text == "Ok") {
+                        document.getElementById("glossWarning").innerHTML = "";
+                        $('#gloss-container').removeClass('has-error');
+                        $('#gloss-container').removeClass('is-dup');
+                    } else {
+                        document.getElementById("glossWarning").innerHTML = text;
+                        $('#gloss-container').addClass('has-error');
+                        $('#gloss-container').addClass('is-dup');
+                    }
 
-                                            }
-                                        };
-                                        
-                                        xmlhttp.open("GET", "../function/checkGloss.php?q=" + encodeURIComponent(str), true);
-                                        xmlhttp.send();
-                                    }
-                                }
+                }
+            };
+
+            xmlhttp.open("GET", "../function/checkGloss.php?q=" + encodeURIComponent(str), true);
+            xmlhttp.send();
+        }
+    }
+    
+    
 </script>
 <script src="../js/signFormCheck.js" type="text/javascript"></script>

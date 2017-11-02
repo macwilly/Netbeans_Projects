@@ -22,14 +22,8 @@ class sign {
             case 1:
                 self::__construct1($argv[0]);
                 break;
-            case 3:
-                self::__construct3($argv[0], $argv[1], $argv[2]);
-                break;
-            case 4:
-                self::__construct4($argv[0], $argv[1], $argv[2], $argv[3]);
-                break;
-            case 5:
-                self::__construct5($argv[0], $argv[1], $argv[2], $argv[3], $argv[4]);
+            case 2:
+                self::__construct2($argv[0], $argv[1]);
                 break;
             case 12:
                 self::__construct12($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11]);
@@ -39,7 +33,12 @@ class sign {
                 break;
         }
     }
-
+    
+    function __construct2($id,$gloss) {
+        $this->_id = $id;
+        $this->_gloss = $gloss;
+    }
+    
     function __construct12($embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link) {
         $this->_embr = $embr;
         $this->_gloss = $gloss;
@@ -198,14 +197,16 @@ class sign {
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
 
-        $sql = "INSERT INTO sign(embr_xml, gloss, dominant_start_HS, dominant_end_HS, nondominant_start_HS,handedness,nondominant_end_HS,english_menaing, start_photo, end_photo, finished, asllvd_link) " .
+        $sql = "INSERT INTO sign(embr_xml, gloss, dominant_start_HS, dominant_end_HS, nondominant_start_HS,handedness,nondominant_end_HS,english_meaning, start_photo, end_photo, finished, asllvd_link) " .
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
 
-        $stmt->bind_param("sssi", $this->get_description(), $this->get_embrDescription(), $this->get_imageLocation(), $this->get_active());
+        $stmt->bind_param("ssiiiiisssis",$this->_embr, $this->_gloss, $this->_dominant_start_HS, $this->_dominant_end_HS, $this->_nondominant_start_HS, $this->_handedness,$this->_nondominant_end_HS,$this->_english_meaning,$this->_start_photo,$this->_end_photo,$this->_finished,$this->_asllvd_link);
         $stmt->execute();
         $stmt->close();
         $conn->close();
+        
+        return "../pages/signList.php";
     }
 
 }

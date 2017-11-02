@@ -64,13 +64,20 @@ if ($endFile != "") {
 
 if($inEd == 1 && ($startOk == 1 && $startFile == "na")&&($endOk == 1 && $endFile == "na")){
     //adding a new sign and everything is okay and there are no images
-    insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    $url = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+} elseif($inEd ==1 && ($startOk == 1 && $startFile != "na")&&($endOk == 1 && $endFile != "na")){
+    $url = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    if($url == '../pages/signList.php'){
+        
+    }
 }
 
 function insertSign($g,$e,$a,$f,$h,$embr,$ds,$de,$nds,$nde,$sf,$ef){
-    $s = new sign($g,$e,$a,$f,$h,$embr,$ds,$de,$nds,$nde,$sf,$ef);
-    $s->createSign();
+    $s = new sign($embr,$g,$ds,$de,$nds,$h,$nde,$e,$sf,$ef,$f,$a);
+    $ret = $s->createSign();
+    return $ret;
 }
+
 
 function insertAttribute(){
     
@@ -100,6 +107,8 @@ function checkImage($type, $img, $size) {
 
     return $uploadOk;
 }
+
+header("Location: " . $url);
 
 
 //echo $gloss  . '<br>';

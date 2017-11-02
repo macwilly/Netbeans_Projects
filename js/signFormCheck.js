@@ -1,5 +1,8 @@
 function doSignCreate() {
-
+    //stopping the checking from progressing if the sign is a duplicate
+    if($('#gloss-container').hasClass('is-dup')){
+        return;
+    }
     removeErrors();
     if(check() > 0){
         return;
