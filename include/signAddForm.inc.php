@@ -152,7 +152,7 @@ $sign = getSign();
                                 <?php
                                 //will add code to add in all of the signs 
                                  foreach ($sign as $printSign){
-                                     echo '<option value="' . $printSign->get_id() . '">' . $printSign->get_gloss() . '</option>';
+                                     echo '<option value="' . $printSign->get_gloss() . '">' . $printSign->get_gloss() . '</option>';
                                  }
                                 ?>  
                             </select>

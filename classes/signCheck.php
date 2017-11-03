@@ -3,6 +3,7 @@
 session_start();
 
 include './signClass.php';
+include './relatedSignClass.php';
 include './sign_attributeClass.php';
 
 $target_dir_start = "../images/sign/startImg/";
@@ -38,7 +39,6 @@ if ($numOfAtt > 0) {
     }
 }
 
-
 //checking the files. 
 if ($startFile != "") {
     $target_file_start = $target_dir_start . basename($_FILES["startImage"]["name"]);
@@ -64,11 +64,37 @@ if ($endFile != "") {
 
 if($inEd == 1 && ($startOk == 1 && $startFile == "na")&&($endOk == 1 && $endFile == "na")){
     //adding a new sign and everything is okay and there are no images
-    $url = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    //checking to see if any related signs were selected
+    if($signStat == 'ok' && sizeof($relatedSign)>0){
+        $rsStat = insertRelatedSigns($gloss,$relatedSign);
+    }
 } elseif($inEd ==1 && ($startOk == 1 && $startFile != "na")&&($endOk == 1 && $endFile != "na")){
-    $url = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
-    if($url == '../pages/signList.php'){
-        
+    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    if($signStat == 'ok'){
+        if(move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start) && move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)){
+            $url = $url;
+        }else{
+            $url = '../pages/sign.php?type=1&error=fileUpload';
+        }
+    }
+} elseif($inEd ==1 && ($startOk == 1 && $startFile != "na")&&($endOk == 1 && $endFile == "na")){
+    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    if($signStat == 'ok'){
+        if(move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start)){
+            $url = $url;
+        }else{
+            $url = '../pages/sign.php?type=1&error=fileUpload';
+        }
+    }
+} elseif($inEd ==1 && ($startOk == 1 && $startFile == "na")&&($endOk == 1 && $endFile != "na")){
+    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    if($signStat == 'ok'){
+        if(move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_end)){
+            $url = $url;
+        }else{
+            $url = '../pages/sign.php?type=1&error=fileUpload';
+        }
     }
 }
 
@@ -83,9 +109,21 @@ function insertAttribute(){
     
 }
 
-function insertRelatedSigns(){
-    
+function insertRelatedSigns($gl,$related){
+    foreach ($related as $value) {
+        $rs = new relatedSignClass();
+        $rs->set_s_sign($gl);
+        $rs->set_r_sign($value);
+        $count += $rs->insertRelatedSign();
+        //inserts the opposit way so both will have the relation
+        $rsOp = new relatedSignClass($value,$gl);
+        $count += $rsOp->insertRelatedSign();
+    }
+    if($count == (sizeof($related) * 2)){
+        return "ok";
+    }
 }
+
 
 function checkImage($type, $img, $size) {
     if ($img !== FALSE) {

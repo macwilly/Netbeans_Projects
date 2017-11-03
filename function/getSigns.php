@@ -1,7 +1,7 @@
 <?php
 
 function getSign(){
-    $sql = "SELECT id, gloss FROM sign";
+    $sql = "SELECT gloss FROM sign";
     
     require '../classes/signClass.php';
     $signs = array();
@@ -20,7 +20,7 @@ function getSign(){
 
     while ($row = $result->fetch_assoc()) {
 
-        $sign = new sign($row["id"],$row["gloss"]);
+        $sign = new sign($row["gloss"]);
 
         array_push($signs, $sign);
         //echo $user->getUsername();

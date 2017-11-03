@@ -2,7 +2,6 @@
 
 class sign {
 
-    private $_id;
     private $_embr;
     private $_gloss;
     private $_dominant_start_HS;
@@ -28,17 +27,13 @@ class sign {
             case 12:
                 self::__construct12($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11]);
                 break;
-            case 13:
-                self::__construct13($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11], $argv[12]);
-                break;
         }
     }
-    
-    function __construct2($id,$gloss) {
-        $this->_id = $id;
+
+    function __construct1($gloss) {
         $this->_gloss = $gloss;
     }
-    
+
     function __construct12($embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link) {
         $this->_embr = $embr;
         $this->_gloss = $gloss;
@@ -52,26 +47,6 @@ class sign {
         $this->_end_photo = $end_photo;
         $this->_finished = $finished;
         $this->_asllvd_link = $asllvd_link;
-    }
-
-    function __construct13($id, $embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link) {
-        $this->_id = $id;
-        $this->_embr = $embr;
-        $this->_gloss = $gloss;
-        $this->_dominant_start_HS = $dominant_start_HS;
-        $this->_dominant_end_HS = $dominant_end_HS;
-        $this->_nondominant_start_HS = $nondominant_start_HS;
-        $this->_handedness = $handedness;
-        $this->_nondominant_end_HS = $nondominant_end_HS;
-        $this->_english_meaning = $english_meaning;
-        $this->_start_photo = $start_photo;
-        $this->_end_photo = $end_photo;
-        $this->_finished = $finished;
-        $this->_asllvd_link = $asllvd_link;
-    }
-
-    function get_id() {
-        return $this->_id;
     }
 
     function get_embr() {
@@ -120,11 +95,6 @@ class sign {
 
     function get_asllvd_link() {
         return $this->_asllvd_link;
-    }
-
-    function set_id($_id) {
-        $this->_id = $_id;
-        return $this;
     }
 
     function set_embr($_embr) {
@@ -201,12 +171,24 @@ class sign {
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
 
-        $stmt->bind_param("ssiiiiisssis",$this->_embr, $this->_gloss, $this->_dominant_start_HS, $this->_dominant_end_HS, $this->_nondominant_start_HS, $this->_handedness,$this->_nondominant_end_HS,$this->_english_meaning,$this->_start_photo,$this->_end_photo,$this->_finished,$this->_asllvd_link);
+        $stmt->bind_param("ssiiiiisssis", $this->_embr, $this->_gloss, $this->_dominant_start_HS, $this->_dominant_end_HS, $this->_nondominant_start_HS, $this->_handedness, $this->_nondominant_end_HS, $this->_english_meaning, $this->_start_photo, $this->_end_photo, $this->_finished, $this->_asllvd_link);
         $stmt->execute();
         $stmt->close();
         $conn->close();
-        
-        return "../pages/signList.php";
+
+        return "ok";
+    }
+
+    function getNewSignId() {
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+        $sql = "SELECT id FROM";
     }
 
 }
