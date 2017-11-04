@@ -9,7 +9,7 @@ include './sign_attributeClass.php';
 $target_dir_start = "../images/sign/startImg/";
 $target_dir_end = "../images/sign/endImg/";
 
-$gloss = strtoupper(filter_input(INPUT_POST, 'inputgloss', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED));
+$gloss = filter_input(INPUT_POST, 'inputgloss', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
 $english = filter_input(INPUT_POST, 'inputenglish', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
 $asllvdLink = filter_input(INPUT_POST, 'inputasllvd');
 $fish = filter_input(INPUT_POST, 'optionsFinished', FILTER_SANITIZE_NUMBER_INT);
@@ -28,6 +28,9 @@ $numOfAtt = filter_input(INPUT_POST, 'numberOfAttributes', FILTER_SANITIZE_NUMBE
 $attList = array();
 $attPropList = array();
 
+if (sizeof($relatedSign) == 0) {
+    $rsStat = "ok";
+}
 //checking to see if there are active attributes
 if ($numOfAtt > 0) {
     //loop through the number of potential attributes
@@ -37,6 +40,12 @@ if ($numOfAtt > 0) {
             array_push($attPropList, $_POST['attrProp' . $i]);
         }
     }
+    //if there are no attributes filled out
+    if(sizeof($attList)== 0){
+        $attStat = "ok";
+    }
+} else {
+    $attStat = "ok";
 }
 
 //checking the files. 
@@ -62,68 +71,125 @@ if ($endFile != "") {
     $endFile = "na";
 }
 
-if($inEd == 1 && ($startOk == 1 && $startFile == "na")&&($endOk == 1 && $endFile == "na")){
+if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile == "na")) {
     //adding a new sign and everything is okay and there are no images
-    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
     //checking to see if any related signs were selected
-    if($signStat == 'ok' && sizeof($relatedSign)>0){
-        $rsStat = insertRelatedSigns($gloss,$relatedSign);
+    if ($signStat == 'ok' && sizeof($relatedSign) > 0) {
+        $rsStat = insertRelatedSigns($gloss, $relatedSign);
     }
-} elseif($inEd ==1 && ($startOk == 1 && $startFile != "na")&&($endOk == 1 && $endFile != "na")){
-    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
-    if($signStat == 'ok'){
-        if(move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start) && move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)){
-            $url = $url;
-        }else{
+    //check to see if any attributes have been added
+    if ($signStat == 'ok' && sizeof($attList) > 0) {
+        $attStat = insertAttribute($gloss, $attList, $attPropList);
+    }
+
+    if ($signStat == "ok" && $rsStat == "ok" && $attStat == "ok") {
+        $url = '../pages/signList.php';
+    } else {
+        $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat . '&$rsStat=' . $rsStat. '&attstat=' . $attStat;
+    }
+} elseif ($inEd == 1 && ($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile != "na")) {
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
+    if ($signStat == 'ok') {
+        if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start) && move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)) {
+            if (sizeof($relatedSign) > 0) {
+                $rsStat = insertRelatedSigns($gloss, $relatedSign);
+            }
+            //check to see if any attributes have been added
+            if ($signStat == 'ok' && sizeof($attList) > 0) {
+                $attStat = insertAttribute($gloss, $attList, $attPropList);
+            }
+
+            if ($signStat == "ok" && $rsStat == "ok" && $attStat == "ok") {
+                $url = '../pages/signList.php';
+            } else {
+                $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat . '&$rsStat=' . $rsStat. '&attstat=' . $attStat;
+            }
+        } else {
             $url = '../pages/sign.php?type=1&error=fileUpload';
         }
     }
-} elseif($inEd ==1 && ($startOk == 1 && $startFile != "na")&&($endOk == 1 && $endFile == "na")){
-    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
-    if($signStat == 'ok'){
-        if(move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start)){
-            $url = $url;
-        }else{
+} elseif ($inEd == 1 && ($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile == "na")) {
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
+    if ($signStat == 'ok') {
+        if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start)) {
+            if (sizeof($relatedSign) > 0) {
+                $rsStat = insertRelatedSigns($gloss, $relatedSign);
+            }
+            //check to see if any attributes have been added
+            if ($signStat == 'ok' && sizeof($attList) > 0) {
+                $attStat = insertAttribute($gloss, $attList, $attPropList);
+            }
+
+            if ($signStat == "ok" && $rsStat == "ok" && $attStat == "ok") {
+                $url = '../pages/signList.php';
+            } else {
+                $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat . '&$rsStat=' . $rsStat. '&attstat=' . $attStat;
+            }
+        } else {
             $url = '../pages/sign.php?type=1&error=fileUpload';
         }
     }
-} elseif($inEd ==1 && ($startOk == 1 && $startFile == "na")&&($endOk == 1 && $endFile != "na")){
-    $signStat = insertSign($gloss,$english,$asllvdLink,$fish,$hand,$embr,$domStart,$domEnd,$nonDomStart,$nonDomEnd,$startFile,$endFile);
-    if($signStat == 'ok'){
-        if(move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_end)){
-            $url = $url;
-        }else{
+} elseif ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile != "na")) {
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
+    if ($signStat == 'ok') {
+        if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_end)) {
+            if (sizeof($relatedSign) > 0) {
+                $rsStat = insertRelatedSigns($gloss, $relatedSign);
+            }
+            //check to see if any attributes have been added
+            if ($signStat == 'ok' && sizeof($attList) > 0) {
+                $attStat = insertAttribute($gloss, $attList, $attPropList);
+            }
+
+            if ($signStat == "ok" && $rsStat == "ok" && $attStat == "ok") {
+                $url = '../pages/signList.php';
+            } else {
+                $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat . '&$rsStat=' . $rsStat. '&attstat=' . $attStat;
+            }
+        } else {
             $url = '../pages/sign.php?type=1&error=fileUpload';
         }
     }
 }
 
-function insertSign($g,$e,$a,$f,$h,$embr,$ds,$de,$nds,$nde,$sf,$ef){
-    $s = new sign($embr,$g,$ds,$de,$nds,$h,$nde,$e,$sf,$ef,$f,$a);
+function insertSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef) {
+    $s = new sign($embr, $g, $ds, $de, $nds, $h, $nde, $e, $sf, $ef, $f, $a);
     $ret = $s->createSign();
     return $ret;
 }
 
-
-function insertAttribute(){
-    
+function insertAttribute($gl, $ats, $props) {
+    $count = 0;
+    for ($i = 0; $i < sizeof($ats); $i++) {
+        $sa = new sign_attributeClass($gl, $ats[$i], $props[$i]);
+        $count += $sa->insertSignAttribute();
+    }
+    if ($count == sizeof($ats)) {
+        return "ok";
+    } else {
+        return "bad";
+    }
 }
 
-function insertRelatedSigns($gl,$related){
+function insertRelatedSigns($gl, $related) {
+    $count = 0;
     foreach ($related as $value) {
         $rs = new relatedSignClass();
         $rs->set_s_sign($gl);
         $rs->set_r_sign($value);
         $count += $rs->insertRelatedSign();
         //inserts the opposit way so both will have the relation
-        $rsOp = new relatedSignClass($value,$gl);
+        $rsOp = new relatedSignClass($value, $gl);
         $count += $rsOp->insertRelatedSign();
     }
-    if($count == (sizeof($related) * 2)){
+    //inserting twice need to double the check
+    if ($count == (sizeof($related) * 2)) {
         return "ok";
+    } else {
+        return "bad";
     }
 }
-
 
 function checkImage($type, $img, $size) {
     if ($img !== FALSE) {
@@ -147,24 +213,3 @@ function checkImage($type, $img, $size) {
 }
 
 header("Location: " . $url);
-
-
-//echo $gloss  . '<br>';
-//echo $english . '<br>';
-//echo $asllvdLink . '<br>';
-//echo $fish . '<br>';
-//echo $hand . '<br>';
-//echo $embr . '<br>';
-//echo $domStart . '<br>';
-//echo $domEnd . '<br>';
-//echo $nonDomStart . '<br>';
-//echo $nonDomEnd . '<br>';
-//echo $startFile . '<br>';
-//echo $endFile . '<br>';
-//echo $inEd . '<br>';
-////php arrays are base 0s
-//print_r($relatedSign). '<br>';
-//print_r($attList). '<br>';
-//print_r($attPropList). '<br>';
-//echo array_count_values($attList);
-//echo array_count_values($attPropList);

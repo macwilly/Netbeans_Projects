@@ -13,9 +13,10 @@
  */
 class sign_attributeClass {
 
-    private $_signId;
+    private $_sign;
     private $_attribute;
     private $_description;
+    
 
     function __construct() {
 
@@ -34,23 +35,22 @@ class sign_attributeClass {
     }
 
     private function __construct1($sign) {
-        $this->_signId = $sign;
+        $this->_sign = $sign;
     }
 
     private function __construct2($sign, $attribute) {
-        $this->_signId = $sign;
+        $this->_sign = $sign;
         $this->_attribute = $attribute;
     }
 
     private function __construct3($sign, $attribute, $description) {
-        $this->_signId = $sign;
+        $this->_sign = $sign;
         $this->_attribute = $attribute;
         $this->_description = $description;
     }
 
-    
-    function get_signId() {
-        return $this->_signId;
+    function get_sign() {
+        return $this->_sign;
     }
 
     function get_attribute() {
@@ -61,8 +61,8 @@ class sign_attributeClass {
         return $this->_description;
     }
 
-    function set_signId($_signId) {
-        $this->_signId = $_signId;
+    function set_sign($_signId) {
+        $this->_sign = $_signId;
     }
 
     function set_attribute($_attribute) {
@@ -73,34 +73,31 @@ class sign_attributeClass {
         $this->_description = $_description;
     }
 
-    function createAttribute() {
-        if (!$this->isDuplicate($this->_aName)) {
+    function insertSignAttribute() {
 
-            //connection information for the database    
-            if ($_SERVER["HTTP_HOST"] == "localhost") { //development
-                require '../../../bin/dbConnection.inc.php';
-            } else {
-                require '../../bin/dbConnection.inc.php';
-            }
-
-            //process to open a connection to the database
-            include '../include/connection_open.inc.php';
-
-            $sql = "INSERT INTO `attribute_sign` (`sign_id`, `attribute`, `description`) " .
-                    "VALUES(?,?,?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iis", $this->get_signId(), $this->get_attribute(), $this->get_description());
-            $stmt->execute();
-            $stmt->close();
-            $conn->close();
-            $ret = '../pages/attributes.php';
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
         } else {
-            $ret = '../pages/attribute.php?type=1&error=2'; //used 3 becasue this is what I am returning to the error section for the url 
+            require '../../bin/dbConnection.inc.php';
         }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        $sql = "INSERT INTO sign_attribute (sign, attribute, description) " .
+                "VALUES(?,?,?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sss", $this->get_sign(), $this->get_attribute(), $this->get_description());
+        $stmt->execute();
+        $stmt->close();
+        $conn->close();
+        $ret = 1;
+
         return $ret;
     }
-    
-    private function isDuplicate($signId,$attribute,$desc) {
+
+    private function isDuplicate($signId, $attribute, $desc) {
         $ret = FALSE;
         //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
@@ -113,7 +110,7 @@ class sign_attributeClass {
         include '../include/connection_open.inc.php';
 
         $sql = "SELECT * FROM sign_attribute WHERE sign_id = " . $signId .
-                " AND attribute =" . $attribute . " AND description = '".$desc."'";
+                " AND attribute =" . $attribute . " AND description = '" . $desc . "'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $ret = TRUE;

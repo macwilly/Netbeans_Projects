@@ -2,9 +2,19 @@
 
 function activeTextConvert($act){
     if($act == 1){
-        $text = "Yes";
+        $text = "Active";
     }else{
-        $text = "No";
+        $text = "Inactive";
+    }
+        
+    return $text;
+}
+
+function finshTextConvert($fish){
+    if($fish == 1){
+        $text = "Finished";
+    }else{
+        $text = "Not Finished";
     }
         
     return $text;

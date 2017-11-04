@@ -21,8 +21,8 @@ class sign {
             case 1:
                 self::__construct1($argv[0]);
                 break;
-            case 2:
-                self::__construct2($argv[0], $argv[1]);
+            case 9:
+                self::__construct9($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8]);
                 break;
             case 12:
                 self::__construct12($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11]);
@@ -34,6 +34,18 @@ class sign {
         $this->_gloss = $gloss;
     }
 
+    function __construct9($gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished) {
+        $this->_gloss = $gloss;
+        $this->_dominant_start_HS = $dominant_start_HS;
+        $this->_dominant_end_HS = $dominant_end_HS;
+        $this->_nondominant_start_HS = $nondominant_start_HS;
+        $this->_nondominant_end_HS = $nondominant_end_HS;
+        $this->_english_meaning = $english_meaning;
+        $this->_start_photo = $start_photo;
+        $this->_end_photo = $end_photo;
+        $this->_finished = $finished;
+    }
+    
     function __construct12($embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link) {
         $this->_embr = $embr;
         $this->_gloss = $gloss;

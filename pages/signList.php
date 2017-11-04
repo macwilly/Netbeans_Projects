@@ -1,7 +1,7 @@
-<?php 
+<?php
 session_start();
 $secLevel = $_SESSION['secLevel'];
-if($secLevel == ""){
+if ($secLevel == "") {
     header('Location: ./index.php');
 }
 ?>
@@ -32,7 +32,8 @@ if($secLevel == ""){
                         <table width="100%" class="table table-striped table-bordered table-hover" id="sign-table">
                             <thead>
                                 <tr>
-                                    <?php if ($secLevel == 2) {
+                                    <?php
+                                    if ($secLevel >= 2) {
                                         echo '<th></th>';
                                     }
                                     ?>
@@ -51,25 +52,33 @@ if($secLevel == ""){
                                 <?php
                                 //call class to get all of the information for the table 
                                 //build table with loop
-                                //$hs = getHandshapes();
+                                $s = getSignList();
 
-                                /* foreach ($hs as $printHandshape) {
-                                  $count = 1;
+                                foreach ($s as $printSign) {
+                                    $count = 1;
 
-                                  //setting up the hover classes for the data table
-                                  if ($count % 2 != 0) {
-                                  echo '<tr class="odd">';
-                                  } else {
-                                  echo '<tr class="even">';
-                                  }
-                                  echo '<td><button onclick="editHandshape('.$printHandshape->get_id() .')" type="button" class="btn btn-primary">View</button></td>';
-                                  echo '<td>' . $printHandshape->get_description() . '</td>';
-                                  echo '<td>' . $printHandshape->get_embrDescription() . '</td>';
-                                  echo '<td>' . $printHandshape->get_imageLocation() . '</td>'; // will need to chage this to be a link
-                                  echo '<td>' . activeTextConvert($printHandshape->get_active()) . '</td>';
-                                  echo '</tr>';
-                                  $count++;
-                                  } */
+                                    //setting up the hover classes for the data table
+                                    if ($count % 2 != 0) {
+                                        echo '<tr class="odd">';
+                                    } else {
+                                        echo '<tr class="even">';
+                                    }
+                                    if ($secLevel >= 2) {
+                                        echo '<td><button onclick="editSign(' . $printSign->get_gloss() . ')" type="button" class="btn btn-primary">View</button></td>';
+                                    }
+
+                                    echo '<td>' . $printSign->get_gloss() . '</td>';
+                                    echo '<td>' . $printSign->get_dominant_start_HS() . '</td>';
+                                    echo '<td>' . $printSign->get_nondominant_start_HS() . '</td>'; // will need to chage this to be a image
+                                    echo '<td>' . $printSign->get_start_photo() . '</td>'; // will need to chage this to be a image
+                                    echo '<td>' . $printSign->get_end_photo() . '</td>'; // will need to chage this to be a image
+                                    echo '<td>' . $printSign->get_dominant_end_HS() . '</td>'; // will need to chage this to be a image
+                                    echo '<td>' . $printSign->get_nondominant_end_HS() . '</td>'; // will need to chage this to be a image
+                                    echo '<td>' . $printSign->get_english_meaning() . '</td>';
+                                    echo '<td>' . finshTextConvert($printSign->get_finished()) . '</td>';
+                                    echo '</tr>';
+                                    $count++;
+                                }
                                 ?>
                             </tbody>
                         </table>
@@ -98,7 +107,7 @@ if($secLevel == ""){
 <!-- DataTables JavaScript -->
 <script>
 
-    function editHandshape(_id) {
+    function editSign(_gloss) {
         $("#handshapeId").val(_id);
         $("form").submit();
     }

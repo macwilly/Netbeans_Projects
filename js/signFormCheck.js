@@ -34,9 +34,11 @@ function check() {
     if (numAt > 0) {
         for (i = 1; i <= numAt; i++) {
             if ($('#selAttr' + i).val() !== 'none' && ($('#attrProp' + i).val() === undefined || $('#attrProp' + i).val() == "")) {
+                errorCheck += 1;
                 alert("You cannot have an Attribute without a property.");
             }
             if ($('#selAttr' + i).val() === 'none' && ($('#attrProp' + i).val() !== "")) {
+                errorCheck += 1;
                 alert("You cannot have Propterty infomration without selecting an attribute.");
             }
         }
