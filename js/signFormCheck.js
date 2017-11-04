@@ -1,14 +1,20 @@
-function doSignCreate() {
-    //stopping the checking from progressing if the sign is a duplicate
-    if($('#gloss-container').hasClass('is-dup')){
-        return;
-    }
-    removeErrors();
-    if(check() > 0){
-        return;
-    }else{
-        $('#signInputId').attr('action', '../classes/signCheck.php');
-        $("#signInputId").submit();
+function doSignCreate(csv) {
+
+    if (csv === 'yes') {
+        $('#signCSV').attr('action', '../classes/signCheckCSV.php');
+        $("#signCSV").submit();
+    } else {
+        //stopping the checking from progressing if the sign is a duplicate
+        if ($('#gloss-container').hasClass('is-dup')) {
+            return;
+        }
+        removeErrors();
+        if (check() > 0) {
+            return;
+        } else {
+            $('#signInputId').attr('action', '../classes/signCheck.php');
+            $("#signInputId").submit();
+        }
     }
 
 }
@@ -59,36 +65,36 @@ function check() {
         $("#gloss-container").addClass("has-error");
         errorCheck += 1;
     }
-    if(english === "" || english === " "){
+    if (english === "" || english === " ") {
         $("#english-container").addClass("has-error");
         errorCheck += 1;
     }
-    if(asllvd === "" || asllvd === " "){
+    if (asllvd === "" || asllvd === " ") {
         $("#asllvd-container").addClass("has-error");
         errorCheck += 1;
     }
-    
-    if(fish1 === undefined && fish0 === undefined){
+
+    if (fish1 === undefined && fish0 === undefined) {
         $("#finished-container").addClass("has-error");
         errorCheck += 1;
     }
-    
-    if(handed1 === undefined && handed2 === undefined){
+
+    if (handed1 === undefined && handed2 === undefined) {
         $("#handedness-container").addClass("has-error");
         errorCheck += 1;
     }
-    
-    if(sdh === 'none'){
+
+    if (sdh === 'none') {
         $("#dom-hs-container").addClass("has-error");
         errorCheck += 1;
     }
-    
-    if(edh === 'none'){
+
+    if (edh === 'none') {
         $("#dom-hs-end-container").addClass("has-error");
         errorCheck += 1;
     }
-    
-        
+
+
     return errorCheck;
 }
 

@@ -21,13 +21,24 @@ $sign = getSign();
                         <p class="text-danger">* This will only upload information from the CSV and not the manual entry area.</p>
                         <input name="csvFile" type="file">
                     </div>
-                    <input type="hidden" name="csv" value="yes"/>
                     <div class="row">
                         <div class="pull-right">
-                            <button type="button" id="signCSVButton" style="margin-right: 1em" onclick="return <?php echo $jsCheck; ?>" class="btn btn-primary">Add Sign With CVS</button>
+                            <button type="button" id="signCSVButton" style="margin-right: 1em" onclick="return <?php echo $jsCheck1; ?>" class="btn btn-primary">Add Sign With CVS</button>
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div id="csvError" class="hidden col-lg-7 col-md-6 col-sm-4">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                Errors from CSV
+            </div>
+            <div class="panel-body">
+                <?php
+                include '../include/errorText.inc.php';
+                ?>
             </div>
         </div>
     </div>
@@ -191,9 +202,9 @@ $sign = getSign();
                         <input type="hidden" name="numberOfAttributes" id="numberOfAttributes" value="<?php echo count($attr); ?>">
                     </div>
                     <div class="row">
-                        <button type="button" style="margin-right: 1em;" onclick="<?php echo $jsCheck; ?>" class="btn btn-primary pull-right"><?php echo $addEdit_button; ?> Manually</button>
+                        <button type="button" style="margin-right: 1em;" onclick="<?php echo $jsCheck2; ?>" class="btn btn-primary pull-right"><?php echo $addEdit_button; ?> Manually</button>
                     </div>
-                    <input type="hidden" name="csv" value="no"/>
+                    <input type="hidden" class="csv" name="csv" value="no"/>
                     <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
                 </form>
             </div>
@@ -227,7 +238,34 @@ $sign = getSign();
             xmlhttp.send();
         }
     }
+    $(document).ready(function(){
+       var show = 0;
+       <?php
+            if(checkError($_GET['error'])){
+                echo 'show = 1;';
+            }
+            /**
+             * Check the passed error to see if it is a csv error to show
+             * the #csvError
+             * @param type $err = GET error values
+             */
+           function checkError($err){
+               $errors = array('notcsv');
+               foreach($errors as $check){
+                   if($err == $check){
+                       return TRUE;
+                   }else{
+                       return FALSE;
+                   }
+               }
+           }
+       ?>
+               if(show == 1){
+                   $('#csvError').removeClass('hidden');
+               }
+    });
     
     
 </script>
+
 <script src="../js/signFormCheck.js" type="text/javascript"></script>

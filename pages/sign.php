@@ -16,7 +16,8 @@ if ($type == 1) {
     $page_header = "Add Sign";
     $page_include = "../include/signAddForm.inc.php";
     $addEdit_button = "Add Sign";
-    $jsCheck = "doSignCreate()";
+    $jsCheck1 = "doSignCreate('yes')";
+    $jsCheck2 = "doSignCreate('no')";
     $ie = 1;
 } elseif ($type == 2) {
     $page_header = "Edit "; //. $signName;
