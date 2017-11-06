@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <sign>
+        <gloss></gloss>
+        <embr></embr>
+        <dominant_start_HS></dominant_start_HS><!-- use the established handshapes -->
+        <dominant_end_HS></dominant_end_HS><!-- use the established handshapes -->
+        <nondominant_start_HS></nondominant_start_HS><!-- use the established handshapes -->
+        <nondominant_end_HS></nondominant_end_HS><!-- use the established handshapes -->
+        <handedness></handedness> <!-- this will only accept a 1 or 2. 1 = one handed 2= two handed-->
+        <english></english>
+        <start_photo></start_photo><!-- if there is no photo please enter na -->
+        <end_photo></end_photo><!-- if there is no photo please enter na -->
+        <finished></finished><!-- this will only accept a 1 or 0.  1=finished 0= not finished -->
+        <asllvd_link></asllvd_link><!-- replace all & with amp; -->
+    </sign>
+    
+</root>

@@ -12,28 +12,28 @@ $sign = getSign();
     <div class="col-lg-5 col-md-6 col-sm-8">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                Import From CSV
+                Import From XML
             </div>
             <div class="panel-body">
-                <form name="signCSV" id="signCSV" enctype="multipart/form-data" method="POST" action="">
+                <form name="signXML" id="signXML" enctype="multipart/form-data" method="POST" action="">
                     <div class="form-group">
-                        <label>CSV File</label>
-                        <p class="text-danger">* This will only upload information from the CSV and not the manual entry area.</p>
-                        <input name="csvFile" type="file">
+                        <label>XML File</label>
+                        <p class="text-danger">* This will only upload information from the XML and not the manual entry area.</p>
+                        <input id="xmlInput" name="xmlFile" type="file">
                     </div>
                     <div class="row">
                         <div class="pull-right">
-                            <button type="button" id="signCSVButton" style="margin-right: 1em" onclick="return <?php echo $jsCheck1; ?>" class="btn btn-primary">Add Sign With CVS</button>
+                            <button type="button" id="signXMLButton" style="margin-right: 1em" onclick="return <?php echo $jsCheck1; ?>" class="btn btn-primary">Add Sign With CVS</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div id="csvError" class="hidden col-lg-7 col-md-6 col-sm-4">
+    <div id="xmlError" class="hidden col-lg-7 col-md-6 col-sm-4">
         <div class="panel panel-red">
             <div class="panel-heading">
-                Errors from CSV
+                Errors from XML
             </div>
             <div class="panel-body">
                 <?php
@@ -204,7 +204,6 @@ $sign = getSign();
                     <div class="row">
                         <button type="button" style="margin-right: 1em;" onclick="<?php echo $jsCheck2; ?>" class="btn btn-primary pull-right"><?php echo $addEdit_button; ?> Manually</button>
                     </div>
-                    <input type="hidden" class="csv" name="csv" value="no"/>
                     <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
                 </form>
             </div>
@@ -245,23 +244,21 @@ $sign = getSign();
                 echo 'show = 1;';
             }
             /**
-             * Check the passed error to see if it is a csv error to show
-             * the #csvError
+             * Check the passed error to see if it is a xml error to show
+             * the #xmlError
              * @param type $err = GET error values
              */
            function checkError($err){
-               $errors = array('notcsv');
-               foreach($errors as $check){
-                   if($err == $check){
-                       return TRUE;
-                   }else{
-                       return FALSE;
-                   }
-               }
+               $errors = array('duplicateGloss','load','notxml');
+               if(in_array($err, $errors)){
+                    return TRUE;
+               }else{
+                    return FALSE;
+                }
            }
        ?>
                if(show == 1){
-                   $('#csvError').removeClass('hidden');
+                   $('#xmlError').removeClass('hidden');
                }
     });
     

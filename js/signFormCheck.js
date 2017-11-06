@@ -1,8 +1,14 @@
-function doSignCreate(csv) {
+function doSignCreate(xml) {
 
-    if (csv === 'yes') {
-        $('#signCSV').attr('action', '../classes/signCheckCSV.php');
-        $("#signCSV").submit();
+    if (xml === 'yes') {
+        
+        if($('#xmlInput').val() == ""){
+            alert("You need to add a file before you submit this.");
+            return;
+        }
+        
+        $('#signXML').attr('action', '../classes/signCheckXML.php');
+        $("#signXML").submit();
     } else {
         //stopping the checking from progressing if the sign is a duplicate
         if ($('#gloss-container').hasClass('is-dup')) {

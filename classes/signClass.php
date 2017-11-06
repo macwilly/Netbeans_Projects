@@ -45,7 +45,7 @@ class sign {
         $this->_end_photo = $end_photo;
         $this->_finished = $finished;
     }
-    
+
     function __construct12($embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link) {
         $this->_embr = $embr;
         $this->_gloss = $gloss;
@@ -191,7 +191,10 @@ class sign {
         return "ok";
     }
 
-    function getNewSignId() {
+    function xmlCheckDuplicate() {
+
+        $ret = FALSE;
+        //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
             require '../../../bin/dbConnection.inc.php';
         } else {
@@ -200,7 +203,16 @@ class sign {
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
-        $sql = "SELECT id FROM";
+
+        $sql = "SELECT gloss FROM sign where gloss ='" . $this->_gloss . "'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $ret = TRUE;
+        }
+        //close the connection
+        mysqli_close($conn);
+
+        return $ret;
     }
 
 }
