@@ -23,7 +23,7 @@ $sign = getSign();
                     </div>
                     <div class="row">
                         <div class="pull-right">
-                            <button type="button" id="signXMLButton" style="margin-right: 1em" onclick="return <?php echo $jsCheck1; ?>" class="btn btn-primary">Add Sign With CVS</button>
+                            <button type="button" id="signXMLButton" style="margin-right: 1em" onclick="return <?php echo $jsCheck1; ?>" class="btn btn-primary">Add Sign With XML</button>
                         </div>
                     </div>
                 </form>
@@ -38,6 +38,24 @@ $sign = getSign();
             <div class="panel-body">
                 <?php
                 include '../include/errorText.inc.php';
+                
+                $print = array();
+                //since there can be any number of error signs, using session
+                //to check for all
+                for($e = 0; $e< sizeof($_SESSION); $e++){
+                    if(isset($_SESSION['errorsign' . $e])){
+                        array_push($print, $_SESSION['errorsign' . $e]);
+                    }
+                }
+                
+                if(sizeof($print) > 0){
+                   echo '<ul class="list-unstyled">';
+                   foreach($print as $p){
+                       echo '<li>' . $p . '</p>';
+                   }
+                   echo '</ul>';
+                }
+                
                 ?>
             </div>
         </div>
@@ -249,7 +267,7 @@ $sign = getSign();
              * @param type $err = GET error values
              */
            function checkError($err){
-               $errors = array('duplicateGloss','load','notxml');
+               $errors = array('dataError','duplicateGloss','load','notxml','xmlDuplicate');
                if(in_array($err, $errors)){
                     return TRUE;
                }else{

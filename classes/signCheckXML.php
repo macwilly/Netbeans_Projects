@@ -1,8 +1,16 @@
 <?php
 
+session_start();
 include './signClass.php';
+//unsetting all of the errorsign variables
+for ($e = 0; $e < sizeof($_SESSION); $e++) {
+    if (isset($_SESSION['errorsign' . $e])) {
+        unset($_SESSION['errorsign' . $e]);
+    }
+}
 
 
+$url = "";
 $fileType = pathinfo(basename($_FILES["xmlFile"]["name"]), PATHINFO_EXTENSION);
 if ($fileType != 'xml') {
     $url = '../pages/sign.php?type=1&error=notxml';
@@ -12,22 +20,26 @@ if ($fileType != 'xml') {
 $xml = simplexml_load_file($_FILES["xmlFile"]["tmp_name"]) or die(header('Location: ../pages/sign.php?type=1&error=load'));
 //will store the gloss of any signs that have an issue
 $errorSigns = array();
+
 //will store sign objects.  If there are no errors will insert all
 //    if there are errors will insert none
 $signsArray = array();
+
 //these are signs that have already by checked from this xml and making sure 
 // there are no duplicates in it 
 $checkedSigns = array();
 foreach ($xml->children() as $signs) {
     $hand = $signs->handedness;
-    $fish = $sign->finished;
+    $fish = $signs->finished;
+    //changing gloss into a string so that is can be easily checked
+    $gloss = $signs->gloss->__toString();
     if (checkHandedness($hand) == TRUE && checkFinished($fish) == TRUE) {
         $s = new sign();
         $s->set_gloss($signs->gloss);
         $s->set_embr($signs->embr);
-        $s->set_dominant_start_HS(convertHandshape($signs->dominant_stat_HS));
+        $s->set_dominant_start_HS(convertHandshape($signs->dominant_start_HS));
         $s->set_dominant_end_HS(convertHandshape($signs->dominant_end_HS));
-        $s->set_nondominant_start_HS(convertHandshape($signs->nondominant_stat_HS));
+        $s->set_nondominant_start_HS(convertHandshape($signs->nondominant_start_HS));
         $s->set_nondominant_end_HS(convertHandshape($signs->nondominant_end_HS));
         $s->set_handedness($signs->handedness);
         $s->set_english_meaning($signs->english);
@@ -36,25 +48,33 @@ foreach ($xml->children() as $signs) {
         $s->set_finished($signs->finished);
         $s->set_asllvd_link($signs->asllvd_link);
 
+        //checking to see if there are duplicate signs in the xml 
         if (sizeof($checkedSigns) > 0) {
-            if (in_array($$signs->gloss, $checkedSigns)) {
-                array_push($errorSigns, $signs->gloss);
-            } else{
+            //is the sign in the array of signs already checked
+            if (in_array($gloss, $checkedSigns)) {
+                array_push($errorSigns, $gloss);
+                $url = '../pages/sign.php?type=1&error=xmlDuplicate';
+            } else {
+                //check to see if the sign is in the database
                 if ($s->xmlCheckDuplicate() == TRUE) {
-                array_push($errorSigns, $signs->gloss);
-            } else {
-                array_push($signsArray, $s);
+                    array_push($errorSigns, $gloss);
+                } else {
+                    array_push($signsArray, $s);
+                }
             }
-            }
+            array_push($checkedSigns, $gloss);
         } else {
+            //check to see if the sign is in the database
             if ($s->xmlCheckDuplicate() == TRUE) {
-                array_push($errorSigns, $signs->gloss);
+                array_push($errorSigns, $gloss);
             } else {
                 array_push($signsArray, $s);
             }
+            array_push($checkedSigns, $gloss);
         }
     } else {
-        array_push($errorSigns, $signs->gloss);
+        array_push($errorSigns, $gloss);
+        $url = '../pages/sign.php?type=1&error=dataError';
     }
 }
 
@@ -63,9 +83,17 @@ if (sizeof($errorSigns) == 0) {
     foreach ($signsArray as $si) {
         $si->createSign();
     }
+    $url = '../pages/signList.php';
+} else {
+    for ($i = 0; $i < sizeof($errorSigns); $i++) {
+        $_SESSION['errorsign' . $i] = $errorSigns[$i];
+    }
+    if ($url == "") {
+        $url = '../pages/sign.php?type=1&error=duplicateGloss';
+    }
 }
 
-//header('Location: ' . $url);
+header('Location: ' . $url);
 
 function convertHandshape($handshape) {
     $sql = "SELECT id from hand_shape where description = '" . $handshape . "'";
@@ -93,7 +121,7 @@ function convertHandshape($handshape) {
 
 function checkHandedness($h) {
     $ret = TRUE;
-    if ($h !== 1 || $h !== 2) {
+    if ($h != 1 && $h != 2) {
         $ret = FALSE;
     }
     return $ret;
@@ -101,7 +129,7 @@ function checkHandedness($h) {
 
 function checkFinished($f) {
     $ret = TRUE;
-    if ($f !== 1 || $f !== 0) {
+    if ($f != 1 && $f != 0) {
         $ret = FALSE;
     }
     return $ret;

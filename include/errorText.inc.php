@@ -1,13 +1,19 @@
 <?php
 switch($_GET['error']){
+    case 'dataError':
+        echo '<h4>The following sign(s) had errors in the handedness of finished values. Please enter an acceptable value for those.</h4>';
+        break;
     case 'duplicateGloss':
-        echo '<h3>The following sign glosses are already in the database. Please remove them from your XML File and upload again.</h3>';
+        echo '<h4>The following sign(s) gloss are already in the database. Please remove them from your XML File and upload again.</h4>';
         break;
     case 'load':
         echo '<h3>There was an error loading the submitted XML file.</h3>';
         break;
     case 'notxml':
-        echo '<h4>You did not submit a XML File. Please try again with a XML File.</h4>';
+        echo '<h3>You did not submit a XML File. Please try again with a XML File.</h3>';
+        break;
+    case 'xmlDuplicate':
+        echo '<h4>The following sign(s) had were duplicated in your XML file. Make sure there is only one instance of each sign.';
         break;
     default :
         break;
