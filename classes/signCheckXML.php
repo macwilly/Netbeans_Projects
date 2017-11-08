@@ -2,6 +2,7 @@
 
 session_start();
 include './signClass.php';
+include './signHistoryClass.php';
 //unsetting all of the errorsign variables
 for ($e = 0; $e < sizeof($_SESSION); $e++) {
     if (isset($_SESSION['errorsign' . $e])) {
@@ -28,6 +29,9 @@ $signsArray = array();
 //these are signs that have already by checked from this xml and making sure 
 // there are no duplicates in it 
 $checkedSigns = array();
+
+//this array is for the embr history 
+$history = array();
 foreach ($xml->children() as $signs) {
     $hand = $signs->handedness;
     $fish = $signs->finished;
@@ -47,6 +51,11 @@ foreach ($xml->children() as $signs) {
         $s->set_end_photo($signs->end_photo);
         $s->set_finished($signs->finished);
         $s->set_asllvd_link($signs->asllvd_link);
+        
+        $sh = new signHistoryClass();
+        $sh->set_sign($gloss);
+        $sh->set_user($_SESSION['userId']);
+        $sh->set_embr($signs->embr);
 
         //checking to see if there are duplicate signs in the xml 
         if (sizeof($checkedSigns) > 0) {
@@ -60,6 +69,7 @@ foreach ($xml->children() as $signs) {
                     array_push($errorSigns, $gloss);
                 } else {
                     array_push($signsArray, $s);
+                    array_push($history, $sh);
                 }
             }
             array_push($checkedSigns, $gloss);
@@ -69,6 +79,7 @@ foreach ($xml->children() as $signs) {
                 array_push($errorSigns, $gloss);
             } else {
                 array_push($signsArray, $s);
+                array_push($history, $sh);
             }
             array_push($checkedSigns, $gloss);
         }
@@ -83,6 +94,10 @@ if (sizeof($errorSigns) == 0) {
     foreach ($signsArray as $si) {
         $si->createSign();
     }
+    foreach($history as $h){
+        $h->insertWithOutDate();
+    }
+    
     $url = '../pages/signList.php';
 } else {
     for ($i = 0; $i < sizeof($errorSigns); $i++) {

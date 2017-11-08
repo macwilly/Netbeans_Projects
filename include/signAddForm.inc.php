@@ -22,6 +22,9 @@ $sign = getSign();
                         <input id="xmlInput" name="xmlFile" type="file">
                     </div>
                     <div class="row">
+                        <div>
+                            <a id="download" href="#">XML Template</a>
+                        </div>
                         <div class="pull-right">
                             <button type="button" id="signXMLButton" style="margin-right: 1em" onclick="return <?php echo $jsCheck1; ?>" class="btn btn-primary">Add Sign With XML</button>
                         </div>
@@ -255,6 +258,12 @@ $sign = getSign();
             xmlhttp.send();
         }
     }
+    
+    $('#download').click(function(e){
+        
+        window.open('../data/template.xml');
+    });
+    
     $(document).ready(function(){
        var show = 0;
        <?php

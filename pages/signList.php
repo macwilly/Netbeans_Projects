@@ -95,8 +95,8 @@ if ($secLevel == "") {
 
 </div>
 <!-- /#wrapper -->
-<form method="POST" name="editHandshape" action="./handshape.php?type=2">
-    <input type="hidden" name="handshapeId" id="handshapeId">
+<form method="POST" name="editSign" action="./sign.php?type=2">
+    <input type="hidden" name="signGloss" id="signGloss">
 
 </form>
 
@@ -108,7 +108,7 @@ if ($secLevel == "") {
 <script>
 
     function editSign(_gloss) {
-        $("#handshapeId").val(_id);
+        $("#signGloss").val(_gloss);
         $("form").submit();
     }
 

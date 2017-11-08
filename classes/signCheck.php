@@ -5,6 +5,7 @@ session_start();
 include './signClass.php';
 include './relatedSignClass.php';
 include './sign_attributeClass.php';
+include './signHistoryClass.php';
 
 $target_dir_start = "../images/sign/startImg/";
 $target_dir_end = "../images/sign/endImg/";
@@ -23,10 +24,10 @@ $startFile = basename($_FILES["startImage"]["name"]);
 $endFile = basename($_FILES["endImage"]["name"]);
 $inEd = filter_input(INPUT_POST, 'insertEdit', FILTER_SANITIZE_NUMBER_INT);
 $relatedSign = $_POST['relatedsigns'];
-// || $relatedSign = implode(',', $_POST['relatedsigns']);
 $numOfAtt = filter_input(INPUT_POST, 'numberOfAttributes', FILTER_SANITIZE_NUMBER_INT);
 $attList = array();
 $attPropList = array();
+$user = $_SESSION['userId'];
 
 if (sizeof($relatedSign) == 0) {
     $rsStat = "ok";
@@ -73,7 +74,7 @@ if ($endFile != "") {
 
 if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile == "na")) {
     //adding a new sign and everything is okay and there are no images
-    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile,$user);
     //checking to see if any related signs were selected
     if ($signStat == 'ok' && sizeof($relatedSign) > 0) {
         $rsStat = insertRelatedSigns($gloss, $relatedSign);
@@ -89,7 +90,7 @@ if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endF
         $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat . '&$rsStat=' . $rsStat. '&attstat=' . $attStat;
     }
 } elseif ($inEd == 1 && ($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile != "na")) {
-    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile,$user);
     if ($signStat == 'ok') {
         if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start) && move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)) {
             if (sizeof($relatedSign) > 0) {
@@ -110,7 +111,7 @@ if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endF
         }
     }
 } elseif ($inEd == 1 && ($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile == "na")) {
-    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile,$user);
     if ($signStat == 'ok') {
         if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start)) {
             if (sizeof($relatedSign) > 0) {
@@ -131,7 +132,7 @@ if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endF
         }
     }
 } elseif ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile != "na")) {
-    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile);
+    $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile,$user);
     if ($signStat == 'ok') {
         if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_end)) {
             if (sizeof($relatedSign) > 0) {
@@ -153,9 +154,13 @@ if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endF
     }
 }
 
-function insertSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef) {
+function insertSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef,$u) {
     $s = new sign($embr, $g, $ds, $de, $nds, $h, $nde, $e, $sf, $ef, $f, $a);
     $ret = $s->createSign();
+    if($ret == 'ok'){
+        $sh = new signHistoryClass($g,$u,$embr);
+        $sh->insertWithOutDate();
+    }
     return $ret;
 }
 
