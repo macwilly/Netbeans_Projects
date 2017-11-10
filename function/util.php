@@ -31,6 +31,15 @@ function userTextConsert($user){
     return $text;
 }
 
+function handTextConvert($hand){
+    if($hand == 1){
+        $ret = 'One Handed';
+    }else{
+        $ret = "Two Handed";
+    }
+    return $ret;
+}
+
 function makeAttrIndexDiv($name){
     $ret = '<div class="row">'.
            '<div class="col-lg-6">'.

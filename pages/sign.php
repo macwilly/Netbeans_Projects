@@ -1,6 +1,7 @@
 <?php
 session_start();
 $type = filter_input(INPUT_GET, "type", FILTER_VALIDATE_INT);
+$sName = filter_input(INPUT_POST, "signGloss");
 $secLevel = $_SESSION['secLevel'];
 if($secLevel == ""){
     header('Location: ./index.php');
@@ -20,13 +21,13 @@ if ($type == 1) {
     $jsCheck2 = "doSignCreate('no')";
     $ie = 1;
 } elseif ($type == 2) {
-    $page_header = "Edit "; //. $signName;
+    $page_header = "Edit -  " . $sName; //. $signName;
     $page_include = "../include/signEditForm.inc.php";
-    $addEdit_button = "Add Sign";
+    $addEdit_button = "Edit Sign";
     $jsCheck = "doSignEdit()";
     $ie = 2;
 } elseif ($type == 3) {
-    $page_header = "Sign Name"; //$signName;
+    $page_header = $sName; //$signName;
     $page_include = "../include/signView.inc.php";
     $addEdit_button = "Edit Sign"; //this will be used to link to edit the sign 
 }

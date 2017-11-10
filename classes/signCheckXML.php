@@ -50,7 +50,7 @@ foreach ($xml->children() as $signs) {
         $s->set_start_photo($signs->start_photo);
         $s->set_end_photo($signs->end_photo);
         $s->set_finished($signs->finished);
-        $s->set_asllvd_link($signs->asllvd_link);
+        $s->set_asllvd_link(str_replace("amp;", "&", $signs->asllvd_link->__toString()));
         
         $sh = new signHistoryClass();
         $sh->set_sign($gloss);

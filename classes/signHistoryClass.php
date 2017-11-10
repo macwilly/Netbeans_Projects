@@ -17,6 +17,8 @@ class signHistoryClass {
     private $_date;
     private $_user;
     private $_embr;
+    private $_first_name;
+    private $_last_name;
 
     function __construct() {
 
@@ -34,23 +36,34 @@ class signHistoryClass {
             case 4:
                 self::__construct4($argv[0], $argv[1], $argv[2], $argv[3]);
                 break;
+            case 5:
+                self::__construct5($argv[0], $argv[1], $argv[2], $argv[3], $argv[4]);
+                break;
         }
     }
-    
+
     private function __construct1($sign) {
         $this->_sign = $sign;
     }
-    
-    private function __construct3($sign,$user,$embr) {
+
+    private function __construct3($sign, $user, $embr) {
         $this->_sign = $sign;
         $this->_user = $user;
         $this->_embr = $embr;
     }
-    
-    private function __construct4($sign,$date,$user,$embr) {
+
+    private function __construct4($sign, $date, $user, $embr) {
         $this->_sign = $sign;
         $this->_date = $date;
         $this->_user = $user;
+        $this->_embr = $embr;
+    }
+    
+    private function __construct5($sign, $date, $fn, $ln, $embr) {
+        $this->_sign = $sign;
+        $this->_date = $date;
+        $this->_first_name = $fn;
+        $this->_last_name = $ln;
         $this->_embr = $embr;
     }
 
@@ -70,8 +83,24 @@ class signHistoryClass {
         return $this->_embr;
     }
 
+    function get_first_name() {
+        return $this->_first_name;
+    }
+
+    function get_last_name() {
+        return $this->_last_name;
+    }
+
     function set_sign($_sign) {
         $this->_sign = $_sign;
+    }
+
+    function set_first_name($_first_name) {
+        $this->_first_name = $_first_name;
+    }
+
+    function set_last_name($_last_name) {
+        $this->_last_name = $_last_name;
     }
 
     function set_date($_date) {
@@ -85,11 +114,11 @@ class signHistoryClass {
     function set_embr($_embr) {
         $this->_embr = $_embr;
     }
-    
-    function insertWithOutDate(){
-        
-        $sql = "INSERT INTO sign_history VALUES('" . $this->_sign . "',CURRENT_TIMESTAMP,". $this->_user .",'" . $this->_embr . "' )";
-        
+
+    function insertWithOutDate() {
+
+        $sql = "INSERT INTO sign_history VALUES('" . $this->_sign . "',CURRENT_TIMESTAMP," . $this->_user . ",'" . $this->_embr . "' )";
+
         //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
             require '../../../bin/dbConnection.inc.php';
@@ -101,7 +130,6 @@ class signHistoryClass {
         include '../include/connection_open.inc.php';
 
         $conn->query($sql);
-        
     }
 
 }

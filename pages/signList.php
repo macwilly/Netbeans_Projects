@@ -64,7 +64,7 @@ if ($secLevel == "") {
                                         echo '<tr class="even">';
                                     }
                                     if ($secLevel >= 2) {
-                                        echo '<td><button onclick="editSign(' . $printSign->get_gloss() . ')" type="button" class="btn btn-primary">View</button></td>';
+                                        echo '<td><button onclick="editS(\'' . $printSign->get_gloss() . '\')" type="button" class="btn btn-primary">View</button></td>';
                                     }
 
                                     echo '<td>' . $printSign->get_gloss() . '</td>';
@@ -95,9 +95,8 @@ if ($secLevel == "") {
 
 </div>
 <!-- /#wrapper -->
-<form method="POST" name="editSign" action="./sign.php?type=2">
+<form method="POST" name="editSign" action="./sign.php?type=3">
     <input type="hidden" name="signGloss" id="signGloss">
-
 </form>
 
 <!-- jQuery -->
@@ -107,7 +106,7 @@ if ($secLevel == "") {
 <!-- DataTables JavaScript -->
 <script>
 
-    function editSign(_gloss) {
+    function editS(_gloss) {
         $("#signGloss").val(_gloss);
         $("form").submit();
     }

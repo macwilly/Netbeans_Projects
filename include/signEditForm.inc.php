@@ -1,174 +1,239 @@
 <?php
 include '../function/getHandshape.php';
+include '../function/getAttribute.php';
+include '../function/getSigns.php';
+include '../function/util.php';
 $hs = getHandshapes(TRUE);
+$attr = getAttributes(TRUE);
+$sign = getSign();
 ?>
+
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Basic Tabs
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#home" data-toggle="tab"><?php echo 'Gloss Information'; ?></a>
-                    </li>
-                    <li><a href="#EMBR" data-toggle="tab">EMBR History</a>
-                    </li>
-                    <li><a href="#signHistory" data-toggle="tab">Sign History</a>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane fade in active" id="home">
-                        <h4>Edit &lt;Gloss&gt;</h4>
-                        <form name="signInput" id="signInputId" enctype="multipart/form-data"  method="POST" action="">
-                            <div class="col-lg-6">
-                                <div class="form-group" id="gloss-container">
-                                    <label class="control-label">Gloss</label>
-                                    <input class="form-control" name="inputgloss" id="inputgloss" placeholder="">
-                                </div>
-                                <div class="form-group" id="english-container">
-                                    <label class="control-label">English Meaning</label>
-                                    <input class="form-control" name="inputenglish" id="inputenglish" placeholder="">
-                                </div>
-                                <div class="form-group" id="asllvd-container">
-                                    <label class="control-label">ASLLVD Link</label>
-                                    <input class="form-control" name="inputasllvd" id="inputasllvd" placeholder="">
-                                </div>
-                                <div class="form-group" id="finished-container">
-                                    <label class="control-label">Finished</label>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsFinished" id="optionsFinished1" checked value="1">Yes
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsFinished" id="optionsFinished0" value="0">No
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group" id="handedness-container">
-                                    <label class="control-label">Handedness</label>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsHandedness" id="optionsHandedness1" value="1">One Hand
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsHandedness" id="optionsHandedness2" value="2">Two Hand
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>EMBR Text</label>
-                                    <textarea class="form-control" name="embrtext" id="embrtext" rows="5"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Start Dominant Handshape</label>
-                                    <select class="form-control" name="sdh" id="sdh">
-                                        <option value="none">None</option>
-                                        <?php
-                                        foreach ($hs as $printHandshape) {
-                                            echo'<option id="' . $printHandshape->get_id() . '" value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                        }
-                                        ?>  
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Start Nondominant Handshape</label>
-                                    <select class="form-control" name="sndh" id="sndh">
-                                        <option value="none">None</option>
-                                        <?php
-                                        foreach ($hs as $printHandshape) {
-                                            echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                        }
-                                        ?>  
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>End Dominant Handshape</label>
-                                    <select class="form-control" name="edh" id="edh">
-                                        <option value="none">None</option>
-                                        <?php
-                                        foreach ($hs as $printHandshape) {
-                                            echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                        }
-                                        ?>  
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>End Nondominant Handshape</label>
-                                    <select class="form-control" name="endh" id="endh">
-                                        <option value="none">None</option>
-                                        <?php
-                                        foreach ($hs as $printHandshape) {
-                                            echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                        }
-                                        ?>  
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Start Image</label>
-                                    <input name="startImage" type="file">
-                                </div>
-                                <div class="form-group">
-                                    <label>End Image</label>
-                                    <input name="endImage" type="file">
-                                </div>
-                                <div class="form-group">
-                                    <label>Related Signs</label>
-                                    <select multiple class="form-control" name="relatedsigns" id="relatedsigns">
-                                        <option>Signs</option>
-                                        <?php
-                                        //will add code to add in all of the signs 
-                                        ?>  
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <p>Attributes will got here. They will be dynamically added on.</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <button type="button" style="margin-right: 1em;" onclick="return <?php echo $jsCheck; ?>" class="btn btn-primary pull-right"><?php echo $addEdit_button; ?> Manually</button>
-                            </div>
-                            <input type="hidden" name="csv" value="no"/>
-                            <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
-                        </form>
-
-                    </div>
-                    <div class="tab-pane fade" id="EMBR">
-                        <h4>EMBR History</h4>
-                        <ul class="list-unstyled">
-                            <?php
-                            // PHP code to print out all of the Ember history. 
-                            // Will be from the sign_history table
-                            ?>
-                            <li>10/22/2017 4:26 AM - Mackenzie Willard <pre>&lt;ember&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation&lt;/embr&gt;</pre></li>
-                            <li>10/23/2017 4:26 PM - John Testington <pre>&lt;ember&gt;Lorem ipsum dolor sit ametddfsd, ddsda consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation&lt;/embr&gt;</pre></li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane fade" id="signHistory">
-                        <h4>Sign History</h4>
-                        <?php
-                        // PHP code to print out all of the Ember history. 
-                        // Will be from the audit trail table
-                        ?>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
+        <hr>
     </div>
-    <!-- /.col-lg-6 -->
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Add Sign Manually
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <h4  style="margin-left: 1em;" class="text-danger">* Are required inputs</h4>
+                </div>
+                <form name="signInput" id="signInputId" enctype="multipart/form-data"  method="POST" action="">
+                    <div class="col-lg-6">
+                        <div class="form-group" id="gloss-container">
+                            <label class="control-label"><span class="text-danger">*</span>Gloss <span id="glossWarning"></span></label>
+                            <input class="form-control" name="inputgloss" id="inputgloss" placeholder="" maxlength="30" value="" onkeyup="alertDuplicate(this.value)">
+                        </div>
+                        <div class="form-group" id="english-container">
+                            <label class="control-label"><span class="text-danger">*</span>English Meaning</label>
+                            <input class="form-control" name="inputenglish" id="inputenglish" placeholder="" maxlength="100" value="">
+                        </div>
+                        <div class="form-group" id="asllvd-container">
+                            <label class="control-label"><span class="text-danger">*</span>ASLLVD Link</label>
+                            <input class="form-control" name="inputasllvd" id="inputasllvd" maxlength="250" placeholder="" value="">
+                        </div>
+                        <div class="form-group" id="finished-container">
+                            <label class="control-label"><span class="text-danger">*</span>Finished</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsFinished" id="optionsFinished1" checked value="1">Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsFinished" id="optionsFinished0" value="0">No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="handedness-container">
+                            <label class="control-label"><span class="text-danger">*</span>Handedness</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsHandedness" id="optionsHandedness1" checked value="1">One Hand
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optionsHandedness" id="optionsHandedness2" value="2">Two Hand
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>EMBR Text</label>
+                            <textarea class="form-control" name="embrtext" id="embrtext" rows="5"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group" id="dom-hs-container">
+                            <label><span class="text-danger">*</span>Start Dominant Handshape</label>
+                            <select class="form-control" name="sdh" id="sdh">
+                                <option value="none">None</option>
+                                <?php
+                                foreach ($hs as $printHandshape) {
+                                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                                }
+                                ?>  
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Start Nondominant Handshape</label>
+                            <select class="form-control" name="sndh" id="sndh">
+                                <option value="0">None</option>
+                                <?php
+                                foreach ($hs as $printHandshape) {
+                                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                                }
+                                ?>  
+                            </select>
+                        </div>
+                        <div class="form-group" id="dom-hs-end-container">
+                            <label><span class="text-danger">*</span>End Dominant Handshape</label>
+                            <select class="form-control" name="edh" id="edh">
+                                <option value="none">None</option>
+                                <?php
+                                foreach ($hs as $printHandshape) {
+                                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                                }
+                                ?>  
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>End Nondominant Handshape</label>
+                            <select class="form-control" name="endh" id="endh">
+                                <option value="0">None</option>
+                                <?php
+                                foreach ($hs as $printHandshape) {
+                                    echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
+                                }
+                                ?>  
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Start Image</label>
+                            <input name="startImage" type="file">
+                        </div>
+                        <div class="form-group">
+                            <label>End Image</label>
+                            <input name="endImage" type="file">
+                        </div>
+                        <div class="form-group">
+                            <label>Related Signs</label>
+                            <select multiple class="form-control" name="relatedsigns[]" id="relatedsigns">
+                                <?php
+                                //will add code to add in all of the signs 
+                                 foreach ($sign as $printSign){
+                                     echo '<option value="' . $printSign->get_gloss() . '">' . $printSign->get_gloss() . '</option>';
+                                 }
+                                ?>  
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" id="attribute-section">
+                        <?php
+                        for ($i = 1; $i <= count($attr); $i++) {
+                            //create all of the attributes that can be
+                            echo '<div class="row">';
+                            echo '<div class="col-lg-6">';
+                            echo '<div class="form-group" id="attr' . $i . '-container">';
+                            echo '<label>Attribute ' . $i . '</label>';
+                            echo '<select class="form-control" name="selAttr' . $i . '" id="selAttr' . $i . '">';
+                            echo '<option value="none">Select an attribute</option>';
+                            foreach ($attr as $printAttribute) {
+                                echo '<option value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
+                            }
+                            echo '</select>';
+                            echo '</div>'; // form-group
+                            echo '</div>'; // col-lg-6
+                            echo '<div class="col-lg-6">';
+                            echo '<div class="form-group" id="attr' . $i . '-prop-container">';
+                            echo '<label>Attribute Property ' . $i . '</label>';
+                            echo '<input class="form-control" name="attrProp' . $i . '" id="attrProp' . $i . '" value="">';
+                            echo '</div>'; // form-group
+                            echo '</div>'; // col-lg-6
+                            echo '</div>'; // end of row   
+                            if ($i != count($attr)) {
+                                echo '<div class="row">';
+                                echo '<hr>';
+                                echo '</div>'; // end of row   
+                            }
+                        }
+                        ?>  
+                        <input type="hidden" name="numberOfAttributes" id="numberOfAttributes" value="<?php echo count($attr); ?>">
+                    </div>
+                    <div class="row">
+                        <button type="button" style="margin-right: 1em;" onclick="<?php echo $jsCheck2; ?>" class="btn btn-primary pull-right"><?php echo $addEdit_button; ?> </button>
+                    </div>
+                    <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function alertDuplicate(str) {
+        if (str.length == 0) {
+            document.getElementById("glossWarning").innerHTML = "";
+            $('#gloss-container').removeClass('has-error');
+        } else {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var text = this.responseText;
+                    if (text == "Ok") {
+                        document.getElementById("glossWarning").innerHTML = "";
+                        $('#gloss-container').removeClass('has-error');
+                        $('#gloss-container').removeClass('is-dup');
+                    } else {
+                        document.getElementById("glossWarning").innerHTML = text;
+                        $('#gloss-container').addClass('has-error');
+                        $('#gloss-container').addClass('is-dup');
+                    }
+
+                }
+            };
+
+            xmlhttp.open("GET", "../function/checkGloss.php?q=" + encodeURIComponent(str), true);
+            xmlhttp.send();
+        }
+    }
+    
+    $('#download').click(function(e){
+        
+        window.open('../data/template.xml');
+    });
+    
+    $(document).ready(function(){
+       var show = 0;
+       <?php
+            if(checkError($_GET['error'])){
+                echo 'show = 1;';
+            }
+            /**
+             * Check the passed error to see if it is a xml error to show
+             * the #xmlError
+             * @param type $err = GET error values
+             */
+           function checkError($err){
+               $errors = array('dataError','duplicateGloss','load','notxml','xmlDuplicate');
+               if(in_array($err, $errors)){
+                    return TRUE;
+               }else{
+                    return FALSE;
+                }
+           }
+       ?>
+               if(show == 1){
+                   $('#xmlError').removeClass('hidden');
+               }
+    });
+    
+    
+</script>
+
+<script src="../js/signFormCheck.js" type="text/javascript"></script>
