@@ -24,7 +24,8 @@ if ($type == 1) {
     $page_header = "Edit -  " . $sName; //. $signName;
     $page_include = "../include/signEditForm.inc.php";
     $addEdit_button = "Edit Sign";
-    $jsCheck = "doSignEdit()";
+    $jsCheckSign = "doSignEdit()";
+    $jsCheckEmbr = "doSignEditEmbr()";
     $ie = 2;
 } elseif ($type == 3) {
     $page_header = $sName; //$signName;

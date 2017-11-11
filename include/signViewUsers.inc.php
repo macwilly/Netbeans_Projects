@@ -6,10 +6,10 @@ include '../function/getHandshape.php';
 include '../function/getRelatedSigns.php';
 include '../function/util.php';
 
-$sign = filter_input(INPUT_POST, 'signGloss');
-$sc = new sign($sign);
-$rs = getRealtedSigns($sign);
+$passedSign = filter_input(INPUT_POST, 'signGloss');
+$sc = new sign($passedSign);
 $sc->getSignInformation();
+$rs = getRealtedSigns($passedSign);
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -17,7 +17,7 @@ $sc->getSignInformation();
             <div class="panel-heading">
                 <?php
                 if ($secLevel >= 2) {
-                    echo '<td><button onclick="editS(\'' . $sign . '\',2)" type="button" class="btn btn-primary">Edit Sign</button></td>';
+                    echo '<td><button onclick="editS(\'' . $passedSign . '\',2)" type="button" class="btn btn-primary">Edit Sign</button></td>';
                 }
                 ?>
             </div>
@@ -127,7 +127,7 @@ $sc->getSignInformation();
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                 $sa = getSignAttributes($sign);
+                                                 $sa = getSignAttributes($passedSign);
                                                  foreach($sa as $pa){
                                                      echo '<tr>';
                                                      echo '<td>' . $pa->get_attribute() . '</td>';
@@ -150,7 +150,7 @@ $sc->getSignInformation();
                             <?php
                             $i = 1;
 
-                            $sh = getEmberHistory($sign);
+                            $sh = getEmberHistory($passedSign);
                             foreach ($sh as $ph) {
                                 echo '<div class="panel panel-primary">';
                                 echo '<div class="panel-heading">';
@@ -184,7 +184,6 @@ $sc->getSignInformation();
         </div>
         <!-- /.panel -->
     </div>
-    <!-- /.col-lg-6 -->
 </div>
 <script>
     function editS(_gloss, _page) {

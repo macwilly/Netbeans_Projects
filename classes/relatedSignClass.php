@@ -17,7 +17,7 @@ class relatedSignClass {
                 break;
         }
     }
-    
+
     private function __construct1($sentSign) {
         $this->_s_sign = $sentSign;
     }
@@ -25,7 +25,6 @@ class relatedSignClass {
     private function __construct2($sentSign, $relatedSign) {
         $this->_s_sign = $sentSign;
         $this->_r_sign = $relatedSign;
-        
     }
 
     function get_s_sign() {
@@ -43,10 +42,10 @@ class relatedSignClass {
     function set_r_sign($_r_sign) {
         $this->_r_sign = $_r_sign;
     }
-    
-    function insertRelatedSign(){
-        
-         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+
+    function insertRelatedSign() {
+
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
             require '../../../bin/dbConnection.inc.php';
         } else {
             require '../../bin/dbConnection.inc.php';
@@ -64,6 +63,23 @@ class relatedSignClass {
         $stmt->close();
         $conn->close();
         return 1;
+    }
+
+    function removeRelatedSign() {
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+        
+        $sql = "DELETE FROM related_sign WHERE s_sign ='" . $this->_s_sign . "' AND r_sign ='" . $this->_r_sign . "'";
+        $conn->query($sql);
+        
+        $sql = "DELETE FROM related_sign WHERE s_sign ='" . $this->_r_sign . "' AND r_sign ='" . $this->_s_sign . "'";
+        $conn->query($sql);
     }
 
 }

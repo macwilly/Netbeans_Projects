@@ -5,7 +5,7 @@ include '../function/getSigns.php';
 include '../function/util.php';
 $hs = getHandshapes(TRUE);
 $attr = getAttributes(TRUE);
-$sign = getSign();
+$passedSign = getSign();
 ?>
 
 <div class="row">
@@ -183,7 +183,7 @@ $sign = getSign();
                             <select multiple class="form-control" name="relatedsigns[]" id="relatedsigns">
                                 <?php
                                 //will add code to add in all of the signs 
-                                 foreach ($sign as $printSign){
+                                 foreach ($passedSign as $printSign){
                                      echo '<option value="' . $printSign->get_gloss() . '">' . $printSign->get_gloss() . '</option>';
                                  }
                                 ?>  

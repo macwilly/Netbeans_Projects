@@ -1,5 +1,5 @@
 <form name="attributeForm" id="attributeForm"  method="POST" action="">
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div class="form-group" id="attribute-name-container">
             <label class="control-label">Name</label>
             <input class="form-control" maxlength="30"  name="attributeName" id="aName" placeholder="Is in study">

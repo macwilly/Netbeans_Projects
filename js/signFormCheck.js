@@ -1,12 +1,15 @@
+//sign is the only table that a unique page is used to create and a 
+//unique page is used to edit
+
 function doSignCreate(xml) {
 
     if (xml === 'yes') {
-        
-        if($('#xmlInput').val() == ""){
+
+        if ($('#xmlInput').val() == "") {
             alert("You need to add a file before you submit this.");
             return;
         }
-        
+
         $('#signXML').attr('action', '../classes/signCheckXML.php');
         $("#signXML").submit();
     } else {
@@ -25,8 +28,26 @@ function doSignCreate(xml) {
 
 }
 
+
 function doSignEdit() {
+    //stopping the checking from progressing if the sign is a duplicate
+    if ($('#gloss-container').hasClass('is-dup')) {
+        return;
+    }
     removeErrors();
+    if (check() > 0) {
+        return;
+    } else {
+        $('#insertEdit').val("sign");
+        $('#signInputId').attr('action', '../classes/signEdit.php');
+        $("#signInputId").submit();
+    }
+}
+
+function doSignEditEmbr() {
+    $('#insertEdit').val("embr");
+    $('#signInputId').attr('action', '../classes/signEdit.php');
+    $("#signInputId").submit();
 }
 
 function removeErrors() {

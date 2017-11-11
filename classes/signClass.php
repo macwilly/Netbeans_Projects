@@ -246,5 +246,26 @@ class sign {
         //close the connection
         mysqli_close($conn);
     }
+    
+    function updateEmbr(){
+        $sql = "UPDATE sign SET embr_xml  = '" . $this->_embr . "' WHERE gloss = '" . $this->_gloss . "'";
+        
+         //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+         if ($conn->query($sql) === TRUE) {
+            $ret = "../pages/signList.php";
+        } else {
+            $ret = "../pages/sign.php?type=2&error=3&sign=" + $this->_gloss;
+        }
+        return $ret;
+    }
 
 }
