@@ -2,16 +2,20 @@
 
 session_start();
 
+include './attributeClass.php';
+include './sign_attributeClass.php';
 include './relatedSignClass.php';
 include './signClass.php';
 include './signHistoryClass.php';
 include '../function/getRelatedSigns.php';
+include '../function/getAttribute.php';
 
 $inEd = filter_input(INPUT_POST, 'insertEdit');
 $sentSign = filter_input(INPUT_POST, 'startSign');
 $user = $_SESSION['userId'];
 $embr = filter_input(INPUT_POST, 'embrtext');
 $dbRelated = getRelatedSignArray($sentSign);
+$dbAttribute = getAttributeArray($sentSign);
 
 $gloss = filter_input(INPUT_POST, 'inputgloss', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
 $english = filter_input(INPUT_POST, 'inputenglish', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
@@ -53,10 +57,10 @@ if ($inEd == "embr") {
     } else {
         $attStat = "ok";
     }
-    $s = new sign();
+    checkSignAttributes($attList, $dbAttribute, $attPropList, $sentSign);
 }
 
-header("Location: " . $url);
+//header("Location: " . $url);
 
 function sgEdit() {
     
@@ -90,6 +94,43 @@ function checkRelatedSigns($sentRelated, $dbRelated, $ssign) {
             if (!in_array($dbr, $sentRelated)) {
                 $rs = new relatedSignClass($ssign, $dbr);
                 $rs->removeRelatedSign();
+            }
+        }
+    }
+}
+
+function checkSignAttributes($_sentAttribute, $_dbAttribute, $_attPropList, $_ssing) {
+    //see if the two lists match
+    if ($_sentAttribute != $_dbAttribute) {
+        $c1 = 0;
+        if (sizeof($_dbAttribute) == 0) { //there were no attributes in the db
+            for ($i = 0; $i < sizeof($_sentAttribute); $i++) {
+                $as = new sign_attributeClass($_ssing, $_sentAttribute[$i], $_attPropList[$i]);
+                $as->insertSignAttribute();
+            }
+        } else {
+            foreach ($_sentAttribute as $sa) {
+                if (!in_array($sa, $_dbAttribute)) {
+                    //could use the $sa for this but want to make sure that the att and prop match
+                    $signAt = new sign_attributeClass($_ssing, $_sentAttribute[$c1], $_attPropList[$c1]);
+                    $signAt->insertSignAttribute();
+                }
+                $c1 +=1;
+            }
+            
+            foreach ($_dbAttribute as $dba) {
+                if (!in_array($dba, $_sentAttribute)) {
+                    $dbSignAt = new sign_attributeClass($_ssing, $dba);
+                    $dbSignAt->deleteAttribute();
+                }
+            }
+        }
+    } else {
+        //check the properties and see if they are the same
+        for ($i = 0; $i < sizeof($_sentAttribute); $i++) {
+            if (getAttributeDesc($_ssing, $_sentAttribute[$i]) != $_attPropList[$i]) {
+                $propSignAt = new sign_attributeClass($_ssing, $_sentAttribute[$i], $_attPropList[$i]);
+                $propSignAt->updateDescription();
             }
         }
     }

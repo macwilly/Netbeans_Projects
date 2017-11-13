@@ -98,8 +98,6 @@ function getAttributeArray($sign){
 function getAttributeDesc($sign,$attr){
      $sql = "SELECT description FROM sign_attribute WHERE sign = '" .$sign . "' AND attribute='" . $attr . "'";
     
-    
-
     //connection information for the database    
     if($_SERVER["HTTP_HOST"] == "localhost" ){ //development
         require '../../../bin/dbConnection.inc.php';

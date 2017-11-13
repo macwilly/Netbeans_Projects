@@ -92,9 +92,9 @@ $attrs = getAttributeArray($passedSign);
                                         <?php
                                         $dh = $sc->get_dominant_start_HS();
                                         foreach ($hs as $printHandshape) {
-                                            if($dh == $printHandshape->get_id()){
+                                            if ($dh == $printHandshape->get_id()) {
                                                 echo'<option selected value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                            }else{
+                                            } else {
                                                 echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
                                             }
                                         }
@@ -108,12 +108,11 @@ $attrs = getAttributeArray($passedSign);
                                         <?php
                                         $nd = $sc->get_nondominant_start_HS();
                                         foreach ($hs as $printHandshape) {
-                                            if($nd == $printHandshape->get_id()){
+                                            if ($nd == $printHandshape->get_id()) {
                                                 echo'<option selected value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                            }else{
+                                            } else {
                                                 echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
                                             }
-                                            
                                         }
                                         ?>  
                                     </select>
@@ -125,9 +124,9 @@ $attrs = getAttributeArray($passedSign);
                                         <?php
                                         $ed = $sc->get_dominant_end_HS();
                                         foreach ($hs as $printHandshape) {
-                                            if($ed == $printHandshape->get_id()){
+                                            if ($ed == $printHandshape->get_id()) {
                                                 echo'<option selected value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                            }else{
+                                            } else {
                                                 echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
                                             }
                                         }
@@ -141,9 +140,9 @@ $attrs = getAttributeArray($passedSign);
                                         <?php
                                         $en = $sc->get_nondominant_end_HS();
                                         foreach ($hs as $printHandshape) {
-                                           if($en == $printHandshape->get_id()){
+                                            if ($en == $printHandshape->get_id()) {
                                                 echo'<option selected value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
-                                            }else{
+                                            } else {
                                                 echo'<option value="' . $printHandshape->get_id() . '">' . $printHandshape->get_description() . '</option>';
                                             }
                                         }
@@ -164,9 +163,9 @@ $attrs = getAttributeArray($passedSign);
                                         <?php
                                         //will add code to add in all of the signs 
                                         foreach ($signsList as $printSign) {
-                                            if(in_array($printSign,$rs)){
+                                            if (in_array($printSign, $rs)) {
                                                 echo '<option selected value="' . $printSign . '">' . $printSign . '</option>';
-                                            }else{
+                                            } else {
                                                 echo '<option value="' . $printSign . '">' . $printSign . '</option>';
                                             }
                                         }
@@ -186,13 +185,12 @@ $attrs = getAttributeArray($passedSign);
                                     echo '<select class="form-control" name="selAttr' . $i . '" id="selAttr' . $i . '">';
                                     echo '<option value="none">Select an attribute</option>';
                                     foreach ($attr as $printAttribute) {
-                                        
-                                        if($attrs[$a] == str_replace(" ", "_", $printAttribute->get_aName())){
+
+                                        if ($attrs[$a] == str_replace(" ", "_", $printAttribute->get_aName())) {
                                             echo '<option selected value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
-                                        }else{
+                                        } else {
                                             echo '<option value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
                                         }
-                                        
                                     }
                                     echo '</select>';
                                     echo '</div>'; // form-group
@@ -212,7 +210,7 @@ $attrs = getAttributeArray($passedSign);
                                     $a += 1;
                                 }
                                 ?>  
-                                <input type="hidden" name="numberOfAttributes" id="numberOfAttributes" value="<?php echo count($attr); ?>">
+
                             </div>
                             <div class="row">
                                 <button type="button" style="margin-right: 1em;" onclick="<?php echo $jsCheckSign; ?>" class="btn btn-primary pull-right"><?php echo $addEdit_button; ?> </button>
@@ -223,12 +221,13 @@ $attrs = getAttributeArray($passedSign);
                             <label>EMBR Text</label>
                             <textarea class="form-control" rows="30" name="embrtext" id="embrtext" ><?php echo $sc->get_embr(); ?></textarea>
                         </div>
-                         <div class="row">
-                                <button type="button" style="margin-right: 1em;" onclick="<?php echo $jsCheckEmbr; ?>" class="btn btn-primary pull-right">Edit Embr </button>
-                         </div>
+                        <div class="row">
+                            <button type="button" style="margin-right: 1em;" onclick="<?php echo $jsCheckEmbr; ?>" class="btn btn-primary pull-right">Edit Embr </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="numberOfAttributes" id="numberOfAttributes" value="<?php echo count($attr); ?>">
             <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
             <input type="hidden" name="startSign" id="startSign" value="<?php echo $passedSign; ?>">
             </form>
@@ -238,75 +237,76 @@ $attrs = getAttributeArray($passedSign);
     </div>
 </div>
 <script>
-    
-    <?php echo '$("#optionsFinished' . $sc->get_finished() . '").prop("checked",true);'; ?>
-    <?php echo '$("#optionsHandedness' . $sc->get_handedness() . '").prop("checked",true);'; ?>
-    
-    function alertDuplicate(str) {
-        var startSign = $('#startSign').val();
-        startSign = startSign.toUpperCase();
-        if (str.length == 0) {
-            document.getElementById("glossWarning").innerHTML = "";
-            $('#gloss-container').removeClass('has-error');
-        } else {
-            if(str.toUpperCase() === startSign){
-                document.getElementById("glossWarning").innerHTML = "";
-                $('#gloss-container').removeClass('has-error');
-            }else{ 
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var text = this.responseText;
-                        if (text == "Ok") {
-                            document.getElementById("glossWarning").innerHTML = "";
-                            $('#gloss-container').removeClass('has-error');
-                            $('#gloss-container').removeClass('is-dup');
-                        } else {
-                            document.getElementById("glossWarning").innerHTML = text;
-                            $('#gloss-container').addClass('has-error');
-                            $('#gloss-container').addClass('is-dup');
-                        }
 
-                    }
-                };
+<?php echo '$("#optionsFinished' . $sc->get_finished() . '").prop("checked",true);'; ?>
+<?php echo '$("#optionsHandedness' . $sc->get_handedness() . '").prop("checked",true);'; ?>
 
-                xmlhttp.open("GET", "../function/checkGloss.php?q=" + encodeURIComponent(str), true);
-                xmlhttp.send();
-            }
-        }
+                                        function alertDuplicate(str) {
+                                            var startSign = $('#startSign').val();
+                                            startSign = startSign.toUpperCase();
+                                            if (str.length == 0) {
+                                                document.getElementById("glossWarning").innerHTML = "";
+                                                $('#gloss-container').removeClass('has-error');
+                                            } else {
+                                                if (str.toUpperCase() === startSign) {
+                                                    document.getElementById("glossWarning").innerHTML = "";
+                                                    $('#gloss-container').removeClass('has-error');
+                                                } else {
+                                                    var xmlhttp = new XMLHttpRequest();
+                                                    xmlhttp.onreadystatechange = function () {
+                                                        if (this.readyState == 4 && this.status == 200) {
+                                                            var text = this.responseText;
+                                                            if (text == "Ok") {
+                                                                document.getElementById("glossWarning").innerHTML = "";
+                                                                $('#gloss-container').removeClass('has-error');
+                                                                $('#gloss-container').removeClass('is-dup');
+                                                            } else {
+                                                                document.getElementById("glossWarning").innerHTML = text;
+                                                                $('#gloss-container').addClass('has-error');
+                                                                $('#gloss-container').addClass('is-dup');
+                                                            }
+
+                                                        }
+                                                    };
+
+                                                    xmlhttp.open("GET", "../function/checkGloss.php?q=" + encodeURIComponent(str), true);
+                                                    xmlhttp.send();
+                                                }
+                                            }
+                                        }
+
+                                        $('#download').click(function (e) {
+
+                                            window.open('../data/template.xml');
+                                        });
+
+                                        $(document).ready(function () {
+                                            var show = 0;
+<?php
+if (checkError($_GET['error'])) {
+    echo 'show = 1;';
+}
+
+/**
+ * Check the passed error to see if it is a xml error to show
+ * the #xmlError
+ * @param type $err = GET error values
+ */
+function checkError($err) {
+    $errors = array('dataError', 'duplicateGloss', 'load', 'notxml', 'xmlDuplicate');
+    if (in_array($err, $errors)) {
+        return TRUE;
+    } else {
+        return FALSE;
     }
-    
-    $('#download').click(function(e){
-        
-        window.open('../data/template.xml');
-    });
-    
-    $(document).ready(function(){
-       var show = 0;
-       <?php
-            if(checkError($_GET['error'])){
-                echo 'show = 1;';
-            }
-            /**
-             * Check the passed error to see if it is a xml error to show
-             * the #xmlError
-             * @param type $err = GET error values
-             */
-           function checkError($err){
-               $errors = array('dataError','duplicateGloss','load','notxml','xmlDuplicate');
-               if(in_array($err, $errors)){
-                    return TRUE;
-               }else{
-                    return FALSE;
-                }
-           }
-       ?>
-               if(show == 1){
-                   $('#xmlError').removeClass('hidden');
-               }
-    });
-    
-    
+}
+?>
+                                            if (show == 1) {
+                                                $('#xmlError').removeClass('hidden');
+                                            }
+                                        });
+
+
 </script>
 
 <script src="../js/signFormCheck.js" type="text/javascript"></script>

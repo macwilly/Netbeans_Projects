@@ -16,7 +16,6 @@ class sign_attributeClass {
     private $_sign;
     private $_attribute;
     private $_description;
-    
 
     function __construct() {
 
@@ -109,7 +108,7 @@ class sign_attributeClass {
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
 
-        $sql = "SELECT * FROM sign_attribute WHERE sign_id = " . $signId .
+        $sql = "SELECT * FROM sign_attribute WHERE sign = '" . $signId . "'" .
                 " AND attribute =" . $attribute . " AND description = '" . $desc . "'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -119,6 +118,39 @@ class sign_attributeClass {
         mysqli_close($conn);
 
         return $ret;
+    }
+
+    function deleteAttribute() {
+        $sql = "DELETE FROM sign_attribute WHERE sign = '" . $this->_sign . "' AND attribute = '" . $this->_attribute . "'";
+
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        $conn->query($sql);
+    }
+
+    function updateDescription() {
+        $sql = "UPDATE sign_attribute SET description = '".$this->_description."'"
+                . " WHERE sign = '" . $this->_sign . "' AND attribute = '" . $this->_attribute . "'";
+
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        $conn->query($sql);
     }
 
 }
