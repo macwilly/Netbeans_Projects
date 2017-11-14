@@ -14,6 +14,7 @@ class sign {
     private $_end_photo;
     private $_finished;
     private $_asllvd_link;
+    private $_sentSign;
 
     function __construct() {
         $argv = func_get_args();
@@ -26,6 +27,9 @@ class sign {
                 break;
             case 12:
                 self::__construct12($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11]);
+                break;
+            case 13:
+                self::__construct13($argv[0], $argv[1], $argv[2], $argv[3], $argv[4], $argv[5], $argv[6], $argv[7], $argv[8], $argv[9], $argv[10], $argv[11], $argv[12]);
                 break;
         }
     }
@@ -59,6 +63,22 @@ class sign {
         $this->_end_photo = $end_photo;
         $this->_finished = $finished;
         $this->_asllvd_link = $asllvd_link;
+    }
+
+    function __construct13($embr, $gloss, $dominant_start_HS, $dominant_end_HS, $nondominant_start_HS, $handedness, $nondominant_end_HS, $english_meaning, $start_photo, $end_photo, $finished, $asllvd_link, $sentsign) {
+        $this->_embr = $embr;
+        $this->_gloss = $gloss;
+        $this->_dominant_start_HS = $dominant_start_HS;
+        $this->_dominant_end_HS = $dominant_end_HS;
+        $this->_nondominant_start_HS = $nondominant_start_HS;
+        $this->_handedness = $handedness;
+        $this->_nondominant_end_HS = $nondominant_end_HS;
+        $this->_english_meaning = $english_meaning;
+        $this->_start_photo = $start_photo;
+        $this->_end_photo = $end_photo;
+        $this->_finished = $finished;
+        $this->_asllvd_link = $asllvd_link;
+        $this->_sentSign = $sentsign;
     }
 
     function get_embr() {
@@ -95,6 +115,15 @@ class sign {
 
     function get_start_photo() {
         return $this->_start_photo;
+    }
+
+    function get_sentSign() {
+        return $this->_sentSign;
+    }
+
+    function set_sentSign($_sentSign) {
+        $this->_sentSign = $_sentSign;
+        return $this;
     }
 
     function get_end_photo() {
@@ -246,11 +275,28 @@ class sign {
         //close the connection
         mysqli_close($conn);
     }
-    
-    function updateEmbr(){
-        $sql = "UPDATE sign SET embr_xml  = '" . $this->_embr . "' WHERE gloss = '" . $this->_gloss . "'";
+
+    function updateSignInfo($ty) {
+        $sql = "UPDATE sign SET gloss = '" . $this->_gloss . "', dominant_start_HS = " . $this->_dominant_start_HS . ", dominant_end_HS = " . $this->_dominant_end_HS . ", "
+                . "nondominant_start_HS = " . $this->_nondominant_start_HS . ", nondominant_end_HS = " . $this->_nondominant_end_HS . ", "
+                . "handedness = " . $this->_handedness . ", english_meaning = '" . $this->_english_meaning . "', finished = " . $this->_finished . ", "
+                . "asllvd_link = '" . $this->_asllvd_link . "' ";
+       
+        if ($ty == 1) {
+            
+        } elseif ($ty == 2) {
+            $sql .= ", start_photo = '" . $this->_start_photo . "' ";
+        } elseif ($ty == 3) {
+            $sql .= ", end_photo = '" . $this->_end_photo . "' ";
+        } elseif ($ty == 4) {
+            $sql .= ", start_photo = '" . $this->_start_photo . "', "
+                    . "end_photo = '" . $this->_end_photo . "' ";
+        }
+
+        $sql .= "WHERE gloss = '" . $this->_sentSign . "'";
         
-         //connection information for the database    
+
+        //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
             require '../../../bin/dbConnection.inc.php';
         } else {
@@ -260,7 +306,29 @@ class sign {
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
 
-         if ($conn->query($sql) === TRUE) {
+        if ($conn->query($sql) === TRUE) {
+            $ret = "ok";
+        } else {
+            $ret = "notOk";
+        }
+
+        return $ret;
+    }
+
+    function updateEmbr() {
+        $sql = "UPDATE sign SET embr_xml  = '" . $this->_embr . "' WHERE gloss = '" . $this->_gloss . "'";
+
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        if ($conn->query($sql) === TRUE) {
             $ret = "../pages/signList.php";
         } else {
             $ret = "../pages/sign.php?type=2&error=3&sign=" + $this->_gloss;

@@ -50,6 +50,22 @@ function doSignEditEmbr() {
     $("#signInputId").submit();
 }
 
+function doBoth() {
+
+    //stopping the checking from progressing if the sign is a duplicate
+    if ($('#gloss-container').hasClass('is-dup')) {
+        return;
+    }
+    removeErrors();
+    if (check() > 0) {
+        return;
+    } else {
+        $('#insertEdit').val("both");
+        $('#signInputId').attr('action', '../classes/signEdit.php');
+        $("#signInputId").submit();
+    }
+}
+
 function removeErrors() {
     $("#gloss-container").removeClass("has-error");
     $("#english-container").removeClass("has-error");

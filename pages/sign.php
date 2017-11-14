@@ -26,6 +26,7 @@ if ($type == 1) {
     $addEdit_button = "Edit Sign";
     $jsCheckSign = "doSignEdit()";
     $jsCheckEmbr = "doSignEditEmbr()";
+    $jsCheckBoth = "doBoth()";
     $ie = 2;
 } elseif ($type == 3) {
     $page_header = $sName; //$signName;

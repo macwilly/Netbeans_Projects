@@ -10,6 +10,9 @@ include './signHistoryClass.php';
 include '../function/getRelatedSigns.php';
 include '../function/getAttribute.php';
 
+$target_dir_start = "../images/sign/startImg/";
+$target_dir_end = "../images/sign/endImg/";
+
 $inEd = filter_input(INPUT_POST, 'insertEdit');
 $sentSign = filter_input(INPUT_POST, 'startSign');
 $user = $_SESSION['userId'];
@@ -38,7 +41,6 @@ if ($inEd == "embr") {
     $url = embrEd($sentSign, $embr, $user);
 } elseif ($inEd == "sign") {
 
-
     checkRelatedSigns($sentRelated, $dbRelated, $sentSign);
 
 //checking to see if there are active attributes
@@ -58,12 +60,195 @@ if ($inEd == "embr") {
         $attStat = "ok";
     }
     checkSignAttributes($attList, $dbAttribute, $attPropList, $sentSign);
+
+
+    //checking the files. 
+    if ($startFile != "") {
+        $target_file_start = $target_dir_start . basename($_FILES["startImage"]["name"]);
+        $fileTypeStart = pathinfo($target_file_start, PATHINFO_EXTENSION);
+        $startImg = getimagesize($_FILES["startImage"]["tmp_name"]);
+        $startSize = $_FILES["startImage"]["size"];
+        $startOk = checkImage($fileTypeStart, $startImg, $startSize);
+    } else {
+        $startOk = 1;
+        $startFile = "na";
+    }
+
+    if ($endFile != "") {
+        $target_file_end = $target_dir_end . basename($_FILES["endImage"]["name"]);
+        $fileTypeEnd = pathinfo($target_file_end, PATHINFO_EXTENSION);
+        $endImg = getimagesize($_FILES["endImage"]["tmp_name"]);
+        $endSize = $_FILES["endImage"]["size"];
+        $endOk = checkImage($fileTypeEnd, $endImg, $endSize);
+    } else {
+        $endOk = 1;
+        $endFile = "na";
+    }
+
+    if (($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile == "na")) {
+        //adding a new sign and everything is okay and there are no images
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        $url = '../pages/signList.php';
+    } elseif (($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile != "na")) {
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        if ($signStat == 'ok') {
+            if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start) && move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)) {
+                if ($signStat == "ok") {
+                    $url = '../pages/signList.php';
+                } else {
+                    $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat;
+                }
+            } else {
+                $url = '../pages/sign.php?type=1&error=fileUpload';
+            }
+        }
+    } elseif (($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile == "na")) {
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        if ($signStat == 'ok') {
+            if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start)) {
+
+                if ($signStat == "ok") {
+                    $url = '../pages/signList.php';
+                } else {
+                    $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat;
+                }
+            } else {
+                $url = '../pages/sign.php?type=1&error=fileUpload';
+            }
+        }
+    } elseif (($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile != "na")) {
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        if ($signStat == 'ok') {
+            if (move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)) {
+
+                if ($signStat == "ok") {
+                    $url = '../pages/signList.php';
+                } else {
+                    $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat;
+                }
+            } else {
+                $url = '../pages/sign.php?type=1&error=fileUpload';
+            }
+        }
+    }
+} elseif($inEd == 'both'){
+    embrEd($sentSign, $embr, $user);
+    checkRelatedSigns($sentRelated, $dbRelated, $sentSign);
+
+//checking to see if there are active attributes
+    if ($numOfAtt > 0) {
+        //loop through the number of potential attributes
+        for ($i = 1; $i <= $numOfAtt; $i++) {
+            if ($_POST['selAttr' . $i] != 'none') {
+                array_push($attList, $_POST['selAttr' . $i]);
+                array_push($attPropList, $_POST['attrProp' . $i]);
+            }
+        }
+        //if there are no attributes filled out
+        if (sizeof($attList) == 0) {
+            $attStat = "ok";
+        }
+    } else {
+        $attStat = "ok";
+    }
+    checkSignAttributes($attList, $dbAttribute, $attPropList, $sentSign);
+
+
+    //checking the files. 
+    if ($startFile != "") {
+        $target_file_start = $target_dir_start . basename($_FILES["startImage"]["name"]);
+        $fileTypeStart = pathinfo($target_file_start, PATHINFO_EXTENSION);
+        $startImg = getimagesize($_FILES["startImage"]["tmp_name"]);
+        $startSize = $_FILES["startImage"]["size"];
+        $startOk = checkImage($fileTypeStart, $startImg, $startSize);
+    } else {
+        $startOk = 1;
+        $startFile = "na";
+    }
+
+    if ($endFile != "") {
+        $target_file_end = $target_dir_end . basename($_FILES["endImage"]["name"]);
+        $fileTypeEnd = pathinfo($target_file_end, PATHINFO_EXTENSION);
+        $endImg = getimagesize($_FILES["endImage"]["tmp_name"]);
+        $endSize = $_FILES["endImage"]["size"];
+        $endOk = checkImage($fileTypeEnd, $endImg, $endSize);
+    } else {
+        $endOk = 1;
+        $endFile = "na";
+    }
+
+    if (($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile == "na")) {
+        //adding a new sign and everything is okay and there are no images
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        $url = '../pages/signList.php';
+    } elseif (($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile != "na")) {
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        if ($signStat == 'ok') {
+            if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start) && move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)) {
+                if ($signStat == "ok") {
+                    $url = '../pages/signList.php';
+                } else {
+                    $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat;
+                }
+            } else {
+                $url = '../pages/sign.php?type=1&error=fileUpload';
+            }
+        }
+    } elseif (($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile == "na")) {
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        if ($signStat == 'ok') {
+            if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_start)) {
+
+                if ($signStat == "ok") {
+                    $url = '../pages/signList.php';
+                } else {
+                    $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat;
+                }
+            } else {
+                $url = '../pages/sign.php?type=1&error=fileUpload';
+            }
+        }
+    } elseif (($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile != "na")) {
+        $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        if ($signStat == 'ok') {
+            if (move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)) {
+
+                if ($signStat == "ok") {
+                    $url = '../pages/signList.php';
+                } else {
+                    $url = '../pages/sign.php?type=1&error=adding&signstat=' . $signStat;
+                }
+            } else {
+                $url = '../pages/sign.php?type=1&error=fileUpload';
+            }
+        }
+    }
 }
 
-//header("Location: " . $url);
 
-function sgEdit() {
+function updateSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef, $ss) {
+    $s = new sign($embr, $g, $ds, $de, $nds, $h, $nde, $e, $sf, $ef, $f, $a, $ss);
+    if ($sf == 'na' && $ef == 'na') {
+        $type = 1;
+    } elseif ($ef == 'na') {
+        $type = 2;
+    } elseif ($sf == 'na') {
+        $type = 3;
+    } else {
+        $type = 4;
+    }
     
+    $relat  = new relatedSignClass($g,$ss);
+    $relat->UpdateSign();
+    $attribute =  new sign_attributeClass($ss,$g);
+    $attribute->updateSign();
+    $embrHist = new signHistoryClass($g,$ss);
+    $embrHist->updateSign();
+    $ret = $s->updateSignInfo($type);
+    
+    
+
+    return $ret;
 }
 
 function embrEd($_sentSign, $_embr, $_user) {
@@ -117,7 +302,7 @@ function checkSignAttributes($_sentAttribute, $_dbAttribute, $_attPropList, $_ss
                 }
                 $c1 +=1;
             }
-            
+
             foreach ($_dbAttribute as $dba) {
                 if (!in_array($dba, $_sentAttribute)) {
                     $dbSignAt = new sign_attributeClass($_ssing, $dba);
@@ -135,3 +320,27 @@ function checkSignAttributes($_sentAttribute, $_dbAttribute, $_attPropList, $_ss
         }
     }
 }
+
+function checkImage($type, $img, $size) {
+    if ($img !== FALSE) {
+        //it is a file
+        $uploadOk = 1;
+    } else {
+        //not a file
+        $uploadOk = 2;
+    }
+
+    if ($size > 2000000) {
+        //file size is to large
+        $uploadOk = 3;
+    }
+    if ($type != "jpg" && $type != "jpeg" && $type != "png" && $type != "gif") {
+        //not a file that we are looking for
+        $uploadOk = 4;
+    }
+
+    return $uploadOk;
+}
+
+header("Location: " . $url);
+

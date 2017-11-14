@@ -134,7 +134,7 @@ if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endF
 } elseif ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile != "na")) {
     $signStat = insertSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile,$user);
     if ($signStat == 'ok') {
-        if (move_uploaded_file($_FILES["startImage"]["tmp_name"], $target_file_end)) {
+        if (move_uploaded_file($_FILES["endImage"]["tmp_name"], $target_file_end)) {
             if (sizeof($relatedSign) > 0) {
                 $rsStat = insertRelatedSigns($gloss, $relatedSign);
             }

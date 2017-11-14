@@ -19,6 +19,7 @@ class signHistoryClass {
     private $_embr;
     private $_first_name;
     private $_last_name;
+    private $_sentSign;
 
     function __construct() {
 
@@ -46,6 +47,11 @@ class signHistoryClass {
         $this->_sign = $sign;
     }
 
+    private function __construct2($sign, $sentSign) {
+        $this->_sign = $sign;
+        $this->_sentSign = $sentSign;
+    }
+
     private function __construct3($sign, $user, $embr) {
         $this->_sign = $sign;
         $this->_user = $user;
@@ -58,7 +64,7 @@ class signHistoryClass {
         $this->_user = $user;
         $this->_embr = $embr;
     }
-    
+
     private function __construct5($sign, $date, $fn, $ln, $embr) {
         $this->_sign = $sign;
         $this->_date = $date;
@@ -91,6 +97,15 @@ class signHistoryClass {
         return $this->_last_name;
     }
 
+    function get_sentSign() {
+        return $this->_sentSign;
+    }
+
+    function set_sentSign($_sentSign) {
+        $this->_sentSign = $_sentSign;
+        return $this;
+    }
+
     function set_sign($_sign) {
         $this->_sign = $_sign;
     }
@@ -117,7 +132,22 @@ class signHistoryClass {
 
     function insertWithOutDate() {
 
-        $sql = "INSERT INTO sign_history VALUES('" . $this->_sign . "',CURRENT_TIMESTAMP," . $this->_user . ",'" . $this->_embr . "' )";
+        $sql = "INSERT INTO sign_history VALUES('" . $this->_sign . "',CURRENT_TIMESTAMP," . $this->_user . ",'" . $this->_embr . "')";
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        $conn->query($sql);
+    }
+
+    function updateSign() {
+        $sql = "UPDATE sign_history SET sign = '" . $this->_sign . "' WHERE sign = '" . $this->_sentSign . "'";
 
         //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development

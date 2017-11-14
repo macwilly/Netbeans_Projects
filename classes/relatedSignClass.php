@@ -64,6 +64,27 @@ class relatedSignClass {
         $conn->close();
         return 1;
     }
+    
+    /**
+     * r_sign will be the exsiting sign name 
+     */
+    function UpdateSign(){
+        
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+        
+        $sql = "UPDATE related_sign set s_sign = '" . $this->_s_sign . "' WHERE s_sign = '" . $this->_r_sign . "'";
+        $conn->query($sql);
+        
+        $sql = "UPDATE related_sign set r_sign = '" . $this->_s_sign . "' WHERE r_sign = '" . $this->_r_sign . "'";
+        $conn->query($sql);
+    }
 
     function removeRelatedSign() {
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
