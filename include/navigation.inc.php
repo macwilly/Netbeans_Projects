@@ -1,3 +1,11 @@
+<?php
+session_start();
+if ($_SESSION['secLevel'] > 0) {
+    $navSearch = 'doSearch()';
+} else {
+    $navSearch = '#';
+}
+?>
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +48,9 @@
                     echo '<li>';
                     echo '<a  href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>';
                     echo '</li>';
-                    
+
                     echo '<li class="divider"></li>';
-                    
+
                     echo '<li>';
                     echo '<a  href="../classes/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>';
                     echo '</li>';
@@ -61,12 +69,14 @@
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
                     <div class="input-group custom-search-form">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
+                        <form name="navSearch">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" onclick="<?php echo $navSearch ?>" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </form>
                     </div>
                     <!-- /input-group -->
                 </li>
@@ -81,7 +91,7 @@
                     include '../include/signNavUser.inc.php';
                     include '../include/handshapeNavUser.inc.php';
                     include '../include/userNavUser.inc.php';
-                    if($secLevel == 3){
+                    if ($secLevel == 3) {
                         
                     }
                 }
