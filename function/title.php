@@ -23,6 +23,9 @@ function titleInformation($pageName) {
         case 'login.php':
             echo 'Login';
             break;
+        case 'searchResults.php';
+            echo 'Search Results';
+            break;
         case 'sign.php':
             echo 'Sign';
             break;

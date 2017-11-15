@@ -1,7 +1,7 @@
 <?php
 session_start();
 if ($_SESSION['secLevel'] > 0) {
-    $navSearch = 'doSearch()';
+    $navSearch = 'doNavSearch()';
 } else {
     $navSearch = '#';
 }
@@ -69,14 +69,16 @@ if ($_SESSION['secLevel'] > 0) {
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
                     <div class="input-group custom-search-form">
-                        <form name="navSearch">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" onclick="<?php echo $navSearch ?>" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
+                        <form name="navSearch" id="navSearch" method="POST" action="">
+                            <input type="text" name='navSearchInput' id="navSearchInput" class="form-control" placeholder="Search...">
+                            <input type="hidden" name="sender" value="nav">
                         </form>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" onclick="<?php echo $navSearch ?>" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+
                     </div>
                     <!-- /input-group -->
                 </li>
@@ -102,3 +104,4 @@ if ($_SESSION['secLevel'] > 0) {
     </div>
     <!-- /.navbar-static-side -->
 </nav>
+<script src="../js/searchCheck.js" type="text/javascript"></script>
