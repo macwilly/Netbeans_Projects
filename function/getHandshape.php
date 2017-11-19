@@ -88,3 +88,37 @@ function getDescription($id) {
 
     return $desc;
 }
+
+function getHandshapePhoto($hsId) {
+
+    if ($hsId == 0) {
+
+        $img = "noHandShape.gif";
+    } else {
+
+         $sql = "SELECT image, description FROM hand_shape WHERE id = " . $hsId;
+
+        //connection information for the database    
+        if ($_SERVER["HTTP_HOST"] == "localhost") { //development
+            require '../../../bin/dbConnection.inc.php';
+        } else {
+            require '../../bin/dbConnection.inc.php';
+        }
+
+        //process to open a connection to the database
+        include '../include/connection_open.inc.php';
+
+        $result = $conn->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+            $img = $row['image'];
+            $desc = $row['description'];
+        }
+        if ($img == 'na') {
+            $img = 'none.gif';
+        }
+    }
+    
+    $image = '<img src="../images/handshape/' . $img . '" height="108px" width="77px" alt="' . $img . '"/> ' . $desc;
+    return $image;
+}

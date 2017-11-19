@@ -83,3 +83,15 @@ function getSignList() {
     mysqli_close($conn);
     return $signs;
 }
+
+function getSignPhoto($sOre,$image){
+    if($image == "na"){
+        $image = "";
+    }
+    if($sOre == "start"){
+       $img = '<img src="../images/sign/startImg/' . $image . '" height="108px" width="77px" alt="' . $image . '"/>'; 
+    }elseif($sOre == "end"){
+       $img = '<img src="../images/sign/endImg/' . $image . '" height="108px" width="77px" alt="' . $image . '"/>';  
+    }
+    return $img;
+}

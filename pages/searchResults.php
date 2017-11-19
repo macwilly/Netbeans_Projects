@@ -10,6 +10,7 @@ if ($secLevel == "") {
 <?php include '../function/getHandshape.php'; ?>
 <?php include '../function/searchProcessor.php'; ?>
 <?php include '../function/util.php'; ?>
+<?php include '../function/getSigns.php'; ?>
 
 
 
@@ -168,12 +169,12 @@ if ($secLevel == "") {
                                     }
 
                                     echo '<td>' . $printSign->get_gloss() . '</td>';
-                                    echo '<td>' . $printSign->get_dominant_start_HS() . '</td>';
-                                    echo '<td>' . $printSign->get_nondominant_start_HS() . '</td>'; // will need to chage this to be a image
-                                    echo '<td>' . $printSign->get_start_photo() . '</td>'; // will need to chage this to be a image
-                                    echo '<td>' . $printSign->get_end_photo() . '</td>'; // will need to chage this to be a image
-                                    echo '<td>' . $printSign->get_dominant_end_HS() . '</td>'; // will need to chage this to be a image
-                                    echo '<td>' . $printSign->get_nondominant_end_HS() . '</td>'; // will need to chage this to be a image
+                                    echo '<td>' . getHandshapePhoto($printSign->get_dominant_start_HS()) . '</td>';
+                                    echo '<td>' . getHandshapePhoto($printSign->get_nondominant_start_HS()) . '</td>'; 
+                                    echo '<td>' . getSignPhoto("start",$printSign->get_start_photo()) . '</td>'; 
+                                    echo '<td>' . getSignPhoto("end",$printSign->get_end_photo()) . '</td>'; 
+                                    echo '<td>' . getHandshapePhoto($printSign->get_dominant_end_HS()) . '</td>'; 
+                                    echo '<td>' . getHandshapePhoto($printSign->get_nondominant_end_HS()) . '</td>'; 
                                     echo '<td>' . $printSign->get_english_meaning() . '</td>';
                                     echo '<td>' . finshTextConvert($printSign->get_finished()) . '</td>';
                                     echo '</tr>';
