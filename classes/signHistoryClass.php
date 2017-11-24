@@ -148,7 +148,6 @@ class signHistoryClass {
 
     function updateSign() {
         $sql = "UPDATE sign_history SET sign = '" . $this->_sign . "' WHERE sign = '" . $this->_sentSign . "'";
-
         //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
             require '../../../bin/dbConnection.inc.php';

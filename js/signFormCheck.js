@@ -1,6 +1,11 @@
 //sign is the only table that a unique page is used to create and a 
 //unique page is used to edit
 
+function doBack(){
+    $('#signInputId').attr('action', './sign.php?type=3');
+    $("#signInputId").submit();
+}
+
 function doSignCreate(xml) {
 
     if (xml === 'yes') {

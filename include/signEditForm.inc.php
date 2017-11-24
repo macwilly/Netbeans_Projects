@@ -28,7 +28,8 @@ $attrs = getAttributeArray($passedSign);
     <div class="col-lg-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <button onclick="<?php echo $jsCheckBoth; ?>" type="button" class="btn btn-warning">Edit All</button>
+                <button onclick="doBack()" type="button" class="btn btn-danger">Back</button>
+                <button onclick="doBoth()" type="button" class="btn btn-warning">Edit All</button>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -176,6 +177,7 @@ $attrs = getAttributeArray($passedSign);
                             <div class="col-lg-12" id="attribute-section">
                                 <?php
                                 $a = 0;
+                                $setAttsCount = count($attrs);
                                 for ($i = 1; $i <= count($attr); $i++) {
                                     //create all of the attributes that can be
                                     echo '<div class="row">';
@@ -185,10 +187,13 @@ $attrs = getAttributeArray($passedSign);
                                     echo '<select class="form-control" name="selAttr' . $i . '" id="selAttr' . $i . '">';
                                     echo '<option value="none">Select an attribute</option>';
                                     foreach ($attr as $printAttribute) {
-
-                                        if ($attrs[$a] == str_replace(" ", "_", $printAttribute->get_aName())) {
-                                            echo '<option selected value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
-                                        } else {
+                                        if ($a < $setAttsCount) {
+                                            if ($attrs[$a] == str_replace(" ", "_", $printAttribute->get_aName())) {
+                                                echo '<option selected value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
+                                            } else {
+                                                echo '<option value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
+                                            }
+                                        }else{
                                             echo '<option value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
                                         }
                                     }
@@ -198,7 +203,12 @@ $attrs = getAttributeArray($passedSign);
                                     echo '<div class="col-lg-6">';
                                     echo '<div class="form-group" id="attr' . $i . '-prop-container">';
                                     echo '<label>Attribute Property ' . $i . '</label>';
-                                    echo '<input class="form-control" name="attrProp' . $i . '" id="attrProp' . $i . '" value="' . getAttributeDesc($passedSign, $attrs[$a]) . '">';
+                                    if ($a < $setAttsCount) {
+                                        echo '<input class="form-control" name="attrProp' . $i . '" id="attrProp' . $i . '" value="' . getAttributeDesc($passedSign, $attrs[$a]) . '">';
+                                    } else {
+                                        echo '<input class="form-control" name="attrProp' . $i . '" id="attrProp' . $i . '" value="">';
+                                    }
+
                                     echo '</div>'; // form-group
                                     echo '</div>'; // col-lg-6
                                     echo '</div>'; // end of row   
@@ -230,6 +240,7 @@ $attrs = getAttributeArray($passedSign);
             <input type="hidden" name="numberOfAttributes" id="numberOfAttributes" value="<?php echo count($attr); ?>">
             <input type="hidden" name="insertEdit" id="insertEdit" value="<?php echo $ie; ?>">
             <input type="hidden" name="startSign" id="startSign" value="<?php echo $passedSign; ?>">
+            <input type="hidden" name="signGloss" id="signGloss" value="<?php echo $passedSign; ?>">
             </form>
             <!-- /.panel-body -->
         </div>

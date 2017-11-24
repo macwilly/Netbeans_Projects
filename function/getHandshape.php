@@ -94,6 +94,7 @@ function getHandshapePhoto($hsId) {
     if ($hsId == 0) {
 
         $img = "noHandShape.gif";
+        $desc = "";
     } else {
 
          $sql = "SELECT image, description FROM hand_shape WHERE id = " . $hsId;

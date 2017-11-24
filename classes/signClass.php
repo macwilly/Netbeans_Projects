@@ -295,7 +295,6 @@ class sign {
 
         $sql .= "WHERE gloss = '" . $this->_sentSign . "'";
         
-
         //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
             require '../../../bin/dbConnection.inc.php';

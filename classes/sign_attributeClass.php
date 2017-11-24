@@ -139,7 +139,7 @@ class sign_attributeClass {
     function updateDescription() {
         $sql = "UPDATE sign_attribute SET description = '".$this->_description."'"
                 . " WHERE sign = '" . $this->_sign . "' AND attribute = '" . $this->_attribute . "'";
-
+        
         //connection information for the database    
         if ($_SERVER["HTTP_HOST"] == "localhost") { //development
             require '../../../bin/dbConnection.inc.php';
@@ -166,7 +166,6 @@ class sign_attributeClass {
         }
         
         $sql = "UPDATE sign_attribute SET sign = '" . $this->_attribute . "' WHERE sign = '" . $this->_sign . "' ";
-
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
 

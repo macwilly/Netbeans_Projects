@@ -87,7 +87,7 @@ if ($secLevel == "") {
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group tooltips">
-                                                    <label  data-toggle="tooltip" data-placement="right" title="Multiple Select: Hold Command click multiple options." >Hand Shape</label>
+                                                    <label  data-toggle="tooltip" data-placement="right" title="Multiple Select: Hold Command click multiple options." >Handshape</label>
                                                     <select multiple name="handshapes[]" class="form-control">
                                                         <?php
                                                         //need to have an object that will get the the information for the handshapes
@@ -164,7 +164,7 @@ if ($secLevel == "") {
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    if ($secLevel >= 2) {
+                                    if ($secLevel >= 1) {
                                         echo '<td><button onclick="editS(\'' . $printSign->get_gloss() . '\')" type="button" class="btn btn-primary">View</button></td>';
                                     }
 

@@ -124,7 +124,7 @@ function getAttributeArray($sign){
 }
 
 function getAttributeDesc($sign,$attr){
-     $sql = "SELECT description FROM sign_attribute WHERE sign = '" .$sign . "' AND attribute='" . $attr . "'";
+     $sql = "SELECT description FROM sign_attribute WHERE sign = '" . $sign . "' AND attribute='" . $attr . "'";
     
     //connection information for the database    
     if($_SERVER["HTTP_HOST"] == "localhost" ){ //development
@@ -139,11 +139,10 @@ function getAttributeDesc($sign,$attr){
     $result = $conn->query($sql);
 
     while ($row = $result->fetch_assoc()) {
-
         $description = $row["description"];
-
     }
     //close the connection
     mysqli_close($conn);
+    
     return $description;
 }

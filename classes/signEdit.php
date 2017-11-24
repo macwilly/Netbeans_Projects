@@ -131,7 +131,7 @@ if ($inEd == "embr") {
             }
         }
     }
-} elseif($inEd == 'both'){
+} elseif ($inEd == 'both') {
     embrEd($sentSign, $embr, $user);
     checkRelatedSigns($sentRelated, $dbRelated, $sentSign);
 
@@ -225,8 +225,9 @@ if ($inEd == "embr") {
     }
 }
 
-
 function updateSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef, $ss) {
+    
+    
     $s = new sign($embr, $g, $ds, $de, $nds, $h, $nde, $e, $sf, $ef, $f, $a, $ss);
     if ($sf == 'na' && $ef == 'na') {
         $type = 1;
@@ -238,15 +239,21 @@ function updateSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef, $
         $type = 4;
     }
     
-    $relat  = new relatedSignClass($g,$ss);
-    $relat->UpdateSign();
-    $attribute =  new sign_attributeClass($ss,$g);
-    $attribute->updateSign();
-    $embrHist = new signHistoryClass($g,$ss);
-    $embrHist->updateSign();
+    //if the gloss has changed no need to make unnecessary database calls
+    if($g != $ss){
+        $relat = new relatedSignClass($g, $ss);
+        $relat->UpdateSign();
+        
+        $attribute = new sign_attributeClass($ss, $g);
+        $attribute->updateSign();
+    
+        $embrHist = new signHistoryClass($g, $ss);
+        $embrHist->updateSign();
+    }
+    
     $ret = $s->updateSignInfo($type);
-    
-    
+
+
 
     return $ret;
 }
@@ -285,7 +292,7 @@ function checkRelatedSigns($sentRelated, $dbRelated, $ssign) {
 }
 
 function checkSignAttributes($_sentAttribute, $_dbAttribute, $_attPropList, $_ssing) {
-    //see if the two lists match
+//see if the two lists match
     if ($_sentAttribute != $_dbAttribute) {
         $c1 = 0;
         if (sizeof($_dbAttribute) == 0) { //there were no attributes in the db
@@ -300,7 +307,7 @@ function checkSignAttributes($_sentAttribute, $_dbAttribute, $_attPropList, $_ss
                     $signAt = new sign_attributeClass($_ssing, $_sentAttribute[$c1], $_attPropList[$c1]);
                     $signAt->insertSignAttribute();
                 }
-                $c1 +=1;
+                $c1 += 1;
             }
 
             foreach ($_dbAttribute as $dba) {

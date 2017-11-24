@@ -127,9 +127,12 @@ class attributeClass {
         if($this->_aName == $this->_sentName){
             $sql = "UPDATE attribute_list SET  description='" . $this->_desc . "', active = " . $this->_active .
                 " WHERE name = '" . $this->_sentName . "'";
+            $sql2 = "";
         }else{
             $sql = "UPDATE attribute_list SET name='" . $this->_aName . "', description='" . $this->_desc . "', active = " . $this->_active .
                 " WHERE name = '" . $this->_sentName . "'";
+            
+            $sql2 = "UPDATE sign_attribute SET attribute='" . str_replace(" ", "_", $this->_aName). "' WHERE attribute ='" .str_replace(" ", "_", $this->_sentName)."'";
         }
         
         //connection information for the database    
@@ -141,8 +144,10 @@ class attributeClass {
 
         //process to open a connection to the database
         include '../include/connection_open.inc.php';
-
         if ($conn->query($sql) === TRUE) {
+            if($sql2!=""){
+                $conn->query($sql2);
+            }
             $ret = "../pages/attributes.php";
         } else {
             $ret = "../pages/attribute.php?type=2&error=3";

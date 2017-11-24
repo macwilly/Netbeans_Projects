@@ -15,6 +15,7 @@ $rs = getRealtedSigns($passedSign);
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
+                <button onclick="doB()" type="button" class="btn btn-danger">Back To List</button>
                 <?php
                 if ($secLevel >= 2) {
                     echo '<td><button onclick="editS(\'' . $passedSign . '\',2)" type="button" class="btn btn-primary">Edit Sign</button></td>';
@@ -127,13 +128,13 @@ $rs = getRealtedSigns($passedSign);
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                 $sa = getSignAttributes($passedSign);
-                                                 foreach($sa as $pa){
-                                                     echo '<tr>';
-                                                     echo '<td>' . $pa->get_attribute() . '</td>';
-                                                     echo '<td>' . $pa->get_description() . '</td>';
-                                                     echo '</tr>';
-                                                 }
+                                                $sa = getSignAttributes($passedSign);
+                                                foreach ($sa as $pa) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . str_replace("_", " ", $pa->get_attribute()) . '</td>';
+                                                    echo '<td>' . $pa->get_description() . '</td>';
+                                                    echo '</tr>';
+                                                }
                                                 ?>
                                             </tbody>
                                         </table>
@@ -186,6 +187,9 @@ $rs = getRealtedSigns($passedSign);
     </div>
 </div>
 <script>
+    function doB() {
+        window.location.href = './signList.php';
+    }
     function editS(_gloss, _page) {
         if (_page == 2) {
             $('#pageChange').attr('action', './sign.php?type=2');
@@ -196,4 +200,5 @@ $rs = getRealtedSigns($passedSign);
         $("form").submit();
     }
 
+    
 </script>
