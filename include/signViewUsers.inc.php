@@ -4,6 +4,7 @@ include '../function/getAttribute.php';
 include '../function/getEmbrHistory.php';
 include '../function/getHandshape.php';
 include '../function/getRelatedSigns.php';
+include '../function/getSigns.php';
 include '../function/util.php';
 
 $passedSign = filter_input(INPUT_POST, 'signGloss');
@@ -44,13 +45,13 @@ $rs = getRealtedSigns($passedSign);
                             <div class="col-lg-6">
                                 <figure>
                                     <figcaption style="font-weight: bold;">Start Photo</figcaption>
-                                    <img src="../images/sign/startImg/<?php echo $sc->get_start_photo(); ?>" alt="<?php echo $sc->get_start_photo() ?>"/>
+                                    <img src="../images/sign/startImg/<?php echo getPhoto($sc->get_start_photo()); ?>" width="224px" height="225px" alt="<?php echo $sc->get_start_photo() ?>"/>
                                 </figure>
                             </div>
                             <div class="col-lg-6">
                                 <figure>
                                     <figcaption style="font-weight: bold;">End Photo</figcaption>
-                                    <img src="../images/sign/endImg/<?php echo $sc->get_end_photo(); ?>" alt="<?php echo $sc->get_end_photo(); ?>"/>
+                                    <img src="../images/sign/endImg/<?php echo getPhoto($sc->get_end_photo()); ?>"  width="224px" height="225px" alt="<?php echo $sc->get_end_photo(); ?>"/>
                                 </figure>
                             </div>
                         </div>

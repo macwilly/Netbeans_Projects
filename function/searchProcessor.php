@@ -18,14 +18,16 @@ function search() {
             break;
         case "main":
             $inputField = filter_input(INPUT_POST, 'mainBar', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
-            $searchQuery = "SELECT * FROM sign WHERE gloss LIKE '" . $inputField . "%'"
-                    . " AND english_meaning LIKE '" . $inputField . "%'";
+            $searchQuery = "SELECT * FROM sign WHERE gloss LIKE '%" . $inputField . "%'"
+                    . " OR english_meaning LIKE '%" . $inputField . "%'";
             return processQuery($searchQuery);
             break;
         case "nav":
             $inputField = filter_input(INPUT_POST, 'navSearchInput', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
-            $searchQuery = "SELECT * FROM sign WHERE gloss LIKE '" . $inputField . "%'"
-                    . " AND english_meaning LIKE '" . $inputField . "%'";
+            $searchQuery = "SELECT * FROM sign WHERE gloss LIKE '%" . $inputField . "%'"
+                    . " OR english_meaning LIKE '%" . $inputField . "%'";
+            
+            echo $searchQuery;
             return processQuery($searchQuery);
             break;
         default:
@@ -95,7 +97,7 @@ function sqlBuilder($input, $hand, $fish, $HS, $at) {
     }
 
     if ($input != "") {
-        $sql .= " WHERE gloss LIKE '" . $input . "%' AND english_meaning LIKE '" . $input . "%'";
+        $sql .= " WHERE gloss LIKE '%" . $input . "%' OR english_meaning LIKE '%" . $input . "%'";
     }
 
     if ((strpos($sql, 'WHERE') == false) && ($hand != "")) {

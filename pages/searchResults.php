@@ -8,7 +8,7 @@ if ($secLevel == "") {
 <?php include '../include/header.inc.php'; ?>
 <?php include '../function/getAttribute.php'; ?>
 <?php include '../function/getHandshape.php'; ?>
-<?php include '../function/searchProcessor.php'; ?>
+<?php include '../function/searchProcessor.php'; //this handles all of the searching  ?>
 <?php include '../function/util.php'; ?>
 <?php include '../function/getSigns.php'; ?>
 
@@ -151,7 +151,7 @@ if ($secLevel == "") {
                             </thead>
                             <tbody>
                                 <?php
-                                //call class to get all of the information for the table 
+                                //call function to get all of the information for the table 
                                 //build table with loop
                                 $s = search();
 

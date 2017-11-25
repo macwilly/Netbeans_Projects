@@ -86,7 +86,7 @@ function getSignList() {
 
 function getSignPhoto($sOre,$image){
     if($image == "na"){
-        $image = "";
+        $image = "unknown.png";
     }
     if($sOre == "start"){
        $img = '<img src="../images/sign/startImg/' . $image . '" height="108px" width="77px" alt="' . $image . '"/>'; 
@@ -94,4 +94,12 @@ function getSignPhoto($sOre,$image){
        $img = '<img src="../images/sign/endImg/' . $image . '" height="108px" width="77px" alt="' . $image . '"/>';  
     }
     return $img;
+}
+
+function getPhoto($image){
+     if($image == "na"){
+        $image = "unknown.png";
+    }
+    
+    return $image;
 }
