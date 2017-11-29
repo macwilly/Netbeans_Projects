@@ -55,7 +55,15 @@ function getSignsForEdit() {
 }
 
 function getSignList() {
-    $sql = "SELECT * FROM sign ORDER BY gloss";
+    //"SELECT sign.gloss, sign_handshapes.dominant_start_HS, sign_handshapes.dominant_end_HS,sign_handshapes.nondominant_start_HS,sign_handshapes.nondominant_end_HS,english_meaning,start_photo,end_photo,finished FROM sign JOIN sign_handshapes ON sign_handshapes.gloss = sign.gloss ORDER BY sign.gloss"
+    //$sql = "SELECT * FROM sign ORDER BY gloss";
+    $sql = "SELECT sign.gloss, sign_handshapes.dominant_start_HS,"
+            . " sign_handshapes.dominant_end_HS, sign_handshapes.nondominant_start_HS,"
+            . " sign_handshapes.nondominant_end_HS, english_meaning, start_photo,"
+            . " end_photo, finished"
+            . " FROM sign"
+            . " JOIN sign_handshapes ON sign_handshapes.gloss = sign.gloss"
+            . " ORDER BY sign.gloss";
 
     require '../classes/signClass.php';
     $signs = array();

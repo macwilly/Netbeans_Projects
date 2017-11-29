@@ -5,6 +5,7 @@ session_start();
 include './signClass.php';
 include './relatedSignClass.php';
 include './sign_attributeClass.php';
+include './sign_handshapesClass.php';
 include './signHistoryClass.php';
 
 $target_dir_start = "../images/sign/startImg/";
@@ -155,9 +156,11 @@ if ($inEd == 1 && ($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endF
 }
 
 function insertSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef,$u) {
-    $s = new sign($embr, $g, $ds, $de, $nds, $h, $nde, $e, $sf, $ef, $f, $a);
+    $s = new sign($embr, $g, $h, $e, $sf, $ef, $f, $a);
     $ret = $s->createSign();
     if($ret == 'ok'){
+        $shs = new sign_handshapesClass($g,$ds, $de, $nds, $nde);
+        $shs->insertHandshapes();
         $sh = new signHistoryClass($g,$u,$embr);
         $sh->insertWithOutDate();
     }

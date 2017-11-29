@@ -6,6 +6,7 @@ include './attributeClass.php';
 include './sign_attributeClass.php';
 include './relatedSignClass.php';
 include './signClass.php';
+include './sign_handshapesClass.php';
 include './signHistoryClass.php';
 include '../function/getRelatedSigns.php';
 include '../function/getAttribute.php';
@@ -88,6 +89,7 @@ if ($inEd == "embr") {
     if (($startOk == 1 && $startFile == "na") && ($endOk == 1 && $endFile == "na")) {
         //adding a new sign and everything is okay and there are no images
         $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
+        
         $url = '../pages/signList.php';
     } elseif (($startOk == 1 && $startFile != "na") && ($endOk == 1 && $endFile != "na")) {
         $signStat = updateSign($gloss, $english, $asllvdLink, $fish, $hand, $embr, $domStart, $domEnd, $nonDomStart, $nonDomEnd, $startFile, $endFile, $sentSign);
@@ -252,8 +254,10 @@ function updateSign($g, $e, $a, $f, $h, $embr, $ds, $de, $nds, $nde, $sf, $ef, $
     }
     
     $ret = $s->updateSignInfo($type);
-
-
+    
+    //editing the handshapes
+    $shand =  new sign_handshapesClass($g, $ds, $de, $nds, $nde);
+    $shand->updateHandshapes();
 
     return $ret;
 }

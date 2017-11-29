@@ -3,6 +3,7 @@
 session_start();
 include './signClass.php';
 include './signHistoryClass.php';
+include './sign_handshapesClass.php';
 //unsetting all of the errorsign variables
 for ($e = 0; $e < sizeof($_SESSION); $e++) {
     if (isset($_SESSION['errorsign' . $e])) {
@@ -32,6 +33,9 @@ $checkedSigns = array();
 
 //this array is for the embr history 
 $history = array();
+
+//this array is for the handshapes
+$handshapes = array();
 foreach ($xml->children() as $signs) {
     $hand = $signs->handedness;
     $fish = $signs->finished;
@@ -41,16 +45,25 @@ foreach ($xml->children() as $signs) {
         $s = new sign();
         $s->set_gloss($signs->gloss);
         $s->set_embr($signs->embr);
-        $s->set_dominant_start_HS(convertHandshape($signs->dominant_start_HS));
-        $s->set_dominant_end_HS(convertHandshape($signs->dominant_end_HS));
-        $s->set_nondominant_start_HS(convertHandshape($signs->nondominant_start_HS));
-        $s->set_nondominant_end_HS(convertHandshape($signs->nondominant_end_HS));
+        //$s->set_dominant_start_HS(convertHandshape($signs->dominant_start_HS));
+        //$s->set_dominant_end_HS(convertHandshape($signs->dominant_end_HS));
+        //$s->set_nondominant_start_HS(convertHandshape($signs->nondominant_start_HS));
+        //$s->set_nondominant_end_HS(convertHandshape($signs->nondominant_end_HS));
         $s->set_handedness($signs->handedness);
         $s->set_english_meaning($signs->english);
         $s->set_start_photo($signs->start_photo);
         $s->set_end_photo($signs->end_photo);
         $s->set_finished($signs->finished);
         $s->set_asllvd_link(str_replace("amp;", "&", $signs->asllvd_link->__toString()));
+        
+        $shs = new sign_handshapesClass();
+        
+        $shs->set_gloss($signs->gloss);
+        $shs->set_dominant_start_HS(convertHandshape($signs->dominant_start_HS));
+        $shs->set_dominant_end_HS(convertHandshape($signs->dominant_end_HS));
+        $shs->set_nondominant_start_HS(convertHandshape($signs->nondominant_start_HS));
+        $shs->set_nondominant_end_HS(convertHandshape($signs->nondominant_end_HS));
+        
         
         $sh = new signHistoryClass();
         $sh->set_sign($gloss);
@@ -70,8 +83,10 @@ foreach ($xml->children() as $signs) {
                 } else {
                     array_push($signsArray, $s);
                     array_push($history, $sh);
+                    array_push($handshapes, $shs);
                 }
             }
+            //adding to the checked signs array
             array_push($checkedSigns, $gloss);
         } else {
             //check to see if the sign is in the database
@@ -80,7 +95,9 @@ foreach ($xml->children() as $signs) {
             } else {
                 array_push($signsArray, $s);
                 array_push($history, $sh);
+                array_push($handshapes, $shs);
             }
+            //adding to the checked signs array
             array_push($checkedSigns, $gloss);
         }
     } else {
@@ -94,6 +111,11 @@ if (sizeof($errorSigns) == 0) {
     foreach ($signsArray as $si) {
         $si->createSign();
     }
+    
+    foreach($handshapes as $hs){
+        $hs->insertHandshapes();
+    }
+    
     foreach($history as $h){
         $h->insertWithOutDate();
     }

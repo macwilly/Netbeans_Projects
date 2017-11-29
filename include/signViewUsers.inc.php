@@ -42,46 +42,51 @@ $rs = getRealtedSigns($passedSign);
                             </div>
                         </div>
                         <div class="row" style="margin-top: 1em;">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4 col-md-5">
                                 <figure>
                                     <figcaption style="font-weight: bold;">Start Photo</figcaption>
                                     <img src="../images/sign/startImg/<?php echo getPhoto($sc->get_start_photo()); ?>" width="224px" height="225px" alt="<?php echo $sc->get_start_photo() ?>"/>
                                 </figure>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4 col-md-5">
                                 <figure>
                                     <figcaption style="font-weight: bold;">End Photo</figcaption>
                                     <img src="../images/sign/endImg/<?php echo getPhoto($sc->get_end_photo()); ?>"  width="224px" height="225px" alt="<?php echo $sc->get_end_photo(); ?>"/>
                                 </figure>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <hr>
+                            </div>
+                        </div>
                         <div class="row" style="margin-top: 1em;">
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-3">
                                 <figure>
                                     <figcaption style="font-weight: bold;">Dominant Starting Handshape: <?php echo getDescription($sc->get_dominant_start_HS()); ?></figcaption>
                                     <img src="../images/handshape/<?php echo getHandShapeImg($sc->get_dominant_start_HS()); ?>" alt="<?php echo getHandShapeImg($sc->get_dominant_start_HS()); ?>"/>
                                 </figure>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-3">
                                 <figure>
                                     <figcaption style="font-weight: bold;">Nondominant Starting Handshape: <?php echo getDescription($sc->get_nondominant_start_HS()); ?></figcaption>
                                     <img src="../images/handshape/<?php echo getHandShapeImg($sc->get_nondominant_start_HS()); ?>" alt="<?php echo getHandShapeImg($sc->get_nondominant_start_HS()); ?>"/>
                                 </figure>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-3">
                                 <figure>
                                     <figcaption style="font-weight: bold;">Dominant Ending Handshape: <?php echo getDescription($sc->get_dominant_end_HS()); ?></figcaption>
                                     <img src="../images/handshape/<?php echo getHandShapeImg($sc->get_dominant_end_HS()); ?>" alt="<?php echo getHandShapeImg($sc->get_dominant_end_HS()); ?>"/>
                                 </figure>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-md-3">
                                 <figure>
                                     <figcaption style="font-weight: bold;">Nondominant Ending Handshape: <?php echo getDescription($sc->get_nondominant_end_HS()); ?></figcaption>
                                     <img src="../images/handshape/<?php echo getHandShapeImg($sc->get_nondominant_end_HS()); ?>" alt="<?php echo getHandShapeImg($sc->get_nondominant_end_HS()); ?>"/>
                                 </figure>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 1em;">
+                        <div class="row" style="margin-top: 2em;">
                             <div class="col-lg-3">
                                 <p><span style="font-weight: bold;">Handedness: </span><?php echo handTextConvert($sc->get_handedness()); ?></p>
                             </div>

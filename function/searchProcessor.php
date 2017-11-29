@@ -18,27 +18,42 @@ function search() {
             break;
         case "main":
             $inputField = filter_input(INPUT_POST, 'mainBar', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
-            $searchQuery = "SELECT * FROM sign WHERE gloss LIKE '%" . $inputField . "%'"
-                    . " OR english_meaning LIKE '%" . $inputField . "%'";
+            $searchQuery = "SELECT sign.gloss, sign_handshapes.dominant_start_HS,"
+                    . " sign_handshapes.dominant_end_HS, sign_handshapes.nondominant_start_HS,"
+                    . " sign_handshapes.nondominant_end_HS, english_meaning, start_photo,"
+                    . " end_photo, finished"
+                    . " FROM sign"
+                    . " JOIN sign_handshapes ON sign_handshapes.gloss = sign.gloss"
+                    . " WHERE sign.gloss LIKE '%" . $inputField . "%'"
+                    . " OR sign.english_meaning LIKE '%" . $inputField . "%'";
             return processQuery($searchQuery);
             break;
         case "nav":
             $inputField = filter_input(INPUT_POST, 'navSearchInput', FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
-            $searchQuery = "SELECT * FROM sign WHERE gloss LIKE '%" . $inputField . "%'"
-                    . " OR english_meaning LIKE '%" . $inputField . "%'";
-            
-            echo $searchQuery;
+            $searchQuery = "SELECT sign.gloss, sign_handshapes.dominant_start_HS,"
+                    . " sign_handshapes.dominant_end_HS, sign_handshapes.nondominant_start_HS,"
+                    . " sign_handshapes.nondominant_end_HS, english_meaning, start_photo,"
+                    . " end_photo, finished"
+                    . " FROM sign"
+                    . " JOIN sign_handshapes ON sign_handshapes.gloss = sign.gloss"
+                    . " WHERE sign.gloss LIKE '%" . $inputField . "%'"
+                    . " OR sign.english_meaning LIKE '%" . $inputField . "%'";
+
             return processQuery($searchQuery);
             break;
         default:
-            $searchQuery = "SELECT * FROM sign";
+            $searchQuery = "SELECT sign.gloss, sign_handshapes.dominant_start_HS,"
+                    . " sign_handshapes.dominant_end_HS, sign_handshapes.nondominant_start_HS,"
+                    . " sign_handshapes.nondominant_end_HS, english_meaning, start_photo,"
+                    . " end_photo, finished"
+                    . " FROM sign"
+                    . " JOIN sign_handshapes ON sign_handshapes.gloss = sign.gloss";
             return processQuery($searchQuery);
             break;
     }
 }
 
 function processQuery($sql) {
-
     require '../classes/signClass.php';
     $signs = array();
 
@@ -91,13 +106,18 @@ function attChecker($atAr) {
 }
 
 function sqlBuilder($input, $hand, $fish, $HS, $at) {
-    $sql = "SELECT * FROM sign";
+    $sql = "SELECT sign.gloss, sign_handshapes.dominant_start_HS,"
+            . " sign_handshapes.dominant_end_HS, sign_handshapes.nondominant_start_HS,"
+            . " sign_handshapes.nondominant_end_HS, english_meaning, start_photo,"
+            . " end_photo, finished"
+            . " FROM sign"
+            . " JOIN sign_handshapes ON sign_handshapes.gloss = sign.gloss";
     if ($at != "") {
         $sql .= " JOIN sign_attribute ON sign.gloss = sign_attribute.sign";
     }
 
     if ($input != "") {
-        $sql .= " WHERE gloss LIKE '%" . $input . "%' OR english_meaning LIKE '%" . $input . "%'";
+        $sql .= " WHERE (sign.gloss LIKE '%" . $input . "%' OR sign.english_meaning LIKE '%" . $input . "%')";
     }
 
     if ((strpos($sql, 'WHERE') == false) && ($hand != "")) {
