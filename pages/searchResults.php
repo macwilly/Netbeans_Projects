@@ -134,7 +134,7 @@ if ($secLevel == "") {
                             <thead>
                                 <tr>
                                     <?php
-                                    if ($secLevel >= 2) {
+                                    if ($secLevel >= 1) {
                                         echo '<th></th>';
                                     }
                                     ?>
