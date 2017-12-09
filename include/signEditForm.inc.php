@@ -188,13 +188,13 @@ $attrs = getAttributeArray($passedSign);
                                     echo '<option value="none">Select an attribute</option>';
                                     foreach ($attr as $printAttribute) {
                                         if ($a < $setAttsCount) {
-                                            if ($attrs[$a] == str_replace(" ", "_", $printAttribute->get_aName())) {
-                                                echo '<option selected value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
+                                            if ($attrs[$a] == $printAttribute->get_aName()) {
+                                                echo '<option selected value="' . $printAttribute->get_aName() . '">' . $printAttribute->get_aName() . '</option>';
                                             } else {
-                                                echo '<option value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
+                                                echo '<option value="' . $printAttribute->get_aName() . '">' . $printAttribute->get_aName() . '</option>';
                                             }
                                         }else{
-                                            echo '<option value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
+                                            echo '<option value="' . $printAttribute->get_aName() . '">' . $printAttribute->get_aName() . '</option>';
                                         }
                                     }
                                     echo '</select>';

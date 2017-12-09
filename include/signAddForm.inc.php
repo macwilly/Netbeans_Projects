@@ -201,7 +201,7 @@ $passedSign = getSign();
                             echo '<select class="form-control" name="selAttr' . $i . '" id="selAttr' . $i . '">';
                             echo '<option value="none">Select an attribute</option>';
                             foreach ($attr as $printAttribute) {
-                                echo '<option value="' . str_replace(" ", "_", $printAttribute->get_aName()) . '">' . $printAttribute->get_aName() . '</option>';
+                                echo '<option value="' . $printAttribute->get_aName() . '">' . $printAttribute->get_aName() . '</option>';
                             }
                             echo '</select>';
                             echo '</div>'; // form-group
