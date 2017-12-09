@@ -127,7 +127,7 @@ $passedSign = getSign();
 
                     <div class="col-lg-6">
                         <div class="form-group" id="dom-hs-container">
-                            <label><span class="text-danger">*</span>Start Dominant Handshape</label>
+                            <label>Start Dominant Handshape <span class="text-danger">(Must not be None)</span></label>
                             <select class="form-control" name="sdh" id="sdh">
                                 <option value="none">None</option>
                                 <?php
@@ -149,7 +149,7 @@ $passedSign = getSign();
                             </select>
                         </div>
                         <div class="form-group" id="dom-hs-end-container">
-                            <label><span class="text-danger">*</span>End Dominant Handshape</label>
+                            <label>End Dominant Handshape <span class="text-danger">(Must not be None)</span></label>
                             <select class="form-control" name="edh" id="edh">
                                 <option value="none">None</option>
                                 <?php

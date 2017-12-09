@@ -5,7 +5,7 @@
             <a href="../pages/handshapes.php">All Handshapes</a>
         </li>
         <?php
-        if ($secLevel >= 2) {
+        if ($secLevel >= 3) {
             echo '<li>';
             echo '<a href="../pages/handshape.php?type=1">Add A Handshape</a>';
             echo '</li>';

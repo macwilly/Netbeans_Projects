@@ -34,7 +34,7 @@ if ($secLevel == "") {
                             <thead>
                                 <tr>
                                     <?php
-                                    if ($secLevel >= 2) {
+                                    if ($secLevel >= 3) {
                                         echo '<th></th>';
                                     }
                                     ?>
@@ -63,7 +63,7 @@ if ($secLevel == "") {
                                     } else {
                                         echo '<tr class="even">';
                                     }
-                                    if ($secLevel >= 2) {
+                                    if ($secLevel >= 3) {
                                         echo '<td><button onclick="editHS(' . $printHandshape->get_id() . ')" type="button" class="btn btn-primary">Edit</button></td>';
                                     }
 

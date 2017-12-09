@@ -6,7 +6,7 @@ $secLevel = $_SESSION['secLevel'];
 if($secLevel == ""){
     header('Location: ./index.php');
 }
-if($secLevel < 2){
+if($secLevel < 3){
     header('Location: ./handshapes.php');
 }
 $jsCheck = "";

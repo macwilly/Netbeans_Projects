@@ -2,7 +2,7 @@
     <a href="#"><i class="fa fa-users fa-fw"></i> User<span class="fa arrow"></span></a>
     <ul class="nav nav-second-level">
         <?php 
-            if($secLevel >=2){
+            if($secLevel >=3){
                 echo '<li>';
                 echo '<a href="../pages/users.php">All Users</a>';
                 echo '</li>';
