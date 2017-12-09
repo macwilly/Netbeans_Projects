@@ -30,7 +30,7 @@ include '../include/connection_open.inc.php';
 
 $sql = "SELECT id,username,CAST(AES_DECRYPT(password, '" . $pword . "') AS CHAR(20)) as password_decrypt,security_level,first_name,last_name,active,email"
         . " FROM users"
-        . " WHERE username = '" . $uname . "'";
+        . " WHERE username = '" . $uname . "' and active = 1";
 
 $result = $conn->query($sql);
 
