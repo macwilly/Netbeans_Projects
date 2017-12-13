@@ -82,7 +82,7 @@ $passedSign = getSign();
                 <form name="signInput" id="signInputId" enctype="multipart/form-data"  method="POST" action="">
                     <div class="col-lg-6">
                         <div class="form-group" id="gloss-container">
-                            <label class="control-label"><span class="text-danger">*</span>Gloss <span id="glossWarning"></span></label>
+                            <label class="control-label"><span class="text-danger">*</span>Gloss<span id="glossWarning"></span></label>
                             <input class="form-control" name="inputgloss" id="inputgloss" placeholder="" maxlength="30" value="" onkeyup="alertDuplicate(this.value)">
                         </div>
                         <div class="form-group" id="english-container">
