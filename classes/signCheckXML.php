@@ -45,10 +45,6 @@ foreach ($xml->children() as $signs) {
         $s = new sign();
         $s->set_gloss($signs->gloss);
         $s->set_embr($signs->embr);
-        //$s->set_dominant_start_HS(convertHandshape($signs->dominant_start_HS));
-        //$s->set_dominant_end_HS(convertHandshape($signs->dominant_end_HS));
-        //$s->set_nondominant_start_HS(convertHandshape($signs->nondominant_start_HS));
-        //$s->set_nondominant_end_HS(convertHandshape($signs->nondominant_end_HS));
         $s->set_handedness($signs->handedness);
         $s->set_english_meaning($signs->english);
         $s->set_start_photo($signs->start_photo);

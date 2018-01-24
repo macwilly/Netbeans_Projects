@@ -74,7 +74,6 @@ function doBoth() {
 function removeErrors() {
     $("#gloss-container").removeClass("has-error");
     $("#english-container").removeClass("has-error");
-    $("#asllvd-container").removeClass("has-error");
     $("#finished-container").removeClass("has-error");
     $("#handedness-container").removeClass("has-error");
     $("#dom-hs-container").removeClass("has-error");
@@ -100,7 +99,6 @@ function check() {
 
     var gloss = $('#inputgloss').val();
     var english = $('#inputenglish').val();
-    var asllvd = $('#inputasllvd').val();
     var fish1 = $('#optionsFinished1').val();
     var fish0 = $('#optionsFinished0').val();
     var handed1 = $('#optionsHandedness1').val();
@@ -115,10 +113,6 @@ function check() {
     }
     if (english === "" || english === " ") {
         $("#english-container").addClass("has-error");
-        errorCheck += 1;
-    }
-    if (asllvd === "" || asllvd === " ") {
-        $("#asllvd-container").addClass("has-error");
         errorCheck += 1;
     }
 

@@ -90,7 +90,7 @@ $passedSign = getSign();
                             <input class="form-control" name="inputenglish" id="inputenglish" placeholder="" maxlength="100" value="">
                         </div>
                         <div class="form-group" id="asllvd-container">
-                            <label class="control-label"><span class="text-danger">*</span>ASLLVD Link</label>
+                            <label class="control-label">ASLLVD Link</label>
                             <input class="form-control" name="inputasllvd" id="inputasllvd" maxlength="250" placeholder="" value="">
                         </div>
                         <div class="form-group" id="finished-container">
